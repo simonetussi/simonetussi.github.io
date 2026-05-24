@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Contatta Simone Tussi — Fotografo professionale. Preventivi per ritratti, eventi e sport.">
+  <title>Contatti — Simone Tussi</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="img/altro/logo-w.png">
+  <style>
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0; right: 0;
+      width: 45vw; height: 100vh;
+      background-image: url('https://simonetussi.com/wp-content/uploads/2024/01/ritratti-18.webp');
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.25) saturate(0.5);
+      z-index: -1;
+    }
+    @media(max-width:768px) { body::after { display:none; } }
+  </style>
+</head>
+<body>
+
+  <div id="cursor"></div>
+  <div id="cursor-ring"></div>
+
+  <nav class="scrolled">
+    <a href="index.html">
+      <img src="https://simonetussi.com/wp-content/uploads/2023/05/logo-w.png" alt="Simone Tussi" class="nav-logo">
+    </a>
+    <button class="nav-toggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="ritratti.html">Ritratti</a></li>
+      <li><a href="eventi.html">Eventi</a></li>
+      <li><a href="sport.html">Sport</a></li>
+      <li><a href="contatti.html" class="active">Contatti</a></li>
+    </ul>
+  </nav>
+
+  <div class="contact-section">
+
+    <!-- Info -->
+    <div class="contact-info">
+      <p class="section-label reveal">Parliamo</p>
+      <h1 class="section-title reveal reveal-delay-1" style="margin-bottom:48px">Scrivimi<br><em>un messaggio</em></h1>
+
+      <div class="contact-detail reveal reveal-delay-2">
+        <span class="contact-detail-label">Telefono & WhatsApp</span>
+        <a href="https://wa.me/message/F4VJDF4QB6U6H1" class="contact-detail-value">(+39) 333 472 1296</a>
+      </div>
+
+      <div class="contact-detail reveal reveal-delay-2">
+        <span class="contact-detail-label">Email</span>
+        <a href="mailto:simonetussi2006@gmail.com" class="contact-detail-value">simonetussi2006@gmail.com</a>
+      </div>
+
+      <div class="contact-detail reveal reveal-delay-3">
+        <span class="contact-detail-label">Zona operativa</span>
+        <span class="contact-detail-value" style="cursor:default">Coccaglio, Brescia e dintorni</span>
+      </div>
+
+      <div style="margin-top:48px" class="reveal reveal-delay-3">
+        <p class="section-label" style="margin-bottom:16px">Seguimi</p>
+        <div style="display:flex;gap:24px;flex-wrap:wrap">
+          <a href="https://www.instagram.com/simonetussi.ph/" target="_blank" rel="noopener"
+             style="display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gray-light);transition:color 0.2s"
+             onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--gray-light)'">
+            ↗ Instagram
+          </a>
+          <a href="https://www.tiktok.com/@simonetussi.ph/" target="_blank" rel="noopener"
+             style="display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gray-light);transition:color 0.2s"
+             onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--gray-light)'">
+            ↗ TikTok
+          </a>
+          <a href="https://wa.me/message/F4VJDF4QB6U6H1" target="_blank" rel="noopener"
+             style="display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gray-light);transition:color 0.2s"
+             onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--gray-light)'">
+            ↗ WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <div style="margin-top:64px;padding-top:40px;border-top:1px solid rgba(201,168,76,0.12)" class="reveal">
+        <p style="font-family:var(--font-display);font-style:italic;font-size:18px;color:var(--gray-light);line-height:1.5">
+          "La fotografia è l'unico linguaggio che può essere capito ovunque nel mondo."
+        </p>
+        <p style="font-size:10px;letter-spacing:0.25em;color:var(--gold);margin-top:12px;text-transform:uppercase">— Bruno Barbey</p>
+      </div>
+    </div>
+
+    <!-- Form -->
+    <div class="reveal reveal-delay-2">
+      <form id="contact-form" class="contact-form">
+        <div class="form-group">
+          <label class="form-label" for="nome">Nome e Cognome</label>
+          <input class="form-input" type="text" id="nome" name="nome" placeholder="Mario Rossi" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="email">Email</label>
+          <input class="form-input" type="email" id="email" name="email" placeholder="mario@email.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="oggetto">Tipo di servizio</label>
+          <input class="form-input" type="text" id="oggetto" name="oggetto" placeholder="Ritratti / Evento / Sport / Altro" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="messaggio">Messaggio</label>
+          <textarea class="form-textarea" id="messaggio" name="messaggio" placeholder="Raccontami del tuo progetto: data, luogo, numero di persone, esigenze particolari..." required></textarea>
+        </div>
+        <p class="form-note">Premendo il tasto qui sotto si aprirà il tuo client email con il messaggio precompilato.</p>
+        <button type="submit" class="btn btn-gold" style="align-self:flex-start;margin-top:8px">
+          Invia messaggio
+        </button>
+      </form>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-top">
+      <div>
+        <img src="https://simonetussi.com/wp-content/uploads/2023/05/logo-w.png" alt="Simone Tussi" class="footer-logo">
+        <p class="footer-tagline">Dove la fotografia prende vita</p>
+      </div>
+      <div>
+        <p class="footer-col-title">Esplora</p>
+        <ul class="footer-links">
+          <li><a href="ritratti.html">Ritratti</a></li>
+          <li><a href="eventi.html">Eventi</a></li>
+          <li><a href="sport.html">Sport</a></li>
+          <li><a href="contatti.html">Contatti</a></li>
+        </ul>
+      </div>
+      <div class="footer-contact">
+        <p class="footer-col-title">Contatti</p>
+        <p>Tel: <a href="https://wa.me/message/F4VJDF4QB6U6H1">(+39) 333 472 1296</a></p>
+        <p>Email: <a href="mailto:simonetussi2006@gmail.com">simonetussi2006@gmail.com</a></p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/simonetussi.ph/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://wa.me/message/F4VJDF4QB6U6H1" target="_blank" rel="noopener">WhatsApp</a>
+          <a href="https://www.tiktok.com/@simonetussi.ph/" target="_blank" rel="noopener">TikTok</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 Simone Tussi — Tutti i diritti riservati</p>
+      <p class="footer-copy">v2.0</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
