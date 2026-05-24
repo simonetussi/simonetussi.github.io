@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Simone Tussi - Merch privato, accessori e capi d'abbigliamento.">
+  <title>Merch - Simone Tussi</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="https://simonetussifotografo.wordpress.com/wp-content/uploads/2023/05/cropped-logo-w.png">
+</head>
+<body>
+
+  <div id="cursor"></div>
+  <div id="cursor-ring"></div>
+
+  <nav>
+    <a href="index.html">
+      <img src="https://simonetussifotografo.wordpress.com/wp-content/uploads/2023/05/logo-w.png" alt="Simone Tussi" class="nav-logo">
+    </a>
+    <button class="nav-toggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="ritratti.html">Ritratti</a></li>
+      <li><a href="eventi.html">Eventi</a></li>
+      <li><a href="sport.html">Sport</a></li>
+      <li><a href="contatti.html">Contatti</a></li>
+    </ul>
+  </nav>
+
+  <main class="merch-page" data-shop>
+    <section class="merch-intro">
+      <div>
+        <p class="section-label">Shop privato</p>
+        <h1 class="gallery-page-title"><em>Merch</em></h1>
+      </div>
+      <p class="section-body">Una selezione di accessori e capi d'abbigliamento pensati per portare il linguaggio visivo dello studio anche fuori dal set.</p>
+      <button class="merch-cart-toggle" type="button" data-cart-jump>
+        Carrello <span data-cart-count>0</span>
+      </button>
+    </section>
+
+    <section class="merch-toolbar" aria-label="Categorie prodotti">
+      <button class="merch-filter active" type="button" data-shop-filter="all">Tutto</button>
+      <button class="merch-filter" type="button" data-shop-filter="wear">Capi</button>
+      <button class="merch-filter" type="button" data-shop-filter="accessory">Accessori</button>
+      <button class="merch-filter" type="button" data-shop-filter="print">Print</button>
+    </section>
+
+    <div class="merch-layout">
+      <section class="merch-grid" aria-label="Catalogo merch">
+        <article class="merch-card" data-product-card data-product-id="hoodie-studio" data-product-name="Studio Hoodie" data-product-price="69" data-product-image="img/merch/hoodie.svg" data-product-category="wear">
+          <button class="merch-media" type="button" data-zoom-src="img/merch/hoodie.svg" data-zoom-title="Studio Hoodie">
+            <img src="img/merch/hoodie.svg" alt="Studio Hoodie" loading="lazy">
+          </button>
+          <div class="merch-card-body">
+            <p class="merch-kicker">Abbigliamento</p>
+            <div class="merch-card-head">
+              <h2>Studio Hoodie</h2>
+              <span class="merch-price">69,00 EUR</span>
+            </div>
+            <p class="merch-description">Felpa pesante oversize con cappuccio doppio, tasca frontale e stampa tono oro sul petto.</p>
+            <div class="merch-options">
+              <label>Taglia
+                <select name="size">
+                  <option>S</option><option selected>M</option><option>L</option><option>XL</option>
+                </select>
+              </label>
+              <label>Colore
+                <select name="color">
+                  <option>Nero</option><option>Crema</option>
+                </select>
+              </label>
+            </div>
+            <ul class="merch-details">
+              <li>380 gsm cotone premium</li>
+              <li>Vestibilita comoda</li>
+              <li>Spedizione stimata 3-5 giorni</li>
+            </ul>
+            <button class="btn btn-gold" type="button" data-add-to-cart>Aggiungi al carrello</button>
+          </div>
+        </article>
+
+        <article class="merch-card" data-product-card data-product-id="essential-tee" data-product-name="Essential Tee" data-product-price="34" data-product-image="img/merch/tshirt.svg" data-product-category="wear">
+          <button class="merch-media" type="button" data-zoom-src="img/merch/tshirt.svg" data-zoom-title="Essential Tee">
+            <img src="img/merch/tshirt.svg" alt="Essential Tee" loading="lazy">
+          </button>
+          <div class="merch-card-body">
+            <p class="merch-kicker">Abbigliamento</p>
+            <div class="merch-card-head">
+              <h2>Essential Tee</h2>
+              <span class="merch-price">34,00 EUR</span>
+            </div>
+            <p class="merch-description">T-shirt in cotone morbido con stampa centrale minimal, pensata per un uso quotidiano.</p>
+            <div class="merch-options">
+              <label>Taglia
+                <select name="size">
+                  <option>XS</option><option>S</option><option selected>M</option><option>L</option><option>XL</option>
+                </select>
+              </label>
+              <label>Colore
+                <select name="color">
+                  <option>Crema</option><option>Nero</option>
+                </select>
+              </label>
+            </div>
+            <ul class="merch-details">
+              <li>100% cotone organico</li>
+              <li>Stampa serigrafica</li>
+              <li>Lavaggio a 30 gradi</li>
+            </ul>
+            <button class="btn btn-gold" type="button" data-add-to-cart>Aggiungi al carrello</button>
+          </div>
+        </article>
+
+        <article class="merch-card" data-product-card data-product-id="signature-cap" data-product-name="Signature Cap" data-product-price="29" data-product-image="img/merch/cap.svg" data-product-category="accessory">
+          <button class="merch-media" type="button" data-zoom-src="img/merch/cap.svg" data-zoom-title="Signature Cap">
+            <img src="img/merch/cap.svg" alt="Signature Cap" loading="lazy">
+          </button>
+          <div class="merch-card-body">
+            <p class="merch-kicker">Accessorio</p>
+            <div class="merch-card-head">
+              <h2>Signature Cap</h2>
+              <span class="merch-price">29,00 EUR</span>
+            </div>
+            <p class="merch-description">Cappellino regolabile con patch ricamata, visiera curva e profilo essenziale.</p>
+            <div class="merch-options">
+              <label>Taglia
+                <select name="size">
+                  <option selected>Unica</option>
+                </select>
+              </label>
+              <label>Colore
+                <select name="color">
+                  <option>Nero</option><option>Oro</option>
+                </select>
+              </label>
+            </div>
+            <ul class="merch-details">
+              <li>Chiusura metallica regolabile</li>
+              <li>Ricamo frontale</li>
+              <li>Disponibilit&agrave; limitata</li>
+            </ul>
+            <button class="btn btn-gold" type="button" data-add-to-cart>Aggiungi al carrello</button>
+          </div>
+        </article>
+
+        <article class="merch-card" data-product-card data-product-id="daily-tote" data-product-name="Daily Tote" data-product-price="24" data-product-image="img/merch/tote.svg" data-product-category="accessory">
+          <button class="merch-media" type="button" data-zoom-src="img/merch/tote.svg" data-zoom-title="Daily Tote">
+            <img src="img/merch/tote.svg" alt="Daily Tote" loading="lazy">
+          </button>
+          <div class="merch-card-body">
+            <p class="merch-kicker">Accessorio</p>
+            <div class="merch-card-head">
+              <h2>Daily Tote</h2>
+              <span class="merch-price">24,00 EUR</span>
+            </div>
+            <p class="merch-description">Borsa tote resistente per set, viaggi brevi e quotidianit&agrave;, con stampa frontale grande.</p>
+            <div class="merch-options">
+              <label>Taglia
+                <select name="size">
+                  <option selected>Unica</option>
+                </select>
+              </label>
+              <label>Colore
+                <select name="color">
+                  <option>Naturale</option><option>Nero</option>
+                </select>
+              </label>
+            </div>
+            <ul class="merch-details">
+              <li>Canvas spesso</li>
+              <li>Manici lunghi</li>
+              <li>Capienza 14 litri</li>
+            </ul>
+            <button class="btn btn-gold" type="button" data-add-to-cart>Aggiungi al carrello</button>
+          </div>
+        </article>
+
+        <article class="merch-card" data-product-card data-product-id="camera-strap" data-product-name="Camera Strap" data-product-price="42" data-product-image="img/merch/strap.svg" data-product-category="accessory">
+          <button class="merch-media" type="button" data-zoom-src="img/merch/strap.svg" data-zoom-title="Camera Strap">
+            <img src="img/merch/strap.svg" alt="Camera Strap" loading="lazy">
+          </button>
+          <div class="merch-card-body">
+            <p class="merch-kicker">Accessorio</p>
+            <div class="merch-card-head">
+              <h2>Camera Strap</h2>
+              <span class="merch-price">42,00 EUR</span>
+            </div>
+            <p class="merch-description">Tracolla fotografica morbida, rinforzata e pensata per accompagnare sessioni lunghe.</p>
+            <div class="merch-options">
+              <label>Taglia
+                <select name="size">
+                  <option selected>Standard</option><option>Long</option>
+                </select>
+              </label>
+              <label>Colore
+                <select name="color">
+                  <option>Nero/Oro</option><option>Nero/Crema</option>
+                </select>
+              </label>
+            </div>
+            <ul class="merch-details">
+              <li>Nastro tecnico rinforzato</li>
+              <li>Agganci inclusi</li>
+              <li>Compatibile con camere mirrorless</li>
+            </ul>
+            <button class="btn btn-gold" type="button" data-add-to-cart>Aggiungi al carrello</button>
+          </div>
+        </article>
+
+        <article class="merch-card" data-product-card data-product-id="limited-print" data-product-name="Limited Print" data-product-price="55" data-product-image="img/merch/print.svg" data-product-category="print">
+          <button class="merch-media" type="button" data-zoom-src="img/merch/print.svg" data-zoom-title="Limited Print">
+            <img src="img/merch/print.svg" alt="Limited Print" loading="lazy">
+          </button>
+          <div class="merch-card-body">
+            <p class="merch-kicker">Fine art</p>
+            <div class="merch-card-head">
+              <h2>Limited Print</h2>
+              <span class="merch-price">55,00 EUR</span>
+            </div>
+            <p class="merch-description">Stampa fine art numerata, firmata e spedita con confezione rigida protettiva.</p>
+            <div class="merch-options">
+              <label>Formato
+                <select name="size">
+                  <option>30x40</option><option selected>40x60</option><option>50x70</option>
+                </select>
+              </label>
+              <label>Finitura
+                <select name="color">
+                  <option>Matte</option><option>Glossy</option>
+                </select>
+              </label>
+            </div>
+            <ul class="merch-details">
+              <li>Carta cotton rag 308 gsm</li>
+              <li>Edizione numerata</li>
+              <li>Certificato incluso</li>
+            </ul>
+            <button class="btn btn-gold" type="button" data-add-to-cart>Aggiungi al carrello</button>
+          </div>
+        </article>
+      </section>
+
+      <aside class="merch-cart" id="merch-cart" aria-label="Carrello">
+        <div class="merch-cart-head">
+          <div>
+            <p class="section-label">Ordine</p>
+            <h2>Carrello</h2>
+          </div>
+          <span data-cart-count>0</span>
+        </div>
+        <div class="merch-cart-empty" data-cart-empty>Il carrello &egrave; vuoto.</div>
+        <div class="merch-cart-items" data-cart-items></div>
+        <dl class="merch-totals">
+          <div><dt>Subtotale</dt><dd data-cart-subtotal>0,00 EUR</dd></div>
+          <div><dt>Spedizione</dt><dd data-cart-shipping>0,00 EUR</dd></div>
+          <div class="merch-total"><dt>Totale</dt><dd data-cart-total>0,00 EUR</dd></div>
+        </dl>
+        <button class="btn btn-gold merch-checkout" type="button" data-cart-checkout disabled>Completa su WhatsApp</button>
+        <p class="merch-cart-note">Pagamento e conferma disponibilit&agrave; vengono gestiti dopo il contatto. IVA e spedizione possono variare in base alla destinazione.</p>
+      </aside>
+    </div>
+
+    <section class="merch-info">
+      <article>
+        <p class="section-label">Produzione</p>
+        <h2>Drop limitato</h2>
+        <p>Ogni prodotto &egrave; pensato in piccole quantit&agrave;, con materiali selezionati e dettagli coerenti con l'identit&agrave; visiva del brand.</p>
+      </article>
+      <article>
+        <p class="section-label">Spedizioni</p>
+        <h2>Italia ed Europa</h2>
+        <p>Preparazione entro 2 giorni lavorativi per i prodotti disponibili. Per preordini e taglie speciali i tempi vengono comunicati prima della conferma.</p>
+      </article>
+      <article>
+        <p class="section-label">Resi</p>
+        <h2>14 giorni</h2>
+        <p>Reso possibile su articoli non utilizzati e nella confezione originale. Prodotti personalizzati e print firmate non sono rimborsabili.</p>
+      </article>
+    </section>
+  </main>
+
+  <div class="merch-zoom" data-merch-zoom hidden>
+    <button class="merch-zoom-close" type="button" data-zoom-close>Chiudi</button>
+    <figure>
+      <img src="" alt="" data-zoom-image>
+      <figcaption data-zoom-caption></figcaption>
+    </figure>
+  </div>
+
+  <footer>
+    <div class="footer-top">
+      <div>
+        <img src="https://simonetussifotografo.wordpress.com/wp-content/uploads/2023/05/logo-w.png" alt="Simone Tussi" class="footer-logo">
+        <p class="footer-tagline">Dove la fotografia prende vita</p>
+      </div>
+      <div>
+        <p class="footer-col-title">Esplora</p>
+        <ul class="footer-links">
+          <li><a href="ritratti.html">Ritratti</a></li>
+          <li><a href="eventi.html">Eventi</a></li>
+          <li><a href="sport.html">Sport</a></li>
+          <li><a href="contatti.html">Contatti</a></li>
+        </ul>
+      </div>
+      <div class="footer-contact">
+        <p class="footer-col-title">Contatti</p>
+        <p>Tel: <a href="https://wa.me/message/F4VJDF4QB6U6H1">(+39) 333 472 1296</a></p>
+        <p>Email: <a href="mailto:simonetussi2006@gmail.com">simonetussi2006@gmail.com</a></p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/simonetussi.ph/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://wa.me/message/F4VJDF4QB6U6H1" target="_blank" rel="noopener">WhatsApp</a>
+          <a href="https://www.tiktok.com/@simonetussi.ph/" target="_blank" rel="noopener">TikTok</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">&copy; 2025 Simone Tussi - Tutti i diritti riservati</p>
+      <p class="footer-copy">v2.0</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

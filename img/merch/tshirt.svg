@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1100">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f7f3ea"/>
+      <stop offset="1" stop-color="#d0c3a2"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="1100" fill="url(#bg)"/>
+  <path d="M320 190h260l105 95 120 90-120 148-70-48v390H285V475l-70 48-120-148 120-90z" fill="#f0ebe0" stroke="#c9a84c" stroke-width="5"/>
+  <path d="M344 190c24 68 188 68 212 0" fill="none" stroke="#141210" stroke-width="22" stroke-linecap="round"/>
+  <circle cx="450" cy="490" r="88" fill="#141210"/>
+  <text x="450" y="506" text-anchor="middle" font-family="Georgia, serif" font-size="58" fill="#e8d5a0">ST</text>
+  <text x="450" y="820" text-anchor="middle" font-family="Montserrat, Arial, sans-serif" font-size="25" fill="#141210" letter-spacing="7">ESSENTIAL TEE</text>
+</svg>

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1100">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f0ebe0"/>
+      <stop offset="1" stop-color="#b5aa96"/>
+    </linearGradient>
+    <linearGradient id="fabric" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1c1a16"/>
+      <stop offset="1" stop-color="#090806"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="1100" fill="url(#bg)"/>
+  <rect x="80" y="70" width="740" height="960" fill="#0c0b09" opacity=".05"/>
+  <path d="M360 190h180l85 78 115 82-92 165-72-40v405H324V475l-72 40-92-165 115-82z" fill="url(#fabric)"/>
+  <path d="M360 190c20 80 160 80 180 0l85 78c-26 95-324 95-350 0z" fill="#141210"/>
+  <path d="M376 232c42 46 106 46 148 0" fill="none" stroke="#c9a84c" stroke-width="10" stroke-linecap="round"/>
+  <rect x="380" y="520" width="140" height="96" rx="6" fill="#c9a84c" opacity=".18" stroke="#c9a84c" stroke-width="3"/>
+  <text x="450" y="575" text-anchor="middle" font-family="Georgia, serif" font-size="40" fill="#e8d5a0">ST</text>
+  <text x="450" y="870" text-anchor="middle" font-family="Montserrat, Arial, sans-serif" font-size="26" fill="#f0ebe0" letter-spacing="6">STUDIO HOODIE</text>
+</svg>

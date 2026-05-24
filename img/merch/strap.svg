@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1100">
+  <rect width="900" height="1100" fill="#141210"/>
+  <g transform="rotate(-24 450 550)">
+    <rect x="175" y="438" width="550" height="150" rx="24" fill="#0c0b09" stroke="#c9a84c" stroke-width="8"/>
+    <rect x="210" y="475" width="480" height="76" rx="12" fill="#1c1a16"/>
+    <text x="450" y="526" text-anchor="middle" font-family="Montserrat, Arial, sans-serif" font-size="31" fill="#e8d5a0" letter-spacing="8">SIMONE TUSSI</text>
+  </g>
+  <circle cx="205" cy="680" r="74" fill="none" stroke="#c9a84c" stroke-width="16"/>
+  <circle cx="695" cy="420" r="74" fill="none" stroke="#c9a84c" stroke-width="16"/>
+  <text x="450" y="900" text-anchor="middle" font-family="Montserrat, Arial, sans-serif" font-size="25" fill="#f0ebe0" letter-spacing="7">CAMERA STRAP</text>
+</svg>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1100">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f0ebe0"/>
+      <stop offset="1" stop-color="#8a7f6e"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="1100" fill="url(#bg)"/>
+  <path d="M290 370c0-122 70-205 160-205s160 83 160 205" fill="none" stroke="#141210" stroke-width="34" stroke-linecap="round"/>
+  <rect x="238" y="340" width="424" height="548" rx="18" fill="#e8d5a0" stroke="#141210" stroke-width="7"/>
+  <path d="M272 380h356" stroke="#141210" stroke-width="5" opacity=".3"/>
+  <text x="450" y="585" text-anchor="middle" font-family="Georgia, serif" font-size="98" fill="#141210">ST</text>
+  <text x="450" y="690" text-anchor="middle" font-family="Montserrat, Arial, sans-serif" font-size="24" fill="#141210" letter-spacing="6">DAILY TOTE</text>
+</svg>

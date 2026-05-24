@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1100">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e8d5a0"/>
+      <stop offset="1" stop-color="#8a7f6e"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="1100" fill="url(#bg)"/>
+  <path d="M186 574c40-197 171-292 264-292s224 95 264 292z" fill="#141210"/>
+  <path d="M186 574c162 85 366 85 528 0 91 12 138 45 150 94-206 52-622 52-828 0 12-49 59-82 150-94z" fill="#0c0b09"/>
+  <path d="M450 282v345" stroke="#c9a84c" stroke-width="4" opacity=".45"/>
+  <path d="M306 340c62 53 226 53 288 0" fill="none" stroke="#c9a84c" stroke-width="4" opacity=".35"/>
+  <rect x="382" y="438" width="136" height="82" rx="10" fill="#c9a84c" opacity=".95"/>
+  <text x="450" y="493" text-anchor="middle" font-family="Georgia, serif" font-size="45" fill="#0c0b09">ST</text>
+  <text x="450" y="780" text-anchor="middle" font-family="Montserrat, Arial, sans-serif" font-size="25" fill="#f0ebe0" letter-spacing="7">SIGNATURE CAP</text>
+</svg>

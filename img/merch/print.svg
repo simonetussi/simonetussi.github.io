@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1100">
+  <rect width="900" height="1100" fill="#0c0b09"/>
+  <rect x="175" y="116" width="550" height="760" fill="#f0ebe0"/>
+  <rect x="218" y="160" width="464" height="610" fill="#141210"/>
+  <rect x="252" y="196" width="396" height="538" fill="#c9a84c" opacity=".16"/>
+  <path d="M260 640c86-116 157-169 231-169 52 0 84 27 124 86l60 83z" fill="#e8d5a0" opacity=".88"/>
+  <circle cx="557" cy="282" r="58" fill="#e8d5a0"/>
+  <text x="450" y="842" text-anchor="middle" font-family="Georgia, serif" font-size="46" fill="#141210">Limited Print</text>
+  <text x="450" y="960" text-anchor="middle" font-family="Montserrat, Arial, sans-serif" font-size="24" fill="#f0ebe0" letter-spacing="7">FINE ART</text>
+</svg>
