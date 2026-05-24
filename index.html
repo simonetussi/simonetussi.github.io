@@ -114,10 +114,16 @@
   <section>
     <div class="postprod-section">
       <div class="postprod-images reveal">
-        <img src="https://simonetussifotografo.wordpress.com/wp-content/uploads/2024/01/prima.webp" alt="Post produzione prima" loading="lazy">
-        <img src="https://simonetussifotografo.wordpress.com/wp-content/uploads/2024/12/serenella-nigro-15-1.jpg" alt="Post produzione dopo" loading="lazy">
-        <img src="https://simonetussifotografo.wordpress.com/wp-content/uploads/2024/09/20240602_135441.jpg" alt="Fotografia evento" loading="lazy">
-        <img src="https://simonetussifotografo.wordpress.com/wp-content/uploads/2024/01/sport-1.webp" alt="Sport fotografia" loading="lazy">
+        <div class="postprod-compare" data-compare-slider>
+          <img class="postprod-compare-img postprod-compare-after" src="https://simonetussifotografo.wordpress.com/wp-content/uploads/2024/12/serenella-nigro-15-1.jpg" alt="Post produzione dopo" loading="lazy">
+          <div class="postprod-compare-before">
+            <img class="postprod-compare-img" src="https://simonetussifotografo.wordpress.com/wp-content/uploads/2024/01/prima.webp" alt="Post produzione prima" loading="lazy">
+          </div>
+          <span class="postprod-compare-label postprod-compare-label-before">Prima</span>
+          <span class="postprod-compare-label postprod-compare-label-after">Dopo</span>
+          <span class="postprod-compare-line" aria-hidden="true"></span>
+          <input class="postprod-compare-range" type="range" min="0" max="100" value="50" aria-label="Confronta prima e dopo la post-produzione">
+        </div>
       </div>
       <div>
         <p class="section-label reveal">Processo creativo</p>

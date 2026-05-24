@@ -67,6 +67,31 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
   reveals.forEach(el => revealObserver.observe(el));
 
+  const galleryGrids = document.querySelectorAll('.masonry-grid');
+  galleryGrids.forEach(grid => {
+    const items = Array.from(grid.children).filter(child => child.classList.contains('masonry-item'));
+
+    for (let i = items.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [items[i], items[j]] = [items[j], items[i]];
+    }
+
+    items.forEach(item => grid.appendChild(item));
+  });
+
+  const compareSliders = document.querySelectorAll('[data-compare-slider]');
+  compareSliders.forEach(slider => {
+    const range = slider.querySelector('.postprod-compare-range');
+    if (!range) return;
+
+    const updateCompare = () => {
+      slider.style.setProperty('--position', `${range.value}%`);
+    };
+
+    range.addEventListener('input', updateCompare);
+    updateCompare();
+  });
+
   // ─── Gallery Lightbox ────────────────────────────────────
   const lightbox     = document.getElementById('lightbox');
   const lbImg        = document.getElementById('lightbox-img');
@@ -74,12 +99,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const lbPrev       = document.getElementById('lightbox-prev');
   const lbNext       = document.getElementById('lightbox-next');
   const lbCounter    = document.getElementById('lightbox-counter');
-  const galleryItems = document.querySelectorAll('.masonry-item');
+  const galleryItems = Array.from(document.querySelectorAll('.masonry-item'));
 
-  if (!lightbox || galleryItems.length === 0) return;
+  if (lightbox && galleryItems.length > 0) {
 
   let currentIndex = 0;
-  const imgs = Array.from(galleryItems).map(item => item.querySelector('img'));
+  const imgs = galleryItems.map(item => item.querySelector('img'));
 
   function openLightbox(idx) {
     currentIndex = idx;
@@ -143,6 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
       showImg();
     }
   });
+  }
 
   // ─── Contact form (static — opens mailto) ────────────────
   const form = document.getElementById('contact-form');
