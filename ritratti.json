@@ -1,21 +1,22 @@
 {
   "base": "https://simonetussifotografo.wordpress.com/wp-content/uploads/2024/01/",
   "photos": [
-    { "src": "ritratti-18.webp",  "alt": "Ritratto 18" },
-    { "src": "ritratti-22.webp",  "alt": "Ritratto 22" },
-    { "src": "ritratti-14.webp",  "alt": "Ritratto 14" },
-    { "src": "ritratti-10.webp",  "alt": "Ritratto 10" },
-    { "src": "ritratti-8.webp",   "alt": "Ritratto 8" },
-    { "src": "ritratti-1.webp",   "alt": "Ritratto 1" },
-    { "src": "ritratti-7.webp",   "alt": "Ritratto 7" },
-    { "src": "ritratti-21.webp",  "alt": "Ritratto 21" },
-    { "src": "ritratti-17.webp",  "alt": "Ritratto 17" },
-    { "src": "ritratti-11.webp",  "alt": "Ritratto 11" },
-    { "src": "ritratti-4.webp",   "alt": "Ritratto 4" },
-    { "src": "ritratti-2.webp",   "alt": "Ritratto 2" },
-    { "src": "ritratti-13.webp",  "alt": "Ritratto 13" },
-    { "src": "ritratti-19.webp",  "alt": "Ritratto 19" },
-    { "src": "ritratti-20.webp",  "alt": "Ritratto 20" },
-    { "src": "ritratti-3.webp",   "alt": "Ritratto 3" }
+    { "src": "ritratti (0).webp",  "alt": "Ritratto 0" },
+    { "src": "ritratti (1).webp",  "alt": "Ritratto 1" },
+    { "src": "ritratti (2).webp",  "alt": "Ritratto 2" },
+    { "src": "ritratti (3).webp",  "alt": "Ritratto 3" },
+    { "src": "ritratti (4).webp",  "alt": "Ritratto 4" },
+    { "src": "ritratti (7).webp",  "alt": "Ritratto 7" },
+    { "src": "ritratti (8).webp",  "alt": "Ritratto 8" },
+    { "src": "ritratti (10).webp", "alt": "Ritratto 10" },
+    { "src": "ritratti (11).webp", "alt": "Ritratto 11" },
+    { "src": "ritratti (13).webp", "alt": "Ritratto 13" },
+    { "src": "ritratti (14).webp", "alt": "Ritratto 14" },
+    { "src": "ritratti (17).webp", "alt": "Ritratto 17" },
+    { "src": "ritratti (18).webp", "alt": "Ritratto 18" },
+    { "src": "ritratti (19).webp", "alt": "Ritratto 19" },
+    { "src": "ritratti (20).webp", "alt": "Ritratto 20" },
+    { "src": "ritratti (21).webp", "alt": "Ritratto 21" },
+    { "src": "ritratti (22).webp", "alt": "Ritratto 22" }
   ]
 }
