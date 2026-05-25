@@ -8,24 +8,31 @@
   <link rel="stylesheet" href="style.css">
   <link rel="icon" type="image/png" href="img/altro/logo-w.png">
   <style>
-    body::after {
-      content: '';
+    .contact-bg {
       position: fixed;
       top: 0; right: 0;
       width: 45vw; height: 100vh;
-      background-image: url('https://simonetussifotografo.wordpress.com/wp-content/uploads/2024/01/ritratti-18.webp');
       background-size: cover;
       background-position: center;
       filter: brightness(0.25) saturate(0.5);
       z-index: -1;
+      pointer-events: none;
+      transition: opacity 0.7s ease;
     }
-    @media(max-width:768px) { body::after { display:none; } }
+    #contact-bg-a {
+      background-image: url('https://simonetussifotografo.wordpress.com/wp-content/uploads/2024/01/ritratti-18.webp');
+      opacity: 1;
+    }
+    #contact-bg-b { opacity: 0; }
+    @media(max-width:768px) { .contact-bg { display: none; } }
   </style>
 </head>
 <body>
 
   <div id="cursor"></div>
   <div id="cursor-ring"></div>
+  <div id="contact-bg-a" class="contact-bg"></div>
+  <div id="contact-bg-b" class="contact-bg"></div>
 
   <nav class="scrolled">
     <a href="index.html">
@@ -113,9 +120,9 @@
               <svg class="custom-select-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
             <ul class="custom-select-dropdown" role="listbox" id="custom-select-dropdown">
-              <li role="option" data-value="Ritratti">Ritratti</li>
-              <li role="option" data-value="Evento">Evento</li>
-              <li role="option" data-value="Sport">Sport</li>
+              <li role="option" data-value="Ritratti" data-json="galleries/ritratti.json">Ritratti</li>
+              <li role="option" data-value="Evento" data-json="galleries/eventi.json">Evento</li>
+              <li role="option" data-value="Sport" data-json="galleries/sport.json">Sport</li>
               <li role="option" data-value="Altro">Altro</li>
             </ul>
             <input type="hidden" id="oggetto" name="oggetto" required>
@@ -151,6 +158,34 @@
           trigger.setAttribute('aria-expanded', open);
         });
 
+        // ── Background crossfade ───────────────────────────────
+        const bgA = document.getElementById('contact-bg-a');
+        const bgB = document.getElementById('contact-bg-b');
+        let activeBg = 'a';
+
+        async function swapBackground(jsonPath) {
+          try {
+            const res = await fetch(jsonPath);
+            if (!res.ok) return;
+            const data = await res.json();
+            const photos = data.photos || [];
+            if (!photos.length) return;
+            const base  = data.base || '';
+            const photo = photos[Math.floor(Math.random() * photos.length)];
+            const url   = /^https?:\/\//.test(photo.src) ? photo.src : base + photo.src;
+            const img   = new Image();
+            img.onload  = () => {
+              const incoming = activeBg === 'a' ? bgB : bgA;
+              const outgoing = activeBg === 'a' ? bgA : bgB;
+              incoming.style.backgroundImage = `url('${url}')`;
+              incoming.style.opacity = '1';
+              outgoing.style.opacity = '0';
+              activeBg = activeBg === 'a' ? 'b' : 'a';
+            };
+            img.src = url;
+          } catch(e) {}
+        }
+
         dropdown.querySelectorAll('li').forEach(li => {
           li.addEventListener('click', () => {
             valueEl.textContent = li.dataset.value;
@@ -160,6 +195,7 @@
             trigger.classList.add('has-value');
             dropdown.querySelectorAll('li').forEach(l => l.classList.remove('selected'));
             li.classList.add('selected');
+            if (li.dataset.json) swapBackground(li.dataset.json);
           });
         });
 
