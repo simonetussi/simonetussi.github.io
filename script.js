@@ -1,5 +1,5 @@
 /* ============================================================
-   SIMONE TUSSI v2.0 — Main Script
+   SIMONE TUSSI v2.1 — Main Script
    ============================================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -14,7 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
       cursor.style.left = cx + 'px';
       cursor.style.top  = cy + 'px';
     });
-    // Smooth ring follow
     function animateCursor() {
       rx += (cx - rx) * 0.12;
       ry += (cy - ry) * 0.12;
@@ -34,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ─── Mobile nav toggle ───────────────────────────────────
-  const toggle = document.querySelector('.nav-toggle');
+  const toggle   = document.querySelector('.nav-toggle');
   const navLinks = document.querySelector('.nav-links');
   if (toggle && navLinks) {
     toggle.addEventListener('click', () => {
@@ -50,8 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (heroBg) {
     heroBg.classList.add('loaded');
     window.addEventListener('scroll', () => {
-      const y = window.scrollY;
-      heroBg.style.transform = `scale(1) translateY(${y * 0.3}px)`;
+      heroBg.style.transform = `scale(1) translateY(${window.scrollY * 0.3}px)`;
     }, { passive: true });
   }
 
@@ -67,134 +65,291 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
   reveals.forEach(el => revealObserver.observe(el));
 
-  const privateGalleries = document.querySelectorAll('[data-private-gallery]');
+  // ─── Gallery da JSON ────────────────────────────────────
+  //
+  //  Per ogni .masonry-grid con l'attributo [data-gallery-src],
+  //  carica il JSON indicato e inietta i .masonry-item.
+  //
+  //  Formato JSON (file in /galleries/):
+  //  {
+  //    "base": "https://…/uploads/2024/01/",   ← URL base (opzionale)
+  //    "photos": [
+  //      { "src": "foto-1.webp", "alt": "Descrizione" },
+  //      { "src": "https://…/foto-completa.jpg" }  ← URL assoluto: base ignorata
+  //    ]
+  //  }
+  //
+  const SVG_ZOOM = `<svg viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none">
+    <circle cx="11" cy="11" r="8"/>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+    <line x1="11" y1="8" x2="11" y2="14"/>
+    <line x1="8" y1="11" x2="14" y2="11"/>
+  </svg>`;
+
+  function buildMasonryItem(src, alt) {
+    const div = document.createElement('div');
+    div.className = 'masonry-item';
+    const img = document.createElement('img');
+    img.src     = src;
+    img.alt     = alt || '';
+    img.loading = 'lazy';
+    const overlay = document.createElement('div');
+    overlay.className = 'masonry-item-overlay';
+    overlay.innerHTML = SVG_ZOOM;
+    div.appendChild(img);
+    div.appendChild(overlay);
+    return div;
+  }
+
+  function shuffleArray(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  async function loadGalleryFromJSON(grid) {
+    const src = grid.dataset.gallerySrc;
+    if (!src) return;
+
+    try {
+      const res  = await fetch(src);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+
+      const base   = data.base || '';
+      const photos = data.photos || [];
+
+      if (photos.length === 0) {
+        showEmptyState(grid);
+        return;
+      }
+
+      const items = photos.map(photo => {
+        // Se src inizia con http/https usa direttamente, altrimenti antepone base
+        const url = /^https?:\/\//.test(photo.src) ? photo.src : base + photo.src;
+        return buildMasonryItem(url, photo.alt || '');
+      });
+
+      shuffleArray(items);
+      items.forEach(item => grid.appendChild(item));
+
+      // Dopo aver caricato le foto, inizializza il lightbox per questa griglia
+      initLightbox(grid);
+
+    } catch (err) {
+      console.warn(`[Gallery] Impossibile caricare ${src}:`, err);
+      showEmptyState(grid);
+    }
+  }
+
+  function showEmptyState(grid) {
+    // Mostra il messaggio "In aggiornamento" se presente come elemento successivo
+    const empty = grid.parentElement.querySelector('[data-gallery-empty]');
+    if (empty) empty.hidden = false;
+  }
+
+  // Carica tutte le gallery con [data-gallery-src]
+  document.querySelectorAll('.masonry-grid[data-gallery-src]').forEach(grid => {
+    loadGalleryFromJSON(grid);
+  });
+
+  // ─── Gallery statiche (senza data-gallery-src) ──────────
+  //  Mantieni compatibilità con le gallery HTML già esistenti
+  document.querySelectorAll('.masonry-grid:not([data-gallery-src])').forEach(grid => {
+    const items = Array.from(grid.children).filter(c => c.classList.contains('masonry-item'));
+    shuffleArray(items);
+    items.forEach(item => grid.appendChild(item));
+    initLightbox(grid);
+  });
+
+  // Gallery empty state per griglia statica
+  document.querySelectorAll('[data-gallery-empty]').forEach(empty => {
+    const grid = empty.previousElementSibling;
+    if (grid && grid.querySelector('.masonry-item')) empty.hidden = true;
+  });
+
+  // ─── Private galleries ──────────────────────────────────
   const hashText = async value => {
     const encoded = new TextEncoder().encode(value);
-    const digest = await crypto.subtle.digest('SHA-256', encoded);
+    const digest  = await crypto.subtle.digest('SHA-256', encoded);
     return Array.from(new Uint8Array(digest))
-      .map(byte => byte.toString(16).padStart(2, '0'))
+      .map(b => b.toString(16).padStart(2, '0'))
       .join('');
   };
   const hasGalleryAccess = key => {
-    try {
-      return sessionStorage.getItem(key) === 'unlocked';
-    } catch (err) {
-      return false;
-    }
+    try { return sessionStorage.getItem(key) === 'unlocked'; } catch { return false; }
   };
   const rememberGalleryAccess = key => {
-    try {
-      sessionStorage.setItem(key, 'unlocked');
-    } catch (err) {
-      // Accesso valido anche se il browser blocca lo storage di sessione.
-    }
+    try { sessionStorage.setItem(key, 'unlocked'); } catch { /* ok */ }
   };
 
-  privateGalleries.forEach(gallery => {
-    const galleryId = gallery.dataset.galleryId || window.location.pathname;
+  document.querySelectorAll('[data-private-gallery]').forEach(gallery => {
+    const galleryId    = gallery.dataset.galleryId || window.location.pathname;
     const expectedHash = gallery.dataset.passwordHash;
-    const lock = gallery.querySelector('[data-private-lock]');
-    const content = gallery.querySelector('[data-private-content]');
-    const form = gallery.querySelector('[data-private-lock-form]');
-    const input = form && form.querySelector('[name="password"]');
-    const error = gallery.querySelector('[data-private-lock-error]');
-    const storageKey = `private-gallery:${galleryId}`;
+    const lock         = gallery.querySelector('[data-private-lock]');
+    const content      = gallery.querySelector('[data-private-content]');
+    const form         = gallery.querySelector('[data-private-lock-form]');
+    const input        = form && form.querySelector('[name="password"]');
+    const error        = gallery.querySelector('[data-private-lock-error]');
+    const storageKey   = `private-gallery:${galleryId}`;
 
     if (!expectedHash || !lock || !content || !form || !input) return;
 
     const unlock = () => {
       if (error) error.hidden = true;
-      lock.hidden = true;
+      lock.hidden    = true;
       content.hidden = false;
       rememberGalleryAccess(storageKey);
+      // Carica le gallery JSON presenti nel contenuto privato
+      content.querySelectorAll('.masonry-grid[data-gallery-src]').forEach(grid => {
+        loadGalleryFromJSON(grid);
+      });
     };
 
-    if (hasGalleryAccess(storageKey)) {
-      unlock();
-    }
+    if (hasGalleryAccess(storageKey)) unlock();
 
     form.addEventListener('submit', async e => {
       e.preventDefault();
-
       try {
-        const currentHash = await hashText(input.value.trim());
-        if (currentHash === expectedHash) {
+        const hash = await hashText(input.value.trim());
+        if (hash === expectedHash) {
           unlock();
           window.scrollTo({ top: 0, behavior: 'smooth' });
           return;
         }
-      } catch (err) {
+      } catch {
         if (error) error.textContent = 'Impossibile verificare la password in questo browser.';
       }
-
       if (error) error.hidden = false;
       input.select();
     });
   });
 
-  const galleryGrids = document.querySelectorAll('.masonry-grid');
-  galleryGrids.forEach(grid => {
-    const items = Array.from(grid.children).filter(child => child.classList.contains('masonry-item'));
-
-    for (let i = items.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [items[i], items[j]] = [items[j], items[i]];
-    }
-
-    items.forEach(item => grid.appendChild(item));
-  });
-
-  document.querySelectorAll('[data-gallery-empty]').forEach(empty => {
-    const grid = empty.previousElementSibling;
-    empty.hidden = Boolean(grid && grid.querySelector('.masonry-item'));
-  });
-
-  const compareSliders = document.querySelectorAll('[data-compare-slider]');
-  compareSliders.forEach(slider => {
+  // ─── Compare slider ─────────────────────────────────────
+  document.querySelectorAll('[data-compare-slider]').forEach(slider => {
     const range = slider.querySelector('.postprod-compare-range');
     if (!range) return;
-
-    const updateCompare = () => {
-      slider.style.setProperty('--position', `${range.value}%`);
-    };
-
-    range.addEventListener('input', updateCompare);
-    updateCompare();
+    const update = () => slider.style.setProperty('--position', `${range.value}%`);
+    range.addEventListener('input', update);
+    update();
   });
 
-  // ─── Gallery Lightbox ────────────────────────────────────
+  // ─── Lightbox ────────────────────────────────────────────
+  //  initLightbox viene chiamata dopo ogni caricamento gallery
+  const lightbox  = document.getElementById('lightbox');
+  const lbImg     = document.getElementById('lightbox-img');
+  const lbClose   = document.getElementById('lightbox-close');
+  const lbPrev    = document.getElementById('lightbox-prev');
+  const lbNext    = document.getElementById('lightbox-next');
+  const lbCounter = document.getElementById('lightbox-counter');
+
+  if (!lightbox) return; // nessun lightbox su questa pagina
+
+  let lbImages = [];
+  let lbIndex  = 0;
+
+  function rebuildImageList() {
+    lbImages = Array.from(document.querySelectorAll('.masonry-item img'));
+  }
+
+  function openLightbox(idx) {
+    rebuildImageList();
+    lbIndex = idx;
+    showLbImg();
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function showLbImg() {
+    if (!lbImg || lbImages.length === 0) return;
+    lbImg.style.opacity = '0';
+    setTimeout(() => {
+      lbImg.src   = lbImages[lbIndex].src;
+      lbImg.onload = () => { lbImg.style.opacity = '1'; };
+    }, 150);
+    if (lbCounter) lbCounter.textContent = `${lbIndex + 1} / ${lbImages.length}`;
+  }
+
+  function initLightbox(grid) {
+    grid.querySelectorAll('.masonry-item').forEach(item => {
+      // Evita doppio listener
+      if (item.dataset.lbBound) return;
+      item.dataset.lbBound = '1';
+      item.addEventListener('click', () => {
+        rebuildImageList();
+        const idx = lbImages.indexOf(item.querySelector('img'));
+        openLightbox(idx >= 0 ? idx : 0);
+      });
+    });
+  }
+
+  lbClose && lbClose.addEventListener('click', closeLightbox);
+  lbPrev  && lbPrev.addEventListener('click', () => {
+    lbIndex = (lbIndex - 1 + lbImages.length) % lbImages.length;
+    showLbImg();
+  });
+  lbNext  && lbNext.addEventListener('click', () => {
+    lbIndex = (lbIndex + 1) % lbImages.length;
+    showLbImg();
+  });
+  lightbox.addEventListener('click', e => {
+    if (e.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', e => {
+    if (!lightbox.classList.contains('active')) return;
+    if (e.key === 'Escape')     closeLightbox();
+    if (e.key === 'ArrowLeft')  { lbIndex = (lbIndex - 1 + lbImages.length) % lbImages.length; showLbImg(); }
+    if (e.key === 'ArrowRight') { lbIndex = (lbIndex + 1) % lbImages.length; showLbImg(); }
+  });
+
+  let touchStartX = 0;
+  lightbox.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+  lightbox.addEventListener('touchend',   e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 50) {
+      lbIndex = dx < 0
+        ? (lbIndex + 1) % lbImages.length
+        : (lbIndex - 1 + lbImages.length) % lbImages.length;
+      showLbImg();
+    }
+  });
+
+  // ─── Shop (merch) ────────────────────────────────────────
   const shop = document.querySelector('[data-shop]');
   if (shop) {
-    const formatPrice = value => `${value.toLocaleString('it-IT', {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
-    })} EUR`;
-    const cart = new Map();
-    const cartCounts = document.querySelectorAll('[data-cart-count]');
-    const cartItems = shop.querySelector('[data-cart-items]');
-    const cartEmpty = shop.querySelector('[data-cart-empty]');
-    const subtotalEl = shop.querySelector('[data-cart-subtotal]');
-    const shippingEl = shop.querySelector('[data-cart-shipping]');
-    const totalEl = shop.querySelector('[data-cart-total]');
+    const formatPrice = v => `${v.toLocaleString('it-IT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} EUR`;
+    const cart        = new Map();
+    const cartCounts  = document.querySelectorAll('[data-cart-count]');
+    const cartItems   = shop.querySelector('[data-cart-items]');
+    const cartEmpty   = shop.querySelector('[data-cart-empty]');
+    const subtotalEl  = shop.querySelector('[data-cart-subtotal]');
+    const shippingEl  = shop.querySelector('[data-cart-shipping]');
+    const totalEl     = shop.querySelector('[data-cart-total]');
     const checkoutBtn = shop.querySelector('[data-cart-checkout]');
-    const cartPanel = shop.querySelector('#merch-cart');
+    const cartPanel   = shop.querySelector('#merch-cart');
 
     const renderCart = () => {
-      const items = Array.from(cart.values());
-      const subtotal = items.reduce((sum, item) => sum + item.price * item.qty, 0);
+      const items    = Array.from(cart.values());
+      const subtotal = items.reduce((s, i) => s + i.price * i.qty, 0);
       const shipping = items.length > 0 ? 5 : 0;
-      const totalQty = items.reduce((sum, item) => sum + item.qty, 0);
+      const totalQty = items.reduce((s, i) => s + i.qty, 0);
 
-      cartCounts.forEach(count => { count.textContent = totalQty; });
-      if (cartEmpty) cartEmpty.hidden = items.length > 0;
+      cartCounts.forEach(c => { c.textContent = totalQty; });
+      if (cartEmpty)  cartEmpty.hidden  = items.length > 0;
       if (subtotalEl) subtotalEl.textContent = formatPrice(subtotal);
       if (shippingEl) shippingEl.textContent = formatPrice(shipping);
-      if (totalEl) totalEl.textContent = formatPrice(subtotal + shipping);
-      if (checkoutBtn) checkoutBtn.disabled = items.length === 0;
+      if (totalEl)    totalEl.textContent    = formatPrice(subtotal + shipping);
+      if (checkoutBtn) checkoutBtn.disabled  = items.length === 0;
 
       if (!cartItems) return;
       cartItems.innerHTML = '';
-
       items.forEach(item => {
         const row = document.createElement('article');
         row.className = 'merch-cart-item';
@@ -222,26 +377,17 @@ document.addEventListener('DOMContentLoaded', () => {
       button.addEventListener('click', () => {
         const card = button.closest('[data-product-card]');
         if (!card) return;
-
-        const size = card.querySelector('[name="size"]')?.value || 'Unica';
+        const size  = card.querySelector('[name="size"]')?.value  || 'Unica';
         const color = card.querySelector('[name="color"]')?.value || 'Standard';
         const product = {
-          id: card.dataset.productId,
-          name: card.dataset.productName,
-          price: Number(card.dataset.productPrice),
-          image: card.dataset.productImage,
-          size,
-          color
+          id: card.dataset.productId, name: card.dataset.productName,
+          price: Number(card.dataset.productPrice), image: card.dataset.productImage,
+          size, color
         };
         const key = `${product.id}:${size}:${color}`;
-        const current = cart.get(key);
-
-        if (current) {
-          current.qty += 1;
-        } else {
-          cart.set(key, { ...product, key, qty: 1 });
-        }
-
+        const cur = cart.get(key);
+        if (cur) cur.qty += 1;
+        else cart.set(key, { ...product, key, qty: 1 });
         renderCart();
         if (cartPanel && window.innerWidth < 1024) {
           cartPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -250,34 +396,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     shop.addEventListener('click', e => {
-      const inc = e.target.closest('[data-cart-inc]');
-      const dec = e.target.closest('[data-cart-dec]');
+      const inc    = e.target.closest('[data-cart-inc]');
+      const dec    = e.target.closest('[data-cart-dec]');
       const remove = e.target.closest('[data-cart-remove]');
-
-      if (inc) {
-        const item = cart.get(inc.dataset.cartInc);
-        if (item) item.qty += 1;
-      }
-      if (dec) {
-        const item = cart.get(dec.dataset.cartDec);
-        if (item) {
-          item.qty -= 1;
-          if (item.qty <= 0) cart.delete(item.key);
-        }
-      }
-      if (remove) {
-        cart.delete(remove.dataset.cartRemove);
-      }
-
+      if (inc)    { const i = cart.get(inc.dataset.cartInc); if (i) i.qty += 1; }
+      if (dec)    { const i = cart.get(dec.dataset.cartDec); if (i) { i.qty -= 1; if (i.qty <= 0) cart.delete(i.key); } }
+      if (remove) { cart.delete(remove.dataset.cartRemove); }
       if (inc || dec || remove) renderCart();
     });
 
     shop.querySelectorAll('[data-shop-filter]').forEach(button => {
       button.addEventListener('click', () => {
         const filter = button.dataset.shopFilter;
-        shop.querySelectorAll('[data-shop-filter]').forEach(item => {
-          item.classList.toggle('active', item === button);
-        });
+        shop.querySelectorAll('[data-shop-filter]').forEach(b => b.classList.toggle('active', b === button));
         shop.querySelectorAll('[data-product-card]').forEach(card => {
           card.hidden = filter !== 'all' && card.dataset.productCategory !== filter;
         });
@@ -290,127 +421,41 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     checkoutBtn && checkoutBtn.addEventListener('click', () => {
-      const items = Array.from(cart.values());
-      if (items.length === 0) return;
-
-      const subtotal = items.reduce((sum, item) => sum + item.price * item.qty, 0);
-      const lines = items.map(item => (
-        `- ${item.qty}x ${item.name} (${item.size}, ${item.color}) - ${formatPrice(item.price * item.qty)}`
-      )).join('\n');
-      const message = `Ciao Simone, vorrei completare questo ordine merch:\n\n${lines}\n\nTotale stimato: ${formatPrice(subtotal + 5)}`;
+      const items    = Array.from(cart.values());
+      if (!items.length) return;
+      const subtotal = items.reduce((s, i) => s + i.price * i.qty, 0);
+      const lines    = items.map(i => `- ${i.qty}x ${i.name} (${i.size}, ${i.color}) - ${formatPrice(i.price * i.qty)}`).join('\n');
+      const message  = `Ciao Simone, vorrei completare questo ordine merch:\n\n${lines}\n\nTotale stimato: ${formatPrice(subtotal + 5)}`;
       window.open(`https://wa.me/393334721296?text=${encodeURIComponent(message)}`, '_blank', 'noopener');
     });
 
     renderCart();
   }
 
+  // ─── Merch zoom ──────────────────────────────────────────
   const merchZoom = document.querySelector('[data-merch-zoom]');
   if (merchZoom) {
-    const zoomImage = merchZoom.querySelector('[data-zoom-image]');
+    const zoomImage   = merchZoom.querySelector('[data-zoom-image]');
     const zoomCaption = merchZoom.querySelector('[data-zoom-caption]');
-    const closeZoom = () => {
-      merchZoom.hidden = true;
-      document.body.style.overflow = '';
-    };
+    const closeZoom   = () => { merchZoom.hidden = true; document.body.style.overflow = ''; };
 
     document.querySelectorAll('[data-zoom-src]').forEach(button => {
       button.addEventListener('click', () => {
-        if (!zoomImage || !zoomCaption) return;
-        zoomImage.src = button.dataset.zoomSrc;
-        zoomImage.alt = button.dataset.zoomTitle || '';
-        zoomCaption.textContent = button.dataset.zoomTitle || '';
-        merchZoom.hidden = false;
+        if (!zoomImage) return;
+        zoomImage.src        = button.dataset.zoomSrc;
+        zoomImage.alt        = button.dataset.zoomTitle || '';
+        if (zoomCaption) zoomCaption.textContent = button.dataset.zoomTitle || '';
+        merchZoom.hidden     = false;
         document.body.style.overflow = 'hidden';
       });
     });
 
     merchZoom.querySelector('[data-zoom-close]')?.addEventListener('click', closeZoom);
-    merchZoom.addEventListener('click', e => {
-      if (e.target === merchZoom) closeZoom();
-    });
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape' && !merchZoom.hidden) closeZoom();
-    });
+    merchZoom.addEventListener('click', e => { if (e.target === merchZoom) closeZoom(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && !merchZoom.hidden) closeZoom(); });
   }
 
-  const lightbox     = document.getElementById('lightbox');
-  const lbImg        = document.getElementById('lightbox-img');
-  const lbClose      = document.getElementById('lightbox-close');
-  const lbPrev       = document.getElementById('lightbox-prev');
-  const lbNext       = document.getElementById('lightbox-next');
-  const lbCounter    = document.getElementById('lightbox-counter');
-  const galleryItems = Array.from(document.querySelectorAll('.masonry-item'));
-
-  if (lightbox && galleryItems.length > 0) {
-
-  let currentIndex = 0;
-  const imgs = galleryItems.map(item => item.querySelector('img'));
-
-  function openLightbox(idx) {
-    currentIndex = idx;
-    showImg();
-    lightbox.classList.add('active');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeLightbox() {
-    lightbox.classList.remove('active');
-    document.body.style.overflow = '';
-  }
-
-  function showImg() {
-    if (!lbImg) return;
-    lbImg.style.opacity = '0';
-    setTimeout(() => {
-      lbImg.src = imgs[currentIndex].src;
-      lbImg.onload = () => { lbImg.style.opacity = '1'; };
-    }, 150);
-    if (lbCounter) lbCounter.textContent = `${currentIndex + 1} / ${imgs.length}`;
-  }
-
-  galleryItems.forEach((item, i) => {
-    item.addEventListener('click', () => openLightbox(i));
-  });
-
-  lbClose && lbClose.addEventListener('click', closeLightbox);
-
-  lbPrev && lbPrev.addEventListener('click', () => {
-    currentIndex = (currentIndex - 1 + imgs.length) % imgs.length;
-    showImg();
-  });
-
-  lbNext && lbNext.addEventListener('click', () => {
-    currentIndex = (currentIndex + 1) % imgs.length;
-    showImg();
-  });
-
-  lightbox && lightbox.addEventListener('click', e => {
-    if (e.target === lightbox) closeLightbox();
-  });
-
-  document.addEventListener('keydown', e => {
-    if (!lightbox.classList.contains('active')) return;
-    if (e.key === 'Escape')      closeLightbox();
-    if (e.key === 'ArrowLeft')  { currentIndex = (currentIndex - 1 + imgs.length) % imgs.length; showImg(); }
-    if (e.key === 'ArrowRight') { currentIndex = (currentIndex + 1) % imgs.length; showImg(); }
-  });
-
-  // Touch swipe for lightbox
-  let touchStartX = 0;
-  lightbox && lightbox.addEventListener('touchstart', e => {
-    touchStartX = e.touches[0].clientX;
-  });
-  lightbox && lightbox.addEventListener('touchend', e => {
-    const dx = e.changedTouches[0].clientX - touchStartX;
-    if (Math.abs(dx) > 50) {
-      if (dx < 0) { currentIndex = (currentIndex + 1) % imgs.length; }
-      else        { currentIndex = (currentIndex - 1 + imgs.length) % imgs.length; }
-      showImg();
-    }
-  });
-  }
-
-  // ─── Contact form (static — opens mailto) ────────────────
+  // ─── Contact form ────────────────────────────────────────
   const form = document.getElementById('contact-form');
   if (form) {
     form.addEventListener('submit', e => {

@@ -1,0 +1,15 @@
+{
+  "base": "https://simonetussifotografo.wordpress.com/wp-content/uploads/2024/01/",
+  "photos": [
+    { "src": "sport-7.webp",  "alt": "Sport 7"  },
+    { "src": "sport-5.webp",  "alt": "Sport 5"  },
+    { "src": "sport-3.webp",  "alt": "Sport 3"  },
+    { "src": "sport-6.webp",  "alt": "Sport 6"  },
+    { "src": "sport-4.webp",  "alt": "Sport 4"  },
+    { "src": "sport-10.webp", "alt": "Sport 10" },
+    { "src": "sport-9.webp",  "alt": "Sport 9"  },
+    { "src": "sport-1.webp",  "alt": "Sport 1"  },
+    { "src": "sport-8.webp",  "alt": "Sport 8"  },
+    { "src": "sport-2.webp",  "alt": "Sport 2"  }
+  ]
+}
