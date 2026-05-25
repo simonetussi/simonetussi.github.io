@@ -170,9 +170,9 @@ nav.scrolled {
   inset: 0;
   background-size: cover;
   background-position: center;
-  transform: scale(1.06);
-  transition: transform 8s ease-out;
-  filter: brightness(0.38) saturate(0.7);
+  transform: none;
+  transition: none;
+  filter: brightness(0.65) saturate(0.7);
 }
 .hero-bg.loaded { transform: scale(1); }
 .hero-vignette {
@@ -678,7 +678,7 @@ footer {
   overflow: hidden;
 }
 .gallery-hero .hero-bg {
-  filter: brightness(0.3) saturate(0.6);
+  filter: brightness(0.4) saturate(0.6);
 }
 .gallery-page-title {
   position: relative;

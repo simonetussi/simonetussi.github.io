@@ -48,9 +48,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const heroBg = document.querySelector('.hero-bg');
   if (heroBg) {
     heroBg.classList.add('loaded');
-    window.addEventListener('scroll', () => {
-      heroBg.style.transform = `scale(1) translateY(${window.scrollY * 0.3}px)`;
-    }, { passive: true });
   }
 
   // ─── Scroll reveal ──────────────────────────────────────
