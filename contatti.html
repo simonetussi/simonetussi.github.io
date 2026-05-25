@@ -106,14 +106,20 @@
           <input class="form-input" type="email" id="email" name="email" placeholder="mario@email.com" required>
         </div>
         <div class="form-group">
-          <label class="form-label" for="oggetto">Tipo di servizio</label>
-          <select class="form-input" id="oggetto" name="oggetto" required>
-            <option value="" disabled selected>Seleziona un servizio</option>
-            <option value="Ritratti">Ritratti</option>
-            <option value="Evento">Evento</option>
-            <option value="Sport">Sport</option>
-            <option value="Altro">Altro</option>
-          </select>
+          <label class="form-label">Tipo di servizio</label>
+          <div class="custom-select" id="custom-select">
+            <button type="button" class="custom-select-trigger" id="custom-select-trigger" aria-haspopup="listbox" aria-expanded="false">
+              <span id="custom-select-value">Seleziona un servizio</span>
+              <svg class="custom-select-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <ul class="custom-select-dropdown" role="listbox" id="custom-select-dropdown">
+              <li role="option" data-value="Ritratti">Ritratti</li>
+              <li role="option" data-value="Evento">Evento</li>
+              <li role="option" data-value="Sport">Sport</li>
+              <li role="option" data-value="Altro">Altro</li>
+            </ul>
+            <input type="hidden" id="oggetto" name="oggetto" required>
+          </div>
         </div>
         <div class="form-group">
           <label class="form-label" for="messaggio">Messaggio</label>
@@ -126,8 +132,90 @@
           <button type="button" id="btn-whatsapp" class="btn btn-gold">↗ Invia su WhatsApp</button>
           <button type="button" id="btn-email" class="btn btn-outline">↗ Invia per Email</button>
         </div>
+
+        <p class="form-error" id="form-error" style="display:none;color:var(--gold);font-size:11px;letter-spacing:0.15em;margin-top:12px">Compila tutti i campi prima di inviare.</p>
       </form>
     </div>
+
+    <script>
+      (function() {
+        // ── Custom select ──────────────────────────────────────
+        const trigger   = document.getElementById('custom-select-trigger');
+        const dropdown  = document.getElementById('custom-select-dropdown');
+        const valueEl   = document.getElementById('custom-select-value');
+        const hiddenInput = document.getElementById('oggetto');
+        const wrapper   = document.getElementById('custom-select');
+
+        trigger.addEventListener('click', () => {
+          const open = wrapper.classList.toggle('open');
+          trigger.setAttribute('aria-expanded', open);
+        });
+
+        dropdown.querySelectorAll('li').forEach(li => {
+          li.addEventListener('click', () => {
+            valueEl.textContent = li.dataset.value;
+            hiddenInput.value   = li.dataset.value;
+            wrapper.classList.remove('open');
+            trigger.setAttribute('aria-expanded', 'false');
+            trigger.classList.add('has-value');
+            dropdown.querySelectorAll('li').forEach(l => l.classList.remove('selected'));
+            li.classList.add('selected');
+          });
+        });
+
+        document.addEventListener('click', e => {
+          if (!wrapper.contains(e.target)) {
+            wrapper.classList.remove('open');
+            trigger.setAttribute('aria-expanded', 'false');
+          }
+        });
+
+        // ── Form logic ────────────────────────────────────────
+        function getFormData() {
+          return {
+            name:    document.getElementById('nome').value.trim(),
+            email:   document.getElementById('email').value.trim(),
+            subject: document.getElementById('oggetto').value.trim(),
+            message: document.getElementById('messaggio').value.trim(),
+          };
+        }
+
+        function validateForm() {
+          const { name, email, subject, message } = getFormData();
+          const err = document.getElementById('form-error');
+          if (!name || !email || !subject || !message) {
+            err.style.display = 'block';
+            return false;
+          }
+          err.style.display = 'none';
+          return true;
+        }
+
+        document.getElementById('btn-whatsapp').addEventListener('click', () => {
+          if (!validateForm()) return;
+          const { name, email, subject, message } = getFormData();
+          const text = `Ciao Simone, ti scrivo dal sito!
+
+*Nome:* ${name}
+*Email:* ${email}
+*Servizio:* ${subject}
+
+${message}`;
+          window.open(`https://wa.me/393334721296?text=${encodeURIComponent(text)}`, '_blank', 'noopener');
+        });
+
+        document.getElementById('btn-email').addEventListener('click', () => {
+          if (!validateForm()) return;
+          const { name, email, subject, message } = getFormData();
+          const body = `Ciao Simone,
+
+Sono ${name} (${email}).
+
+${message}`;
+          window.location.href = `mailto:simonetussi2006@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        });
+      })();
+    </script>
 
   </div>
 
