@@ -1,5 +1,5 @@
 {
-  "base": "img/ritratti/",
+  "base": "/img/ritratti/",
   "photos": [
     { "src": "ritratti (0).webp",  "alt": "Ritratto 0" },
     { "src": "ritratti (1).webp",  "alt": "Ritratto 1" },
