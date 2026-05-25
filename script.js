@@ -171,40 +171,42 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ─── Private galleries ──────────────────────────────────
-  const hashText = async value => {
-    const encoded = new TextEncoder().encode(value);
-    const digest  = await crypto.subtle.digest('SHA-256', encoded);
-    return Array.from(new Uint8Array(digest))
-      .map(b => b.toString(16).padStart(2, '0'))
-      .join('');
-  };
-  const hasGalleryAccess = key => {
-    try { return sessionStorage.getItem(key) === 'unlocked'; } catch { return false; }
-  };
-  const rememberGalleryAccess = key => {
-    try { sessionStorage.setItem(key, 'unlocked'); } catch { /* ok */ }
-  };
+const hashText = async value => {
+  const encoded = new TextEncoder().encode(value);
+  const digest  = await crypto.subtle.digest('SHA-256', encoded);
+  return Array.from(new Uint8Array(digest))
+    .map(b => b.toString(16).padStart(2, '0'))
+    .join('');
+};
+const hasGalleryAccess = key => {
+  try { return sessionStorage.getItem(key) === 'unlocked'; } catch { return false; }
+};
+const rememberGalleryAccess = key => {
+  try { sessionStorage.setItem(key, 'unlocked'); } catch { /* ok */ }
+};
 
-  document.querySelectorAll('[data-private-gallery]').forEach(gallery => {
-    const galleryId    = gallery.dataset.galleryId || window.location.pathname;
-    const expectedHash = gallery.dataset.passwordHash;
-    const lock         = gallery.querySelector('[data-private-lock]');
-    const content      = gallery.querySelector('[data-private-content]');
-    const form         = gallery.querySelector('[data-private-lock-form]');
-    const input        = form && form.querySelector('[name="password"]');
-    const error        = gallery.querySelector('[data-private-lock-error]');
-    const storageKey   = `private-gallery:${galleryId}`;
+document.querySelectorAll('[data-private-gallery]').forEach(gallery => {
+  const galleryId    = gallery.dataset.galleryId || window.location.pathname;
+  const expectedHash = gallery.dataset.passwordHash;
+  const lock         = gallery.querySelector('[data-private-lock]');
+  const content      = gallery.querySelector('[data-private-content]');
+  const form         = gallery.querySelector('[data-private-lock-form]');
+  const input        = form && form.querySelector('[name="password"]');
+  const error        = gallery.querySelector('[data-private-lock-error]');
+  const storageKey   = `private-gallery:${galleryId}`;
 
-    if (!expectedHash || !lock || !content || !form || !input) return;
+  if (!expectedHash || !lock || !content || !form || !input) return;
 
-    const unlock = () => {
-      if (error) error.hidden = true;
-      lock.hidden    = true;
-      content.hidden = false;
-      rememberGalleryAccess(storageKey);
-      // Carica le gallery JSON presenti nel contenuto privato
-      content.querySelectorAll('.masonry-grid[data-gallery-src]').forEach(grid => {
-        loadGalleryFromJSON(grid);
+  const unlock = () => {
+    if (error) error.hidden = true;
+    lock.hidden    = true;
+    content.hidden = false;
+    rememberGalleryAccess(storageKey);
+    
+    // Carica le gallery JSON presenti nel contenuto privato
+    content.querySelectorAll('.masonry-grid[data-gallery-src]').forEach(grid => {
+      grid.innerHTML = ''; // ⭐ MODIFICA: Svuota la griglia prima di caricare per evitare foto duplicate
+      loadGalleryFromJSON(grid);
       });
     };
 
