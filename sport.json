@@ -1,15 +1,15 @@
 {
   "base": "https://simonetussifotografo.wordpress.com/wp-content/uploads/2024/01/",
   "photos": [
-    { "src": "img/sport (0).webp", "alt": "Sport 0" },
-    { "src": "img/sport (1).webp", "alt": "Sport 1" },
-    { "src": "img/sport (2).webp", "alt": "Sport 2" },
-    { "src": "img/sport (3).webp", "alt": "Sport 3" },
-    { "src": "img/sport (4).webp", "alt": "Sport 4" },
-    { "src": "img/sport (5).webp", "alt": "Sport 5" },
-    { "src": "img/sport (6).webp", "alt": "Sport 6" },
-    { "src": "img/sport (7).webp", "alt": "Sport 7" },
-    { "src": "img/sport (8).webp", "alt": "Sport 8" },
-    { "src": "img/sport (9).webp", "alt": "Sport 9" }
+    { "src": "img/sport/sport (0).webp", "alt": "Sport 0" },
+    { "src": "img/sport/sport (1).webp", "alt": "Sport 1" },
+    { "src": "img/sport/sport (2).webp", "alt": "Sport 2" },
+    { "src": "img/sport/sport (3).webp", "alt": "Sport 3" },
+    { "src": "img/sport/sport (4).webp", "alt": "Sport 4" },
+    { "src": "img/sport/sport (5).webp", "alt": "Sport 5" },
+    { "src": "img/sport/sport (6).webp", "alt": "Sport 6" },
+    { "src": "img/sport/sport (7).webp", "alt": "Sport 7" },
+    { "src": "img/sport/sport (8).webp", "alt": "Sport 8" },
+    { "src": "img/sport/sport (9).webp", "alt": "Sport 9" }
   ]
 }
