@@ -96,7 +96,7 @@
 
     <!-- Form -->
     <div class="reveal reveal-delay-2">
-      <form id="contact-form" class="contact-form">
+      <form id="contact-form" class="contact-form" novalidate>
         <div class="form-group">
           <label class="form-label" for="nome">Nome e Cognome</label>
           <input class="form-input" type="text" id="nome" name="nome" placeholder="Mario Rossi" required>
@@ -107,16 +107,25 @@
         </div>
         <div class="form-group">
           <label class="form-label" for="oggetto">Tipo di servizio</label>
-          <input class="form-input" type="text" id="oggetto" name="oggetto" placeholder="Ritratti / Evento / Sport / Altro" required>
+          <select class="form-input" id="oggetto" name="oggetto" required>
+            <option value="" disabled selected>Seleziona un servizio</option>
+            <option value="Ritratti">Ritratti</option>
+            <option value="Evento">Evento</option>
+            <option value="Sport">Sport</option>
+            <option value="Altro">Altro</option>
+          </select>
         </div>
         <div class="form-group">
           <label class="form-label" for="messaggio">Messaggio</label>
           <textarea class="form-textarea" id="messaggio" name="messaggio" placeholder="Raccontami del tuo progetto: data, luogo, numero di persone, esigenze particolari..." required></textarea>
         </div>
-        <p class="form-note">Premendo il tasto qui sotto si aprirà il tuo client email con il messaggio precompilato.</p>
-        <button type="submit" class="btn btn-gold" style="align-self:flex-start;margin-top:8px">
-          Invia messaggio
-        </button>
+
+        <p class="form-note">Scegli come inviarmi il messaggio — i campi vengono precompilati automaticamente.</p>
+
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px">
+          <button type="button" id="btn-whatsapp" class="btn btn-gold">↗ Invia su WhatsApp</button>
+          <button type="button" id="btn-email" class="btn btn-outline">↗ Invia per Email</button>
+        </div>
       </form>
     </div>
 

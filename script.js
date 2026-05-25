@@ -460,15 +460,45 @@ document.querySelectorAll('[data-private-gallery]').forEach(gallery => {
   // ─── Contact form ────────────────────────────────────────
   const form = document.getElementById('contact-form');
   if (form) {
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      const name    = form.querySelector('[name="nome"]').value;
-      const email   = form.querySelector('[name="email"]').value;
-      const subject = form.querySelector('[name="oggetto"]').value;
-      const message = form.querySelector('[name="messaggio"]').value;
-      const body    = `Ciao Simone,\n\nSono ${name} (${email}).\n\n${message}`;
-      window.location.href = `mailto:simonetussi2006@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    });
+    function getFormData() {
+      return {
+        name:    form.querySelector('[name="nome"]').value.trim(),
+        email:   form.querySelector('[name="email"]').value.trim(),
+        subject: form.querySelector('[name="oggetto"]').value.trim(),
+        message: form.querySelector('[name="messaggio"]').value.trim(),
+      };
+    }
+
+    function validateForm() {
+      const { name, email, subject, message } = getFormData();
+      if (!name || !email || !subject || !message) {
+        // Mostra validazione nativa del browser
+        form.querySelectorAll('[required]').forEach(el => el.reportValidity());
+        return false;
+      }
+      return true;
+    }
+
+    const btnWA    = document.getElementById('btn-whatsapp');
+    const btnEmail = document.getElementById('btn-email');
+
+    if (btnWA) {
+      btnWA.addEventListener('click', () => {
+        if (!validateForm()) return;
+        const { name, email, subject, message } = getFormData();
+        const text = `Ciao Simone, ti scrivo dal sito!\n\n*Nome:* ${name}\n*Email:* ${email}\n*Servizio:* ${subject}\n\n${message}`;
+        window.open(`https://wa.me/393334721296?text=${encodeURIComponent(text)}`, '_blank', 'noopener');
+      });
+    }
+
+    if (btnEmail) {
+      btnEmail.addEventListener('click', () => {
+        if (!validateForm()) return;
+        const { name, email, subject, message } = getFormData();
+        const body = `Ciao Simone,\n\nSono ${name} (${email}).\n\n${message}`;
+        window.location.href = `mailto:simonetussi2006@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      });
+    }
   }
 
 });
