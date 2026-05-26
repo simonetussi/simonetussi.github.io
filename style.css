@@ -1401,3 +1401,111 @@ footer {
   .masonry-grid { columns: 1; }
   .postprod-compare { min-height: 340px; aspect-ratio: 4 / 5; }
 }
+
+/* ─── Contenitore Nav Destra ─── */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+/* ─── Stile del Pulsante Cambio Tema ─── */
+.theme-toggle-btn {
+  background: none;
+  border: none;
+  color: var(--gray-light);
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.25s, transform 0.25s;
+  z-index: 1001;
+}
+.theme-toggle-btn:hover {
+  color: var(--gold);
+  transform: scale(1.1);
+}
+.theme-toggle-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Logica di visualizzazione icone in base al tema attivo */
+.theme-toggle-btn .icon-moon { display: none; }
+.theme-toggle-btn .icon-sun { display: block; }
+
+body.light-mode .theme-toggle-btn .icon-moon { display: block; }
+body.light-mode .theme-toggle-btn .icon-sun { display: none; }
+
+
+/* ─── Variabili di Sfondo e Testo per il LIGHT MODE ─── */
+body.light-mode {
+  --bg:         #f5f2eb; /* Sfondo chiaro color crema morbido */
+  --bg2:        #eae4d6; /* Sfondo secondario leggermente più scuro */
+  --bg3:        #dfd7c4; 
+  --cream:      #0c0b09; /* Il testo chiaro diventa scuro per contrasto */
+  --gray-light: #4e473c; /* Testo secondario scuro leggibile */
+  --gray:       #706554;
+}
+
+/* ─── Adattamenti specifici per elementi Light Mode ─── */
+
+/* Converte i loghi bianchi in neri in modalità chiara senza cambiare file immagine */
+body.light-mode .nav-logo,
+body.light-mode .footer-logo {
+  filter: invert(1);
+}
+
+/* Correzione della barra di navigazione quando si effettua lo scroll */
+body.light-mode nav.scrolled {
+  background: rgba(245, 242, 235, 0.92);
+  border-bottom: 1px solid rgba(201, 168, 76, 0.2);
+}
+
+/* Inversione della sfumatura dell'Hero */
+body.light-mode .hero-vignette {
+  background: linear-gradient(
+    to top,
+    rgba(245, 242, 235, 0.95) 0%,
+    rgba(245, 242, 235, 0.4) 40%,
+    rgba(245, 242, 235, 0.15) 70%,
+    transparent 100%
+  );
+}
+
+/* Overlay delle card dei servizi */
+body.light-mode .service-card-overlay {
+  background: linear-gradient(to top, rgba(245, 242, 235, 0.92) 0%, transparent 60%);
+}
+body.light-mode .service-card-title {
+  color: var(--cream);
+}
+body.light-mode .service-card img {
+  filter: brightness(0.9) saturate(0.9);
+}
+body.light-mode .service-card:hover img {
+  filter: brightness(0.8) saturate(0.95);
+}
+
+/* Correzione linee del menu mobile */
+body.light-mode .nav-toggle span {
+  background: var(--cream);
+}
+
+/* Etichette del widget di post-produzione */
+body.light-mode .postprod-compare-label {
+  background: rgba(245, 242, 235, 0.8);
+  color: var(--cream);
+}
+body.light-mode .postprod-compare-line::before {
+  background: rgba(245, 242, 235, 0.85);
+  border-color: var(--cream);
+}
+
+/* Menu mobile ad albero (se aperto su smartphone) */
+@media (max-width: 768px) {
+  body.light-mode .nav-links {
+    background: var(--bg2);
+    border-left: 1px solid rgba(201, 168, 76, 0.15);
+  }
+}
