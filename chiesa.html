@@ -17,20 +17,42 @@
   <div id="cursor"></div>
   <div id="cursor-ring"></div>
 
+  <!-- Navigation -->
   <nav>
     <a href="index.html">
       <img src="/img/altro/logo-w.png" alt="Simone Tussi" class="nav-logo">
     </a>
-    <button class="nav-toggle" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="ritratti.html">Ritratti</a></li>
-      <li><a href="eventi.html">Eventi</a></li>
-      <li><a href="sport.html">Sport</a></li>
-      <li><a href="contatti.html">Contatti</a></li>
-    </ul>
+    
+    <div class="nav-right">
+      <button id="theme-toggle" class="theme-toggle-btn" aria-label="Cambia tema">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="4.22" x2="19.78" y2="5.64"></line>
+        </svg>
+      </button>
+
+      <button class="nav-toggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="ritratti.html">Ritratti</a></li>
+        <li><a href="eventi.html">Eventi</a></li>
+        <li><a href="sport.html">Sport</a></li>
+        <li><a href="contatti.html">Contatti</a></li>
+      </ul>
+    </div>
   </nav>
 
   <main data-private-gallery data-gallery-id="chiesa" data-password-hash="158a323a7ba44870f23d96f1516dd70aa48e9a72db4ebb026b0a89e212a208ab">
@@ -50,7 +72,7 @@
 
     <div class="private-gallery-content" data-private-content hidden>
       <div class="gallery-hero">
-        <div class="hero-bg" style="background-image: url('https://simonetussifotografo.wordpress.com/wp-content/uploads/2024/01/eventi-17.webp')"></div>
+        <div class="hero-bg" style="background-image: url('img/chiesa/chiesa (89)')"></div>
         <div class="hero-vignette"></div>
         <div style="position:relative;z-index:2">
           <p class="gallery-breadcrumb">Gallery privata</p>
