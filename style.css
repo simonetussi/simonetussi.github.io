@@ -10,11 +10,11 @@
   --bg2:        #141210;
   --bg3:        #1c1a16;
   --gold:       #c9a84c;
-  --gold-light: #e8d5a0;
-  --cream:      #f0ebe0;
-  --gray:       #8a7f6e;
-  --gray-light: #b5aa96;
-  --white:      #ffffff;
+  --gold-light: #dec786;
+  --cream:      #e7dcc6;
+  --gray:       #695b45;
+  --gray-light: #a49882;
+  --white:      #f1f1f1;
   --nav-h:      80px;
 
   --font-display: 'Cormorant Garamond', Georgia, serif;
@@ -180,9 +180,9 @@ nav.scrolled {
   inset: 0;
   background: linear-gradient(
     to top,
-    rgba(12,11,9,0.95) 0%,
-    rgba(12,11,9,0.4) 40%,
-    rgba(12,11,9,0.15) 70%,
+    rgba(12, 11, 9, 0.75) 0%,
+    rgba(12, 11, 9, 0.25) 12%,
+    rgba(12,11,9,0.15) 50%,
     transparent 100%
   );
 }
@@ -213,7 +213,6 @@ nav.scrolled {
 .hero-title {
   font-family: var(--font-display);
   font-size: clamp(64px, 10vw, 140px);
-  font-weight: 300;
   line-height: 0.9;
   letter-spacing: -0.02em;
   color: var(--cream);
@@ -394,7 +393,7 @@ section { position: relative; }
   width: 100%; height: 100%;
   object-fit: cover;
   transition: transform 0.7s ease, filter 0.7s ease;
-  filter: brightness(0.5) saturate(0.7);
+  filter: brightness(0.7) saturate(0.85);
 }
 .service-card:hover img {
   transform: scale(1.06);
@@ -1440,11 +1439,13 @@ body.light-mode .theme-toggle-btn .icon-moon { display: block; }
 
 
 /* ─── Transizione fluida cambio tema ─── */
-body {
+html, body {
   transition: background-color 0.35s ease, color 0.35s ease;
 }
 
-/* ─── Variabili di Sfondo e Testo per il LIGHT MODE ─── */
+/* ─── Light Mode — attivato sia da html.light-mode che body.light-mode ─── */
+/* html.light-mode serve all'anti-flash nell'<head>; body.light-mode al toggle JS */
+html.light-mode body,
 body.light-mode {
   --bg:         #f5f2eb;
   --bg2:        #eae4d6;
@@ -1452,28 +1453,31 @@ body.light-mode {
   --cream:      #0c0b09;
   --gray-light: #4e473c;
   --gray:       #706554;
+  background-color: var(--bg);
+  color: var(--cream);
 }
 
 /* Nav non-scrolled in light mode */
+html.light-mode body nav:not(.scrolled),
 body.light-mode nav:not(.scrolled) {
   background: linear-gradient(to bottom, rgba(245,242,235,0.7) 0%, transparent 100%);
 }
 
-/* ─── Adattamenti specifici per elementi Light Mode ─── */
-
-/* Converte i loghi bianchi in neri in modalità chiara senza cambiare file immagine */
+/* ─── Adattamenti specifici Light Mode ─── */
+html.light-mode body .nav-logo,
+html.light-mode body .footer-logo,
 body.light-mode .nav-logo,
 body.light-mode .footer-logo {
   filter: invert(1);
 }
 
-/* Correzione della barra di navigazione quando si effettua lo scroll */
+html.light-mode body nav.scrolled,
 body.light-mode nav.scrolled {
   background: rgba(245, 242, 235, 0.92);
   border-bottom: 1px solid rgba(201, 168, 76, 0.2);
 }
 
-/* Inversione della sfumatura dell'Hero */
+html.light-mode body .hero-vignette,
 body.light-mode .hero-vignette {
   background: linear-gradient(
     to top,
@@ -1484,30 +1488,34 @@ body.light-mode .hero-vignette {
   );
 }
 
-/* Overlay delle card dei servizi */
+html.light-mode body .service-card-overlay,
 body.light-mode .service-card-overlay {
   background: linear-gradient(to top, rgba(245, 242, 235, 0.92) 0%, transparent 60%);
 }
+html.light-mode body .service-card-title,
 body.light-mode .service-card-title {
   color: var(--cream);
 }
+html.light-mode body .service-card img,
 body.light-mode .service-card img {
   filter: brightness(0.9) saturate(0.9);
 }
+html.light-mode body .service-card:hover img,
 body.light-mode .service-card:hover img {
   filter: brightness(0.8) saturate(0.95);
 }
 
-/* Correzione linee del menu mobile */
+html.light-mode body .nav-toggle span,
 body.light-mode .nav-toggle span {
   background: var(--cream);
 }
 
-/* Etichette del widget di post-produzione */
+html.light-mode body .postprod-compare-label,
 body.light-mode .postprod-compare-label {
   background: rgba(245, 242, 235, 0.8);
   color: var(--cream);
 }
+html.light-mode body .postprod-compare-line::before,
 body.light-mode .postprod-compare-line::before {
   background: rgba(245, 242, 235, 0.85);
   border-color: var(--cream);

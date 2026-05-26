@@ -498,23 +498,6 @@ document.querySelectorAll('[data-private-gallery]').forEach(gallery => {
     }
   }
 
-  // ─── Theme toggle ───────────────────────────────────────
-  const themeToggleBtn = document.getElementById('theme-toggle');
-  if (themeToggleBtn) {
-    themeToggleBtn.addEventListener('click', () => {
-      const isLight = document.body.classList.toggle('light-mode');
-      localStorage.setItem('theme', isLight ? 'light' : 'dark');
-    });
-  }
+  // ─── Theme toggle gestito inline in HTML ────────────────
+  // (vedi blocco <script> prima di </body> in ogni pagina)
 });
-
-// Applica il tema PRIMA del render per evitare flash — fuori da DOMContentLoaded
-(function() {
-  if (localStorage.getItem('theme') === 'light') {
-    document.documentElement.classList.add('light-mode-pre');
-    document.addEventListener('DOMContentLoaded', () => {
-      document.body.classList.add('light-mode');
-      document.documentElement.classList.remove('light-mode-pre');
-    });
-  }
-})();

@@ -2,37 +2,34 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8">
+  <script>
+    /* Tema persistente — applicato prima del render per evitare flash */
+    (function(){if(localStorage.getItem('theme')==='light')document.documentElement.classList.add('light-mode');})();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Contatta Simone Tussi — Fotografo professionale. Preventivi per ritratti, eventi e sport.">
   <title>Contatti — Simone Tussi</title>
   <link rel="stylesheet" href="style.css">
   <link rel="icon" type="image/png" href="img/altro/logo-w.png">
   <style>
-    .contact-bg {
+    body::after {
+      content: '';
       position: fixed;
       top: 0; right: 0;
       width: 45vw; height: 100vh;
+      background-image: url('https://simonetussifotografo.wordpress.com/wp-content/uploads/2024/01/ritratti-18.webp');
       background-size: cover;
       background-position: center;
       filter: brightness(0.25) saturate(0.5);
       z-index: -1;
-      pointer-events: none;
-      transition: opacity 0.7s ease;
     }
-    #contact-bg-a {
-      background-image: url('https://simonetussifotografo.wordpress.com/wp-content/uploads/2024/01/ritratti-18.webp');
-      opacity: 1;
-    }
-    #contact-bg-b { opacity: 0; }
-    @media(max-width:768px) { .contact-bg { display: none; } }
+    @media(max-width:768px) { body::after { display:none; } }
   </style>
 </head>
 <body>
 
   <div id="cursor"></div>
   <div id="cursor-ring"></div>
-  <div id="contact-bg-a" class="contact-bg"></div>
-  <div id="contact-bg-b" class="contact-bg"></div>
 
   <nav class="scrolled">
     <a href="index.html">
@@ -69,7 +66,7 @@
 
       <div class="contact-detail reveal reveal-delay-3">
         <span class="contact-detail-label">Zona operativa</span>
-        <span class="contact-detail-value" style="cursor:default">Cremona, Parma e dintorni</span>
+        <span class="contact-detail-value" style="cursor:default">Coccaglio, Brescia e dintorni</span>
       </div>
 
       <div style="margin-top:48px" class="reveal reveal-delay-3">
@@ -79,11 +76,6 @@
              style="display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gray-light);transition:color 0.2s"
              onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--gray-light)'">
             ↗ Instagram
-          </a>
-          <a href="https://www.tiktok.com/@simonetussi.ph/" target="_blank" rel="noopener"
-             style="display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gray-light);transition:color 0.2s"
-             onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--gray-light)'">
-            ↗ TikTok
           </a>
           <a href="https://wa.me/message/F4VJDF4QB6U6H1" target="_blank" rel="noopener"
              style="display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gray-light);transition:color 0.2s"
@@ -120,9 +112,9 @@
               <svg class="custom-select-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
             <ul class="custom-select-dropdown" role="listbox" id="custom-select-dropdown">
-              <li role="option" data-value="Ritratti" data-json="galleries/ritratti.json">Ritratti</li>
-              <li role="option" data-value="Evento" data-json="galleries/eventi.json">Evento</li>
-              <li role="option" data-value="Sport" data-json="galleries/sport.json">Sport</li>
+              <li role="option" data-value="Ritratti">Ritratti</li>
+              <li role="option" data-value="Evento">Evento</li>
+              <li role="option" data-value="Sport">Sport</li>
               <li role="option" data-value="Altro">Altro</li>
             </ul>
             <input type="hidden" id="oggetto" name="oggetto" required>
@@ -158,34 +150,6 @@
           trigger.setAttribute('aria-expanded', open);
         });
 
-        // ── Background crossfade ───────────────────────────────
-        const bgA = document.getElementById('contact-bg-a');
-        const bgB = document.getElementById('contact-bg-b');
-        let activeBg = 'a';
-
-        async function swapBackground(jsonPath) {
-          try {
-            const res = await fetch(jsonPath);
-            if (!res.ok) return;
-            const data = await res.json();
-            const photos = data.photos || [];
-            if (!photos.length) return;
-            const base  = data.base || '';
-            const photo = photos[Math.floor(Math.random() * photos.length)];
-            const url   = /^https?:\/\//.test(photo.src) ? photo.src : base + photo.src;
-            const img   = new Image();
-            img.onload  = () => {
-              const incoming = activeBg === 'a' ? bgB : bgA;
-              const outgoing = activeBg === 'a' ? bgA : bgB;
-              incoming.style.backgroundImage = `url('${url}')`;
-              incoming.style.opacity = '1';
-              outgoing.style.opacity = '0';
-              activeBg = activeBg === 'a' ? 'b' : 'a';
-            };
-            img.src = url;
-          } catch(e) {}
-        }
-
         dropdown.querySelectorAll('li').forEach(li => {
           li.addEventListener('click', () => {
             valueEl.textContent = li.dataset.value;
@@ -195,7 +159,6 @@
             trigger.classList.add('has-value');
             dropdown.querySelectorAll('li').forEach(l => l.classList.remove('selected'));
             li.classList.add('selected');
-            if (li.dataset.json) swapBackground(li.dataset.json);
           });
         });
 
@@ -232,11 +195,11 @@
           const { name, email, subject, message } = getFormData();
           const text = `Ciao Simone, ti scrivo dal sito!
 
-            *Nome:* ${name}
-            *Email:* ${email}
-            *Servizio:* ${subject}
+*Nome:* ${name}
+*Email:* ${email}
+*Servizio:* ${subject}
 
-            ${message}`;
+${message}`;
           window.open(`https://wa.me/393334721296?text=${encodeURIComponent(text)}`, '_blank', 'noopener');
         });
 
@@ -287,5 +250,18 @@ ${message}`;
   </footer>
 
   <script src="script.js"></script>
+  <script>
+    /* Theme toggle — autocontenuto */
+    (function(){
+      if(localStorage.getItem('theme')==='light') document.body.classList.add('light-mode');
+      var btn=document.getElementById('theme-toggle');
+      if(!btn)return;
+      btn.addEventListener('click',function(){
+        var light=document.body.classList.toggle('light-mode');
+        document.documentElement.classList.toggle('light-mode', light);
+        localStorage.setItem('theme', light ? 'light' : 'dark');
+      });
+    })();
+  </script>
 </body>
 </html>
