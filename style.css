@@ -1430,22 +1430,33 @@ footer {
   height: 18px;
 }
 
-/* Logica di visualizzazione icone in base al tema attivo */
+/* In dark mode → mostra il sole (click = vai al chiaro)
+   In light mode → mostra la luna (click = vai allo scuro) */
+.theme-toggle-btn .icon-sun  { display: block; }   /* default: dark mode, mostra sole */
 .theme-toggle-btn .icon-moon { display: none; }
-.theme-toggle-btn .icon-sun { display: block; }
 
+body.light-mode .theme-toggle-btn .icon-sun  { display: none; }
 body.light-mode .theme-toggle-btn .icon-moon { display: block; }
-body.light-mode .theme-toggle-btn .icon-sun { display: none; }
 
+
+/* ─── Transizione fluida cambio tema ─── */
+body {
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
 
 /* ─── Variabili di Sfondo e Testo per il LIGHT MODE ─── */
 body.light-mode {
-  --bg:         #f5f2eb; /* Sfondo chiaro color crema morbido */
-  --bg2:        #eae4d6; /* Sfondo secondario leggermente più scuro */
-  --bg3:        #dfd7c4; 
-  --cream:      #0c0b09; /* Il testo chiaro diventa scuro per contrasto */
-  --gray-light: #4e473c; /* Testo secondario scuro leggibile */
+  --bg:         #f5f2eb;
+  --bg2:        #eae4d6;
+  --bg3:        #dfd7c4;
+  --cream:      #0c0b09;
+  --gray-light: #4e473c;
   --gray:       #706554;
+}
+
+/* Nav non-scrolled in light mode */
+body.light-mode nav:not(.scrolled) {
+  background: linear-gradient(to bottom, rgba(245,242,235,0.7) 0%, transparent 100%);
 }
 
 /* ─── Adattamenti specifici per elementi Light Mode ─── */

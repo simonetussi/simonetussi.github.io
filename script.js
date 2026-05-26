@@ -498,29 +498,23 @@ document.querySelectorAll('[data-private-gallery]').forEach(gallery => {
     }
   }
 
-  // ─── Gestione Light / Dark Mode con salvataggio di stato ───
+  // ─── Theme toggle ───────────────────────────────────────
   const themeToggleBtn = document.getElementById('theme-toggle');
-  const currentTheme = localStorage.getItem('theme');
-
-  // Applica il tema salvato all'avvio
-  if (currentTheme === 'light') {
-    document.body.classList.add('light-mode');
-  } else {
-    document.body.classList.remove('light-mode');
-  }
-
-  // Gestione del click sul pulsante
   if (themeToggleBtn) {
     themeToggleBtn.addEventListener('click', () => {
-      // Inverte la classe sul body
-      document.body.classList.toggle('light-mode');
-      
-      // Salva la preferenza nel localStorage
-      if (document.body.classList.contains('light-mode')) {
-        localStorage.setItem('theme', 'light');
-      } else {
-        localStorage.setItem('theme', 'dark');
-      }
+      const isLight = document.body.classList.toggle('light-mode');
+      localStorage.setItem('theme', isLight ? 'light' : 'dark');
     });
   }
 });
+
+// Applica il tema PRIMA del render per evitare flash — fuori da DOMContentLoaded
+(function() {
+  if (localStorage.getItem('theme') === 'light') {
+    document.documentElement.classList.add('light-mode-pre');
+    document.addEventListener('DOMContentLoaded', () => {
+      document.body.classList.add('light-mode');
+      document.documentElement.classList.remove('light-mode-pre');
+    });
+  }
+})();
