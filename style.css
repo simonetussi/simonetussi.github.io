@@ -266,7 +266,7 @@ section { position: relative; }
 
 .section-label {
   font-family: var(--font-body);
-  font-size: 9px;
+  font-size: 15px;
   font-weight: 600;
   letter-spacing: 0.4em;
   text-transform: uppercase;
@@ -320,7 +320,7 @@ section { position: relative; }
   margin-bottom: 28px;
 }
 .quote-author {
-  font-size: 10px;
+  font-size: 15px;
   font-weight: 500;
   letter-spacing: 0.3em;
   text-transform: uppercase;
@@ -516,7 +516,7 @@ section { position: relative; }
   z-index: 4;
   width: 2px;
   background: rgba(240,235,224,0.88);
-  box-shadow: 0 0 24px rgba(0,0,0,0.45);
+  box-shadow: 0 0 24px rgba(0, 0, 0, 0.5);
   transform: translateX(-50%);
   pointer-events: none;
 }
@@ -587,7 +587,7 @@ section { position: relative; }
 .btn-outline {
   background: transparent;
   color: var(--cream);
-  border: 1px solid rgba(240,235,224,0.3);
+  border: 1px solid rgba(240, 235, 224, 0.505);
 }
 .btn-outline:hover {
   border-color: var(--gold);
@@ -1465,8 +1465,9 @@ body.light-mode .footer-col-title,
 body.light-mode .contact-detail-label,
 body.light-mode .form-label,
 body.light-mode .merch-kicker,
-body.light-mode .merch-options label {
-  text-shadow: 0.5px 0.5px 1px rgba(12, 11, 9, 0.25);
+body.light-mode .merch-options label,
+body.light-mode .btn-outline {
+  text-shadow: 1px 1px 1px rgba(12, 11, 9, 0.50);
 }
 
 body.light-mode .nav-links a:hover, 
@@ -1490,9 +1491,9 @@ body.light-mode .section-title em,
 body.light-mode .gallery-page-title em, 
 body.light-mode p,
 body.light-mode .a:active {
-  text-shadow: 0.5px 0.5px 1.5px rgba(12, 11, 9, 0.4);
+  text-shadow: 1px 0.5px 0.5px rgba(12, 11, 9, 0.7);
 }
-
+s
 /* QUI SOPRA */
 
 /* Nav non-scrolled in light mode */
@@ -1537,10 +1538,10 @@ body.light-mode .service-card-title {
 html.light-mode body .service-card img,
 body.light-mode .service-card img {
   filter: brightness(0.9) saturate(0.9);
-}
+}s
 html.light-mode body .service-card:hover img,
 body.light-mode .service-card:hover img {
-  filter: brightness(0.8) saturate(0.95);
+  filter: brightness(1) saturate(0.95);
 }
 
 html.light-mode body .nav-toggle span,
