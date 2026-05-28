@@ -1491,7 +1491,7 @@ body.light-mode .section-title em,
 body.light-mode .gallery-page-title em, 
 body.light-mode p,
 body.light-mode .a:active {
-  text-shadow: 1px 0.5px 0.5px rgba(12, 11, 9, 0.7);
+  text-shadow: 0.5px 0.5px 0.5px rgba(12, 11, 9, 0.7);
 }
 s
 /* QUI SOPRA */
@@ -1567,3 +1567,372 @@ body.light-mode .postprod-compare-line::before {
     border-left: 1px solid rgba(201, 168, 76, 0.15);
   }
 }
+
+/* ══════════════════════════════════════════════
+       CHI SONO PAGE — styles
+    ══════════════════════════════════════════════ */
+
+    /* ─── Page Header ───────────────────────────── */
+    .chisono-hero {
+      height: 56vh;
+      min-height: 420px;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      padding: 0 48px 72px;
+      overflow: hidden;
+    }
+    .chisono-hero .hero-bg {
+      filter: brightness(0.38) saturate(0.65);
+    }
+    .chisono-hero-content {
+      position: relative;
+      z-index: 2;
+    }
+    .chisono-hero-breadcrumb {
+      font-size: 10px;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+    .chisono-hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(60px, 9vw, 128px);
+      font-weight: 300;
+      color: var(--cream);
+      line-height: 0.88;
+      opacity: 0;
+      transform: translateY(28px);
+      animation: fadeUp 1s 0.3s forwards;
+    }
+    .chisono-hero-title em { font-style: italic; color: var(--gold-light); }
+
+    /* ─── Intro ──────────────────────────────────── */
+    .chisono-intro {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 80px 48px 72px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 60px;
+    }
+    .chisono-intro-left { flex: 0 0 auto; }
+    .chisono-intro-right {
+      max-width: 460px;
+      padding-bottom: 8px;
+    }
+
+    /* ─── Carousel Section ───────────────────────── */
+    .carousel-section {
+      padding: 0 0 140px;
+      position: relative;
+    }
+
+    /* Decorative horizontal rule */
+    .carousel-section::before {
+      content: '';
+      display: block;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(201,168,76,0.2), transparent);
+      margin: 0 48px 80px;
+    }
+
+    /* ─── Stage ──────────────────────────────────── */
+    .carousel-stage-wrap {
+      position: relative;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .carousel-stage {
+      position: relative;
+      width: 100%;
+      height: 520px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ─── Cards ──────────────────────────────────── */
+    .carousel-card {
+      position: absolute;
+      width: 600px;
+      background: var(--bg2);
+      border: 1px solid rgba(201,168,76,0.1);
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      will-change: transform, opacity, filter;
+      transition:
+        transform  0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
+        opacity    0.7s ease,
+        filter     0.7s ease,
+        box-shadow 0.7s ease,
+        border-color 0.4s ease;
+    }
+
+    /* CENTER */
+    .carousel-card[data-pos="center"] {
+      transform: translateX(0) scale(1);
+      z-index: 10;
+      opacity: 1;
+      filter: brightness(1) saturate(1);
+      box-shadow:
+        0 40px 100px rgba(0,0,0,0.7),
+        0 0 0 1px rgba(201,168,76,0.28);
+      border-color: rgba(201,168,76,0.3);
+      pointer-events: auto;
+    }
+
+    /* LEFT */
+    .carousel-card[data-pos="left"] {
+      transform: translateX(-468px) scale(0.74);
+      z-index: 5;
+      opacity: 0.6;
+      filter: brightness(0.65) saturate(0.75);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.45);
+      pointer-events: auto;
+    }
+
+    /* RIGHT */
+    .carousel-card[data-pos="right"] {
+      transform: translateX(468px) scale(0.74);
+      z-index: 5;
+      opacity: 0.6;
+      filter: brightness(0.65) saturate(0.75);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.45);
+      pointer-events: auto;
+    }
+
+    /* HIDDEN OFF-SCREEN */
+    .carousel-card[data-pos="hidden-left"] {
+      transform: translateX(-860px) scale(0.52);
+      z-index: 1;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .carousel-card[data-pos="hidden-right"] {
+      transform: translateX(860px) scale(0.52);
+      z-index: 1;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Hover state: side cards brighten slightly */
+    .carousel-card[data-pos="left"]:hover,
+    .carousel-card[data-pos="right"]:hover {
+      filter: brightness(0.80) saturate(0.85);
+      opacity: 0.78;
+    }
+
+    /* ─── Card Image ─────────────────────────────── */
+    .carousel-card-image {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      position: relative;
+      background: var(--bg3);
+    }
+    .carousel-card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s ease;
+    }
+    .carousel-card[data-pos="center"]:hover .carousel-card-image img {
+      transform: scale(1.04);
+    }
+
+    /* Gold shimmer line at top of image */
+    .carousel-card[data-pos="center"] .carousel-card-image::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+    }
+
+    /* ─── Card Body ──────────────────────────────── */
+    .carousel-card-body {
+      padding: 22px 26px 26px;
+      border-top: 1px solid rgba(201,168,76,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    .carousel-card-body::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(201,168,76,0.03), transparent 60%);
+      pointer-events: none;
+    }
+
+    /* Bottom gold line on active card */
+    .carousel-card[data-pos="center"] .carousel-card-body::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 40%;
+      height: 1px;
+      background: linear-gradient(to right, var(--gold), transparent);
+    }
+
+    .carousel-card-num {
+      font-family: var(--font-display);
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.35em;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 4px;
+    }
+    .carousel-card-title {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--cream);
+      margin-bottom: 6px;
+      transition: color 0.3s;
+    }
+    .carousel-card[data-pos="center"]:hover .carousel-card-title {
+      color: var(--gold-light);
+    }
+    .carousel-card-caption {
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: var(--gray);
+      line-height: 1.6;
+    }
+    .carousel-card-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 14px;
+      font-size: 9px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0;
+      transform: translateX(-8px);
+      transition: opacity 0.35s, transform 0.35s;
+    }
+    .carousel-card[data-pos="center"]:hover .carousel-card-cta {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .carousel-card-cta svg {
+      width: 13px; height: 13px;
+      flex-shrink: 0;
+    }
+
+    /* ─── Navigation Arrows ──────────────────────── */
+    .carousel-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 20;
+      background: rgba(12,11,9,0.5);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(201,168,76,0.25);
+      color: var(--gold);
+      width: 50px; height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s, border-color 0.3s, transform 0.3s;
+    }
+    .carousel-nav:hover {
+      background: rgba(201,168,76,0.12);
+      border-color: var(--gold);
+    }
+    .carousel-nav:hover { transform: translateY(-50%) scale(1.06); }
+    .carousel-nav svg { width: 20px; height: 20px; pointer-events: none; }
+    .carousel-nav-prev { left: 32px; }
+    .carousel-nav-next { right: 32px; }
+
+    /* ─── Dots ────────────────────────────────────── */
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-top: 44px;
+    }
+    .carousel-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--gray);
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      transition: background 0.3s, width 0.35s, border-radius 0.35s;
+    }
+    .carousel-dot.active {
+      background: var(--gold);
+      width: 28px;
+      border-radius: 3px;
+    }
+
+    /* ─── CTA Strip ──────────────────────────────── */
+    .chisono-cta {
+      padding: 140px 48px;
+      text-align: center;
+      background: var(--bg2);
+      border-top: 1px solid rgba(201,168,76,0.1);
+    }
+    .chisono-cta .section-title { margin-bottom: 20px; }
+    .chisono-cta p {
+      color: var(--gray-light);
+      font-size: 13px;
+      max-width: 380px;
+      margin: 0 auto 44px;
+      letter-spacing: 0.04em;
+    }
+
+    /* ─── Light Mode overrides ───────────────────── */
+    body.light-mode .carousel-card {
+      background: var(--bg2);
+      border-color: rgba(201,168,76,0.2);
+    }
+    body.light-mode .carousel-card[data-pos="center"] {
+      box-shadow: 0 30px 80px rgba(0,0,0,0.18), 0 0 0 1px rgba(201,168,76,0.3);
+    }
+
+    /* ─── Responsive ─────────────────────────────── */
+    @media (max-width: 1100px) {
+      .carousel-card { width: 500px; }
+      .carousel-card[data-pos="left"]  { transform: translateX(-390px) scale(0.74); }
+      .carousel-card[data-pos="right"] { transform: translateX(390px)  scale(0.74); }
+    }
+    @media (max-width: 900px) {
+      .carousel-stage { height: 460px; }
+      .carousel-card { width: 400px; }
+      .carousel-card[data-pos="left"]  { transform: translateX(-308px) scale(0.72); }
+      .carousel-card[data-pos="right"] { transform: translateX(308px)  scale(0.72); }
+      .carousel-nav-prev { left: 12px; }
+      .carousel-nav-next { right: 12px; }
+      .chisono-intro { flex-direction: column; gap: 32px; padding: 64px 28px 56px; }
+      .chisono-intro-right { max-width: 100%; }
+    }
+    @media (max-width: 680px) {
+      .carousel-stage { height: 380px; }
+      .carousel-card { width: 290px; }
+      .carousel-card[data-pos="left"]  { transform: translateX(-214px) scale(0.68); opacity: 0.45; }
+      .carousel-card[data-pos="right"] { transform: translateX(214px)  scale(0.68); opacity: 0.45; }
+      .carousel-card-title { font-size: 19px; }
+      .carousel-nav { width: 40px; height: 40px; }
+      .chisono-hero { padding: 0 24px 60px; }
+    }
+    @media (max-width: 480px) {
+      .carousel-stage { height: 340px; }
+      .carousel-card { width: 250px; }
+      .carousel-card[data-pos="left"]  { transform: translateX(-185px) scale(0.65); opacity: 0.35; }
+      .carousel-card[data-pos="right"] { transform: translateX(185px)  scale(0.65); opacity: 0.35; }
+    }
