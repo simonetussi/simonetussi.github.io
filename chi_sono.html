@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <script>
+    (function(){if(localStorage.getItem('theme')==='light')document.documentElement.classList.add('light-mode');})();
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Simone Tussi – Chi sono. Studente, soccorritore, militare, animatore, fotografo.">
+  <title>Chi Sono – Simone Tussi</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="/img/altro/logo-w.png">
+
+  <style>
+    /* ══════════════════════════════════════════════
+       CHI SONO PAGE — styles
+    ══════════════════════════════════════════════ */
+
+    /* ─── Page Header ───────────────────────────── */
+    .chisono-hero {
+      height: 56vh;
+      min-height: 420px;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      padding: 0 48px 72px;
+      overflow: hidden;
+    }
+    .chisono-hero .hero-bg {
+      filter: brightness(0.38) saturate(0.65);
+    }
+    .chisono-hero-content {
+      position: relative;
+      z-index: 2;
+    }
+    .chisono-hero-breadcrumb {
+      font-size: 10px;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+    .chisono-hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(60px, 9vw, 128px);
+      font-weight: 300;
+      color: var(--cream);
+      line-height: 0.88;
+      opacity: 0;
+      transform: translateY(28px);
+      animation: fadeUp 1s 0.3s forwards;
+    }
+    .chisono-hero-title em { font-style: italic; color: var(--gold-light); }
+
+    /* ─── Intro ──────────────────────────────────── */
+    .chisono-intro {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 80px 48px 72px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 60px;
+    }
+    .chisono-intro-left { flex: 0 0 auto; }
+    .chisono-intro-right {
+      max-width: 460px;
+      padding-bottom: 8px;
+    }
+
+    /* ─── Carousel Section ───────────────────────── */
+    .carousel-section {
+      padding: 0 0 140px;
+      position: relative;
+    }
+
+    /* Decorative horizontal rule */
+    .carousel-section::before {
+      content: '';
+      display: block;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(201,168,76,0.2), transparent);
+      margin: 0 48px 80px;
+    }
+
+    /* ─── Stage ──────────────────────────────────── */
+    .carousel-stage-wrap {
+      position: relative;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .carousel-stage {
+      position: relative;
+      width: 100%;
+      height: 520px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ─── Cards ──────────────────────────────────── */
+    .carousel-card {
+      position: absolute;
+      width: 600px;
+      background: var(--bg2);
+      border: 1px solid rgba(201,168,76,0.1);
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      will-change: transform, opacity, filter;
+      transition:
+        transform  0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
+        opacity    0.7s ease,
+        filter     0.7s ease,
+        box-shadow 0.7s ease,
+        border-color 0.4s ease;
+    }
+
+    /* CENTER */
+    .carousel-card[data-pos="center"] {
+      transform: translateX(0) scale(1);
+      z-index: 10;
+      opacity: 1;
+      filter: brightness(1) saturate(1);
+      box-shadow:
+        0 40px 100px rgba(0,0,0,0.7),
+        0 0 0 1px rgba(201,168,76,0.28);
+      border-color: rgba(201,168,76,0.3);
+      pointer-events: auto;
+    }
+
+    /* LEFT */
+    .carousel-card[data-pos="left"] {
+      transform: translateX(-468px) scale(0.74);
+      z-index: 5;
+      opacity: 0.6;
+      filter: brightness(0.65) saturate(0.75);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.45);
+      pointer-events: auto;
+    }
+
+    /* RIGHT */
+    .carousel-card[data-pos="right"] {
+      transform: translateX(468px) scale(0.74);
+      z-index: 5;
+      opacity: 0.6;
+      filter: brightness(0.65) saturate(0.75);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.45);
+      pointer-events: auto;
+    }
+
+    /* HIDDEN OFF-SCREEN */
+    .carousel-card[data-pos="hidden-left"] {
+      transform: translateX(-860px) scale(0.52);
+      z-index: 1;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .carousel-card[data-pos="hidden-right"] {
+      transform: translateX(860px) scale(0.52);
+      z-index: 1;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Hover state: side cards brighten slightly */
+    .carousel-card[data-pos="left"]:hover,
+    .carousel-card[data-pos="right"]:hover {
+      filter: brightness(0.80) saturate(0.85);
+      opacity: 0.78;
+    }
+
+    /* ─── Card Image ─────────────────────────────── */
+    .carousel-card-image {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      position: relative;
+      background: var(--bg3);
+    }
+    .carousel-card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s ease;
+    }
+    .carousel-card[data-pos="center"]:hover .carousel-card-image img {
+      transform: scale(1.04);
+    }
+
+    /* Gold shimmer line at top of image */
+    .carousel-card[data-pos="center"] .carousel-card-image::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+    }
+
+    /* ─── Card Body ──────────────────────────────── */
+    .carousel-card-body {
+      padding: 22px 26px 26px;
+      border-top: 1px solid rgba(201,168,76,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    .carousel-card-body::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(201,168,76,0.03), transparent 60%);
+      pointer-events: none;
+    }
+
+    /* Bottom gold line on active card */
+    .carousel-card[data-pos="center"] .carousel-card-body::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 40%;
+      height: 1px;
+      background: linear-gradient(to right, var(--gold), transparent);
+    }
+
+    .carousel-card-num {
+      font-family: var(--font-display);
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.35em;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 4px;
+    }
+    .carousel-card-title {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--cream);
+      margin-bottom: 6px;
+      transition: color 0.3s;
+    }
+    .carousel-card[data-pos="center"]:hover .carousel-card-title {
+      color: var(--gold-light);
+    }
+    .carousel-card-caption {
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: var(--gray);
+      line-height: 1.6;
+    }
+    .carousel-card-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 14px;
+      font-size: 9px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0;
+      transform: translateX(-8px);
+      transition: opacity 0.35s, transform 0.35s;
+    }
+    .carousel-card[data-pos="center"]:hover .carousel-card-cta {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .carousel-card-cta svg {
+      width: 13px; height: 13px;
+      flex-shrink: 0;
+    }
+
+    /* ─── Navigation Arrows ──────────────────────── */
+    .carousel-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 20;
+      background: rgba(12,11,9,0.5);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(201,168,76,0.25);
+      color: var(--gold);
+      width: 50px; height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s, border-color 0.3s, transform 0.3s;
+    }
+    .carousel-nav:hover {
+      background: rgba(201,168,76,0.12);
+      border-color: var(--gold);
+    }
+    .carousel-nav:hover { transform: translateY(-50%) scale(1.06); }
+    .carousel-nav svg { width: 20px; height: 20px; pointer-events: none; }
+    .carousel-nav-prev { left: 32px; }
+    .carousel-nav-next { right: 32px; }
+
+    /* ─── Dots ────────────────────────────────────── */
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-top: 44px;
+    }
+    .carousel-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--gray);
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      transition: background 0.3s, width 0.35s, border-radius 0.35s;
+    }
+    .carousel-dot.active {
+      background: var(--gold);
+      width: 28px;
+      border-radius: 3px;
+    }
+
+    /* ─── CTA Strip ──────────────────────────────── */
+    .chisono-cta {
+      padding: 140px 48px;
+      text-align: center;
+      background: var(--bg2);
+      border-top: 1px solid rgba(201,168,76,0.1);
+    }
+    .chisono-cta .section-title { margin-bottom: 20px; }
+    .chisono-cta p {
+      color: var(--gray-light);
+      font-size: 13px;
+      max-width: 380px;
+      margin: 0 auto 44px;
+      letter-spacing: 0.04em;
+    }
+
+    /* ─── Light Mode overrides ───────────────────── */
+    body.light-mode .carousel-card {
+      background: var(--bg2);
+      border-color: rgba(201,168,76,0.2);
+    }
+    body.light-mode .carousel-card[data-pos="center"] {
+      box-shadow: 0 30px 80px rgba(0,0,0,0.18), 0 0 0 1px rgba(201,168,76,0.3);
+    }
+
+    /* ─── Responsive ─────────────────────────────── */
+    @media (max-width: 1100px) {
+      .carousel-card { width: 500px; }
+      .carousel-card[data-pos="left"]  { transform: translateX(-390px) scale(0.74); }
+      .carousel-card[data-pos="right"] { transform: translateX(390px)  scale(0.74); }
+    }
+    @media (max-width: 900px) {
+      .carousel-stage { height: 460px; }
+      .carousel-card { width: 400px; }
+      .carousel-card[data-pos="left"]  { transform: translateX(-308px) scale(0.72); }
+      .carousel-card[data-pos="right"] { transform: translateX(308px)  scale(0.72); }
+      .carousel-nav-prev { left: 12px; }
+      .carousel-nav-next { right: 12px; }
+      .chisono-intro { flex-direction: column; gap: 32px; padding: 64px 28px 56px; }
+      .chisono-intro-right { max-width: 100%; }
+    }
+    @media (max-width: 680px) {
+      .carousel-stage { height: 380px; }
+      .carousel-card { width: 290px; }
+      .carousel-card[data-pos="left"]  { transform: translateX(-214px) scale(0.68); opacity: 0.45; }
+      .carousel-card[data-pos="right"] { transform: translateX(214px)  scale(0.68); opacity: 0.45; }
+      .carousel-card-title { font-size: 19px; }
+      .carousel-nav { width: 40px; height: 40px; }
+      .chisono-hero { padding: 0 24px 60px; }
+    }
+    @media (max-width: 480px) {
+      .carousel-stage { height: 340px; }
+      .carousel-card { width: 250px; }
+      .carousel-card[data-pos="left"]  { transform: translateX(-185px) scale(0.65); opacity: 0.35; }
+      .carousel-card[data-pos="right"] { transform: translateX(185px)  scale(0.65); opacity: 0.35; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cursor -->
+  <div id="cursor"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="index.html">
+      <img src="/img/altro/logo-w.png" alt="Simone Tussi" class="nav-logo">
+    </a>
+    <div class="nav-right">
+      <button id="theme-toggle" class="theme-toggle-btn" aria-label="Cambia tema">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="4.22" x2="19.78" y2="5.64"></line>
+        </svg>
+      </button>
+      <button class="nav-toggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="chi-sono.html" class="active">Chi sono</a></li>
+        <li><a href="ritratti.html">Ritratti</a></li>
+        <li><a href="eventi.html">Eventi</a></li>
+        <li><a href="sport.html">Sport</a></li>
+        <li><a href="contatti.html">Contatti</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero Header -->
+  <section class="chisono-hero">
+    <div class="hero-bg" style="background-image: url('img/chisono/studente.webp')"></div>
+    <div class="hero-vignette"></div>
+    <div class="chisono-hero-content">
+      <p class="chisono-hero-breadcrumb">Simone Tussi</p>
+      <h1 class="chisono-hero-title">Chi<br><em>sono</em></h1>
+    </div>
+  </section>
+
+  <!-- Intro text -->
+  <div class="chisono-intro">
+    <div class="chisono-intro-left">
+      <p class="section-label reveal">La mia storia</p>
+      <h2 class="section-title reveal reveal-delay-1">Molte<br><em>facce</em></h2>
+    </div>
+    <div class="chisono-intro-right">
+      <p class="section-body reveal reveal-delay-2">
+        Sono <strong style="color:var(--cream);font-weight:500">Simone Tussi</strong>: studente, volontario, militare, animatore e fotografo.
+        Ogni ruolo racconta un pezzo di me — sfoglia le mie esperienze e scopri cosa mi muove ogni giorno.
+      </p>
+    </div>
+  </div>
+
+  <!-- ── Carousel ───────────────────────────────────────────── -->
+  <section class="carousel-section" aria-label="Le mie esperienze">
+
+    <div class="carousel-stage-wrap">
+
+      <!-- Freccia sinistra -->
+      <button class="carousel-nav carousel-nav-prev" aria-label="Precedente" id="btnPrev">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+             stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+
+      <!-- Stage -->
+      <div class="carousel-stage" id="carouselStage">
+
+        <!--
+          ╔══════════════════════════════════════════╗
+          ║  CARD 1 – Studente universitario         ║
+          ║  Sostituisci href e src con i tuoi dati  ║
+          ╚══════════════════════════════════════════╝
+        -->
+        <a href="studente.html" class="carousel-card" data-index="0">
+          <div class="carousel-card-image">
+            <img src="img/chisono/studente.webp"
+                 alt="Studente universitario di psicologia" loading="eager">
+          </div>
+          <div class="carousel-card-body">
+            <span class="carousel-card-num">01</span>
+            <h2 class="carousel-card-title">Studente di Psicologia</h2>
+            <p class="carousel-card-caption">Università — mente, comportamento e scienze umane</p>
+            <span class="carousel-card-cta">
+              Scopri di più
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </span>
+          </div>
+        </a>
+
+        <!--
+          ╔══════════════════════════════════════════╗
+          ║  CARD 2 – Soccorritore Croce Rossa       ║
+          ╚══════════════════════════════════════════╝
+        -->
+        <a href="soccorritore.html" class="carousel-card" data-index="1">
+          <div class="carousel-card-image">
+            <img src="img/chisono/croce-rossa.webp"
+                 alt="Soccorritore Croce Rossa" loading="lazy">
+          </div>
+          <div class="carousel-card-body">
+            <span class="carousel-card-num">02</span>
+            <h2 class="carousel-card-title">Soccorritore Croce Rossa</h2>
+            <p class="carousel-card-caption">Volontariato in emergenza — sempre in prima linea</p>
+            <span class="carousel-card-cta">
+              Scopri di più
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </span>
+          </div>
+        </a>
+
+        <!--
+          ╔══════════════════════════════════════════╗
+          ║  CARD 3 – Militare Volontario CRI        ║
+          ╚══════════════════════════════════════════╝
+        -->
+        <a href="militare.html" class="carousel-card" data-index="2">
+          <div class="carousel-card-image">
+            <img src="img/chisono/militare.webp"
+                 alt="Militare Volontario CRI" loading="lazy">
+          </div>
+          <div class="carousel-card-body">
+            <span class="carousel-card-num">03</span>
+            <h2 class="carousel-card-title">Militare Volontario CRI</h2>
+            <p class="carousel-card-caption">Servizio e disciplina — Croce Rossa Italiana</p>
+            <span class="carousel-card-cta">
+              Scopri di più
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </span>
+          </div>
+        </a>
+
+        <!--
+          ╔══════════════════════════════════════════╗
+          ║  CARD 4 – Animatore oratorio e FOCR      ║
+          ╚══════════════════════════════════════════╝
+        -->
+        <a href="animatore.html" class="carousel-card" data-index="3">
+          <div class="carousel-card-image">
+            <img src="img/chisono/animatore.webp"
+                 alt="Animatore oratorio e FOCR" loading="lazy">
+          </div>
+          <div class="carousel-card-body">
+            <span class="carousel-card-num">04</span>
+            <h2 class="carousel-card-title">Animatore Oratorio e FOCR</h2>
+            <p class="carousel-card-caption">Giovani, gioco e comunità — fede in azione</p>
+            <span class="carousel-card-cta">
+              Scopri di più
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </span>
+          </div>
+        </a>
+
+        <!--
+          ╔══════════════════════════════════════════╗
+          ║  CARD 5 – Fotografo Diocesi di Cremona   ║
+          ╚══════════════════════════════════════════╝
+        -->
+        <a href="fotografia-diocesi.html" class="carousel-card" data-index="4">
+          <div class="carousel-card-image">
+            <img src="img/chisono/diocesi.webp"
+                 alt="Fotografo Diocesi di Cremona" loading="lazy">
+          </div>
+          <div class="carousel-card-body">
+            <span class="carousel-card-num">05</span>
+            <h2 class="carousel-card-title">Fotografo — Diocesi di Cremona</h2>
+            <p class="carousel-card-caption">Catturare i momenti della comunità cremonese</p>
+            <span class="carousel-card-cta">
+              Scopri di più
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </span>
+          </div>
+        </a>
+
+        <!--
+          ╔══════════════════════════════════════════╗
+          ║  CARD 6 – Feesta Oof Cot × LILT          ║
+          ╚══════════════════════════════════════════╝
+        -->
+        <a href="feesta-lilt.html" class="carousel-card" data-index="5">
+          <div class="carousel-card-image">
+            <img src="img/chisono/feesta.webp"
+                 alt="Feesta Oof Cot x LILT" loading="lazy">
+          </div>
+          <div class="carousel-card-body">
+            <span class="carousel-card-num">06</span>
+            <h2 class="carousel-card-title">Feesta Oof Cot × LILT</h2>
+            <p class="carousel-card-caption">Sport e solidarietà — insieme contro il cancro</p>
+            <span class="carousel-card-cta">
+              Scopri di più
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </span>
+          </div>
+        </a>
+
+      </div><!-- /carousel-stage -->
+
+      <!-- Freccia destra -->
+      <button class="carousel-nav carousel-nav-next" aria-label="Successivo" id="btnNext">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+             stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+
+    </div><!-- /carousel-stage-wrap -->
+
+    <!-- Dots indicator -->
+    <div class="carousel-dots" id="carouselDots" role="tablist" aria-label="Navigazione carosello"></div>
+
+  </section><!-- /carousel-section -->
+
+  <!-- CTA -->
+  <section class="chisono-cta">
+    <p class="section-label reveal">Iniziamo</p>
+    <h2 class="section-title reveal reveal-delay-1">Raccontiamo la<br><em>tua storia</em></h2>
+    <p class="reveal reveal-delay-2">In caso dovessi avere bisogno di informazioni o consulenza non esitare a contattarmi.</p>
+    <a href="contatti.html" class="btn btn-gold reveal reveal-delay-3">Richiedi un preventivo</a>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-top">
+      <div>
+        <img src="/img/altro/logo-w.png" alt="Simone Tussi" class="footer-logo">
+        <p class="footer-tagline">Dove la fotografia prende vita</p>
+      </div>
+      <div>
+        <p class="footer-col-title">Esplora</p>
+        <ul class="footer-links">
+          <li><a href="chi-sono.html">Chi sono</a></li>
+          <li><a href="ritratti.html">Ritratti</a></li>
+          <li><a href="eventi.html">Eventi</a></li>
+          <li><a href="sport.html">Sport</a></li>
+          <li><a href="contatti.html">Contatti</a></li>
+        </ul>
+      </div>
+      <div class="footer-contact">
+        <p class="footer-col-title">Contatti</p>
+        <p>Tel: <a href="https://wa.me/message/F4VJDF4QB6U6H1">(+39) 333 472 1296</a></p>
+        <p>Email: <a href="mailto:simonetussi2006@gmail.com">simonetussi2006@gmail.com</a></p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/simonetussi.ph/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://wa.me/message/F4VJDF4QB6U6H1" target="_blank" rel="noopener">WhatsApp</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 Simone Tussi - Tutti i diritti riservati</p>
+    </div>
+  </footer>
+
+  <!-- External scripts -->
+  <script src="script.js"></script>
+
+  <script>
+    /* ══════════════════════════════════════════════════════════
+       THEME TOGGLE
+    ══════════════════════════════════════════════════════════ */
+    (function () {
+      if (localStorage.getItem('theme') === 'light')
+        document.body.classList.add('light-mode');
+      var btn = document.getElementById('theme-toggle');
+      if (!btn) return;
+      btn.addEventListener('click', function () {
+        var light = document.body.classList.toggle('light-mode');
+        document.documentElement.classList.toggle('light-mode', light);
+        localStorage.setItem('theme', light ? 'light' : 'dark');
+      });
+    })();
+
+    /* ══════════════════════════════════════════════════════════
+       CAROUSEL
+       ─ Card 0 (Studente) è sempre la prima mostrata al centro.
+       ─ Click sulle card laterali → rotazione del carosello.
+       ─ Click sulla card centrale → naviga alla pagina relativa.
+    ══════════════════════════════════════════════════════════ */
+    (function () {
+      'use strict';
+
+      const cards  = Array.from(document.querySelectorAll('.carousel-card'));
+      const dotsEl = document.getElementById('carouselDots');
+      const total  = cards.length;
+      let current  = 0;          // ← card 0 (Studente) sempre al centro all'ingresso
+      let animating = false;
+      const ANIM_DURATION = 700; // ms — uguale alla transition CSS
+
+      /* ── Costruisci i pallini ── */
+      cards.forEach(function (_, i) {
+        var dot = document.createElement('button');
+        dot.className = 'carousel-dot';
+        dot.setAttribute('role', 'tab');
+        dot.setAttribute('aria-label', 'Slide ' + (i + 1));
+        dot.addEventListener('click', function () { goTo(i); });
+        dotsEl.appendChild(dot);
+      });
+
+      /* ── Calcola la posizione di ogni card rispetto a "current" ── */
+      function getPos(index) {
+        var diff = ((index - current) % total + total) % total;
+        if (diff === 0)               return 'center';
+        if (diff === 1)               return 'right';
+        if (diff === total - 1)       return 'left';
+        if (diff <= Math.floor(total / 2)) return 'hidden-right';
+        return 'hidden-left';
+      }
+
+      /* ── Aggiorna DOM ── */
+      function update() {
+        var dots = dotsEl.querySelectorAll('.carousel-dot');
+        cards.forEach(function (card, i) {
+          var pos = getPos(i);
+          card.dataset.pos = pos;
+        });
+        dots.forEach(function (d, i) {
+          d.classList.toggle('active', i === current);
+          d.setAttribute('aria-selected', i === current ? 'true' : 'false');
+        });
+      }
+
+      /* ── Naviga a un indice specifico ── */
+      function goTo(index) {
+        if (animating) return;
+        current   = ((index % total) + total) % total;
+        update();
+        animating = true;
+        setTimeout(function () { animating = false; }, ANIM_DURATION);
+      }
+
+      function prev() { goTo((current - 1 + total) % total); }
+      function next() { goTo((current + 1) % total); }
+
+      /* ── Frecce ── */
+      document.getElementById('btnPrev').addEventListener('click', prev);
+      document.getElementById('btnNext').addEventListener('click', next);
+
+      /* ── Click sulle card:
+            • Laterale sinistra → prev
+            • Laterale destra  → next
+            • Centrale         → segue l'href (comportamento link naturale)
+      ── */
+      cards.forEach(function (card) {
+        card.addEventListener('click', function (e) {
+          var pos = card.dataset.pos;
+          if (pos === 'left') {
+            e.preventDefault();
+            prev();
+          } else if (pos === 'right') {
+            e.preventDefault();
+            next();
+          }
+          // pos === 'center' → link si apre normalmente
+        });
+      });
+
+      /* ── Tastiera ── */
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowLeft')  prev();
+        if (e.key === 'ArrowRight') next();
+      });
+
+      /* ── Touch / Swipe ── */
+      var touchStartX = 0;
+      var stage = document.getElementById('carouselStage');
+      stage.addEventListener('touchstart', function (e) {
+        touchStartX = e.touches[0].clientX;
+      }, { passive: true });
+      stage.addEventListener('touchend', function (e) {
+        var dx = e.changedTouches[0].clientX - touchStartX;
+        if (Math.abs(dx) > 48) { dx < 0 ? next() : prev(); }
+      });
+
+      /* ── Avvio ── */
+      update();
+    })();
+  </script>
+
+</body>
+</html>
