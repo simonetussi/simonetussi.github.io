@@ -8,8 +8,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Simone Tussi — Studente di Psicologia. Fotografia e psicologia: due modi di osservare il mondo.">
   <title>Psicologia — Simone Tussi</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" type="image/png" href="https://simonetussifotografo.wordpress.com/wp-content/uploads/2023/05/cropped-logo-w.png">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="icon" type="image/png" href="/img/altro/logo-w.png">
 
   <style>
     /* ═══════════════════════════════════════════════
@@ -103,6 +103,35 @@
     }
     .psico-intro-photo:hover img {
       transform: scale(1.04);
+    }
+    .psico-intro--reverse .psico-intro-text {
+      border-left: 0;
+      border-right: 1px solid rgba(201,168,76,0.1);
+      padding: 80px 64px 80px 72px;
+    }
+    .psico-dynamic-photos.masonry-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      columns: auto;
+      column-gap: 3px;
+      align-items: stretch;
+    }
+    .psico-dynamic-photos .masonry-item {
+      display: block;
+      margin: 0;
+      overflow: hidden;
+    }
+    .psico-dynamic-photos .masonry-item img {
+      width: 100%;
+      height: 100%;
+      min-height: 420px;
+      object-fit: cover;
+      filter: brightness(0.88) saturate(0.8);
+      transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.4s ease;
+    }
+    .psico-dynamic-photos .masonry-item:hover img {
+      transform: scale(1.04);
+      filter: brightness(1) saturate(1);
     }
     /* Gold shimmer on top edge */
     .psico-intro-photo::after {
@@ -319,11 +348,19 @@
         border-left: none;
         border-top: 1px solid rgba(201,168,76,0.1);
       }
+      .psico-intro--reverse .psico-intro-text {
+        border-right: none;
+        border-top: none;
+        border-bottom: 1px solid rgba(201,168,76,0.1);
+        padding: 64px 48px;
+      }
       .psico-masonry { columns: 2; }
     }
     @media (max-width: 680px) {
       .psico-hero { padding: 0 24px 60px; }
       .psico-intro-text { padding: 48px 24px; }
+      .psico-intro--reverse .psico-intro-text { padding: 48px 24px; }
+      .psico-dynamic-photos .masonry-item img { min-height: 280px; }
       .psico-gallery-section { padding: 64px 20px 80px; }
       .psico-gallery-header { flex-direction: column; align-items: flex-start; }
       .psico-masonry { columns: 1; }
@@ -349,7 +386,7 @@
 
   <!-- Navigation -->
   <nav>
-    <a href="index.html">
+    <a href="/">
       <img src="/img/altro/logo-w.png" alt="Simone Tussi" class="nav-logo">
     </a>
     <div class="nav-right">
@@ -369,12 +406,13 @@
         <span></span><span></span><span></span>
       </button>
       <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="ritratti.html">Ritratti</a></li>
-        <li><a href="eventi.html">Eventi</a></li>
-        <li><a href="sport.html">Sport</a></li>
-        <li><a href="psicologia.html" class="active">Psicologia</a></li>
-        <li><a href="contatti.html">Contatti</a></li>
+        <li><a href="/">Home</a></li>
+        <li><a href="/pages/chi_sono.html">Chi sono</a></li>
+        <li><a href="/pages/ritratti.html">Ritratti</a></li>
+        <li><a href="/pages/eventi.html">Eventi</a></li>
+        <li><a href="/pages/sport.html">Sport</a></li>
+        <li><a href="/pages/chi_sono/psicologia.html" class="active">Psicologia</a></li>
+        <li><a href="/pages/contatti.html">Contatti</a></li>
       </ul>
     </div>
   </nav>
@@ -402,7 +440,8 @@
       <img
         src="/img/psicologia/intro.webp"
         alt="Simone Tussi — studente di psicologia"
-        loading="lazy"
+        loading="eager"
+        fetchpriority="high"
       >
     </div>
 
@@ -442,28 +481,42 @@
   <!-- ══════════════════════════════════════
        BLOCK 2 — Gallery casuale
   ══════════════════════════════════════ -->
-  <section class="psico-gallery-section">
+  <section class="psico-intro psico-intro--reverse">
 
-    <div class="psico-gallery-header">
+    <div class="psico-intro-text">
       <div>
-        <p class="section-label reveal">Galleria</p>
-        <h2 class="reveal reveal-delay-1">Momenti <em>scelti</em></h2>
+        <p class="section-label reveal">Empatia</p>
+        <h2 class="reveal reveal-delay-1">Capire prima<br>di <em>raccontare</em></h2>
+        <div class="psico-divider reveal reveal-delay-1"></div>
+        <div class="psico-intro-body reveal reveal-delay-2">
+          <p>Ogni incontro porta con sé un punto di vista unico. Lo studio della psicologia mi ricorda di lasciare spazio ai tempi, alle parole e alle emozioni di chi ho davanti.</p>
+          <p>La tecnica mette a fuoco l'immagine, l'attenzione mette a fuoco la persona.</p>
+        </div>
       </div>
       <p class="psico-gallery-note reveal">Selezione casuale — si rinnova ad ogni visita</p>
     </div>
 
-    <!-- Loading placeholder -->
-    <div class="psico-gallery-loading" id="psico-loading">Caricamento galleria</div>
-
-    <!-- Masonry grid: le foto vengono iniettate da JS -->
     <div
-      class="psico-masonry masonry-grid"
-      id="psico-grid"
-      data-gallery-src="galleries/psicologia.json"
-      data-max-photos="20"
-      style="display:none"
+      class="psico-intro-photo psico-dynamic-photos masonry-grid"
+      data-gallery-src="/galleries/chi_sono_psicologia.json"
+      data-gallery-limit="2"
     ></div>
 
+  </section>
+
+  <!-- Lightbox (identico agli altri) -->
+  <section class="psico-intro">
+    <div class="psico-intro-photo psico-dynamic-photos masonry-grid" data-gallery-src="/galleries/chi_sono_psicologia.json" data-gallery-limit="2"></div>
+    <div class="psico-intro-text">
+      <span class="psico-intro-deco">"</span>
+      <p class="section-label reveal">Presenza</p>
+      <h2 class="reveal reveal-delay-1">Uno sguardo<br>che sa <em>restare</em></h2>
+      <div class="psico-divider reveal reveal-delay-1"></div>
+      <div class="psico-intro-body reveal reveal-delay-2">
+        <p>Fotografia e psicologia si incontrano nel desiderio di osservare senza giudicare. Entrambe chiedono cura, presenza e la disponibilità a cogliere ciò che spesso passa inosservato.</p>
+        <p>Per me ogni fotografia è una relazione: un piccolo spazio in cui una storia può emergere con naturalezza.</p>
+      </div>
+    </div>
   </section>
 
   <!-- Lightbox (identico agli altri) -->
@@ -482,24 +535,25 @@
     <p class="section-label reveal">Collaboriamo</p>
     <h2 class="reveal reveal-delay-1">Prenota il tuo<br><em>servizio</em></h2>
     <p class="reveal reveal-delay-2">Ogni viso ha la sua storia da raccontare.</p>
-    <a href="contatti.html" class="btn btn-gold reveal reveal-delay-3">Contattami</a>
+    <a href="/pages/contatti.html" class="btn btn-gold reveal reveal-delay-3">Contattami</a>
   </section>
 
   <!-- Footer -->
   <footer>
     <div class="footer-top">
       <div>
-        <img src="https://simonetussifotografo.wordpress.com/wp-content/uploads/2023/05/logo-w.png" alt="Simone Tussi" class="footer-logo">
+        <img src="/img/altro/logo-w.png" alt="Simone Tussi" class="footer-logo">
         <p class="footer-tagline">Dove la fotografia prende vita</p>
       </div>
       <div>
         <p class="footer-col-title">Esplora</p>
         <ul class="footer-links">
-          <li><a href="ritratti.html">Ritratti</a></li>
-          <li><a href="eventi.html">Eventi</a></li>
-          <li><a href="sport.html">Sport</a></li>
-          <li><a href="psicologia.html">Psicologia</a></li>
-          <li><a href="contatti.html">Contatti</a></li>
+          <li><a href="/pages/chi_sono.html">Chi sono</a></li>
+          <li><a href="/pages/ritratti.html">Ritratti</a></li>
+          <li><a href="/pages/eventi.html">Eventi</a></li>
+          <li><a href="/pages/sport.html">Sport</a></li>
+          <li><a href="/pages/chi_sono/psicologia.html">Psicologia</a></li>
+          <li><a href="/pages/contatti.html">Contatti</a></li>
         </ul>
       </div>
       <div class="footer-contact">
@@ -517,94 +571,9 @@
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="/script.js"></script>
 
-  <script>
-    /* ───────────────────────────────────────────────────
-       PSICOLOGIA — Gallery loader con selezione casuale
-       (max 20 foto, ordine casuale a ogni refresh)
-       ─────────────────────────────────────────────────── */
-    (function () {
-      const SVG_ZOOM = `<svg viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none">
-        <circle cx="11" cy="11" r="8"/>
-        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-        <line x1="11" y1="8" x2="11" y2="14"/>
-        <line x1="8" y1="11" x2="14" y2="11"/>
-      </svg>`;
-
-      const grid    = document.getElementById('psico-grid');
-      const loading = document.getElementById('psico-loading');
-      const MAX     = parseInt(grid.dataset.maxPhotos, 10) || 20;
-      const src     = grid.dataset.gallerySrc;
-
-      /* Fisher-Yates shuffle */
-      function shuffle(arr) {
-        for (let i = arr.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [arr[i], arr[j]] = [arr[j], arr[i]];
-        }
-        return arr;
-      }
-
-      function buildItem(url, alt) {
-        const div = document.createElement('div');
-        div.className = 'masonry-item';
-        const img = document.createElement('img');
-        img.src     = url;
-        img.alt     = alt || '';
-        img.loading = 'lazy';
-        const overlay = document.createElement('div');
-        overlay.className = 'masonry-item-overlay';
-        overlay.innerHTML = SVG_ZOOM;
-        div.appendChild(img);
-        div.appendChild(overlay);
-        return div;
-      }
-
-      async function loadGallery() {
-        try {
-          const res  = await fetch(src);
-          if (!res.ok) throw new Error(`HTTP ${res.status}`);
-          const data = await res.json();
-
-          const base   = data.base   || '';
-          let   photos = data.photos || [];
-
-          if (photos.length === 0) {
-            loading.textContent = 'Galleria in aggiornamento';
-            return;
-          }
-
-          /* 1. mescola tutte le foto */
-          shuffle(photos);
-
-          /* 2. prendi al massimo MAX */
-          photos = photos.slice(0, MAX);
-
-          /* 3. costruisci e aggiungi gli item */
-          photos.forEach(photo => {
-            const url  = /^https?:\/\//.test(photo.src) ? photo.src : base + photo.src;
-            grid.appendChild(buildItem(url, photo.alt || ''));
-          });
-
-          /* 4. mostra la griglia, nascondi il loading */
-          loading.style.display = 'none';
-          grid.style.display    = '';
-
-          /* 5. inizializza il lightbox sul grid (riusa la funzione di script.js) */
-          if (typeof initLightbox === 'function') {
-            initLightbox(grid);
-          }
-
-        } catch (err) {
-          console.warn('[Psicologia gallery] Errore:', err);
-          loading.textContent = 'Galleria temporaneamente non disponibile';
-        }
-      }
-
-      document.addEventListener('DOMContentLoaded', loadGallery);
-    })();
-  </script>
+  
 
   <script>
     /* Theme toggle */
