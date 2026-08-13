@@ -25,17 +25,21 @@
       loader.innerHTML = '<img src="/img/altro/logo-w.png" alt=""><span>Caricamento fotografie</span>';
       document.body.appendChild(loader);
     }
+    const logo = loader.querySelector('img');
+    if (logo) logo.src = document.documentElement.classList.contains('light-mode') ? '/img/altro/logo-b.png' : '/img/altro/logo-w.png';
     return loader;
   }
 
   function showPageLoader() {
     loadingVisible = true;
+    document.documentElement.classList.add('loading-active');
     requestAnimationFrame(() => pageLoader().classList.add('is-visible'));
   }
 
   function hidePageLoader() {
     if (!loadingVisible || pendingGalleries > 0) return;
     pageLoader().classList.remove('is-visible');
+    document.documentElement.classList.remove('loading-active');
     loadingVisible = false;
   }
 

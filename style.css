@@ -1622,3 +1622,8 @@ body.light-mode .custom-select-dropdown li.selected {
   letter-spacing: 0.28em;
   text-transform: uppercase;
 }
+html.loading-active,
+html.loading-active body {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
