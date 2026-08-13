@@ -62,21 +62,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
   reveals.forEach(el => revealObserver.observe(el));
 
-  // ─── Gallery da JSON ────────────────────────────────────
-  //
-  //  Per ogni .masonry-grid con l'attributo [data-gallery-src],
-  //  carica il JSON indicato e inietta i .masonry-item.
-  //
-  //  Formato JSON (file in /galleries/):
-  //  {
-  //    "base": "https://…/uploads/2024/01/",   ← URL base (opzionale)
-  //    "photos": [
-  //      { "src": "foto-1.webp", "alt": "Descrizione" },
-  //      { "src": "https://…/foto-completa.jpg" }  ← URL assoluto: base ignorata
-  //    ]
-  //  }
-  //
-  
   const SVG_ZOOM = `<svg viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none">
     <circle cx="11" cy="11" r="8"/>
     <line x1="21" y1="21" x2="16.65" y2="16.65"/>
