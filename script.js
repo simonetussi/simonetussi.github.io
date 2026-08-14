@@ -84,12 +84,34 @@
     pendingGalleries += 1;
 
     try {
-      const response = await fetch(source, { cache: 'force-cache' });
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      const data = await response.json();
-      const base = data.base || '';
+      // Se è la prima volta che chiamiamo questo JSON nella pagina, creamo il mazzo
+      if (!galleryPools[source]) {
+        const response = await fetch(source);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const data = await response.json();
+        galleryPools[source] = {
+          base: data.base || '',
+          photos: shuffle(data.photos || []),
+          currentIndex: 0 // Segna da dove iniziare a distribuire le foto
+        };
+      }
+
+      const pool = galleryPools[source];
       const limit = Number.parseInt(grid.dataset.galleryLimit, 10);
-      const photos = shuffle(data.photos || []).slice(0, Number.isFinite(limit) ? limit : undefined);
+      const count = Number.isFinite(limit) ? limit : pool.photos.length;
+      
+      // Distribuiamo le foto pescando dal mazzo globale
+      const photos = [];
+      for (let i = 0; i < count; i++) {
+        // Se le foto nel mazzo finiscono, lo rimescoliamo e ricominciamo (sicurezza extra)
+        if (pool.currentIndex >= pool.photos.length) {
+          pool.photos = shuffle(pool.photos);
+          pool.currentIndex = 0;
+        }
+        photos.push(pool.photos[pool.currentIndex]);
+        pool.currentIndex++;
+      }
+
       if (!photos.length) {
         showGalleryError(grid, 'Galleria in aggiornamento');
         return;
@@ -97,7 +119,7 @@
 
       const entries = photos.map(photo => ({
         alt: photo.alt || '',
-        url: /^https?:\/\//.test(photo.src) || photo.src.startsWith('/') ? photo.src : base + photo.src
+        url: /^https?:\/\//.test(photo.src) || photo.src.startsWith('/') ? photo.src : pool.base + photo.src
       }));
       await preloadImages(entries.map(entry => entry.url));
       entries.forEach(entry => grid.appendChild(galleryItem(entry.url, entry.alt)));
@@ -189,10 +211,18 @@
       range.addEventListener('input', update); update();
     });
 
+    // Inizializza le gallerie a griglia classica
     document.querySelectorAll('.masonry-grid[data-gallery-src]').forEach(grid => {
       if (!grid.closest('[data-private-content][hidden]')) loadGalleryFromJSON(grid);
     });
-    document.querySelectorAll('.masonry-grid:not([data-gallery-src])').forEach(initLightbox);
+    
+    // Inizializza il mosaico ritagliato (psicologia)
+    document.querySelectorAll('.cropped-mosaic[data-gallery-src]').forEach(grid => {
+      if (!grid.closest('[data-private-content][hidden]')) loadGalleryFromJSON(grid);
+    });
+
+    // Attiva la lente d'ingrandimento per entrambi i tipi
+    document.querySelectorAll('.masonry-grid:not([data-gallery-src]), .cropped-mosaic').forEach(initLightbox);
 
     document.querySelectorAll('[data-private-gallery]').forEach(gallery => {
       const lock = gallery.querySelector('[data-private-lock]');

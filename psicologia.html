@@ -109,26 +109,80 @@
       border-right: 1px solid rgba(201,168,76,0.1);
       padding: 80px 64px 80px 72px;
     }
-    .psico-dynamic-photos.masonry-grid {
-      display: block; /* Disattiva la grid per sbloccare la masonry */
-      columns: 2;     /* Forza due colonne */
-      column-gap: 3px;
-    }
-    .psico-dynamic-photos .masonry-item {
-      display: block;
-      margin: 0;
-      overflow: hidden;
-    }
-    .psico-dynamic-photos .masonry-item img {
+/* ── Il Mosaico "Bento Box" (Intelligente e Flessibile) ── */
+    .cropped-mosaic {
+      display: grid;
+      gap: 4px;
       width: 100%;
-      height: auto; /* Lascia che la foto decida la sua altezza in base alle proporzioni */
+      height: 100%; /* Si adatta all'altezza del testo */
+      /* Griglia invisibile 6x6 per fare calcoli geometrici perfetti */
+      grid-template-columns: repeat(6, 1fr);
+      grid-template-rows: repeat(6, 1fr);
+      padding: 0;
+      margin: 0;
+    }
+
+    .cropped-mosaic .masonry-item {
+      position: relative;
+      overflow: hidden;
+      margin: 0;
+      /* Fallback se ci fossero più di 5 foto */
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+
+    /* Le immagini coprono la loro cella con dignità, senza deformarsi */
+    .cropped-mosaic .masonry-item img {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; 
       display: block;
-      filter: brightness(0.88) saturate(0.8);
+      filter: brightness(0.9) saturate(0.8);
       transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.4s ease;
     }
-    .psico-dynamic-photos .masonry-item:hover img {
+    .cropped-mosaic .masonry-item:hover img {
       transform: scale(1.04);
       filter: brightness(1) saturate(1);
+    }
+
+    /* ── REGOLE AUTODATTANTI IN BASE AL NUMERO DI FOTO ── */
+
+    /* Se c'è 1 SOLA FOTO: Copre tutto */
+    .cropped-mosaic .masonry-item:first-child:nth-last-child(1) {
+      grid-column: 1 / -1; grid-row: 1 / -1;
+    }
+
+    /* Se ci sono 2 FOTO: Affiancate verticalmente a metà (Ottime per i ritratti) */
+    .cropped-mosaic .masonry-item:first-child:nth-last-child(2),
+    .cropped-mosaic .masonry-item:first-child:nth-last-child(2) ~ .masonry-item {
+      grid-column: span 3; grid-row: 1 / -1;
+    }
+
+    /* Se ci sono 3 FOTO: Una grande a sinistra, due medie impilate a destra */
+    .cropped-mosaic .masonry-item:first-child:nth-last-child(3) {
+      grid-column: 1 / 4; grid-row: 1 / -1;
+    }
+    .cropped-mosaic .masonry-item:first-child:nth-last-child(3) ~ .masonry-item:nth-child(2) {
+      grid-column: 4 / -1; grid-row: 1 / 4;
+    }
+    .cropped-mosaic .masonry-item:first-child:nth-last-child(3) ~ .masonry-item:nth-child(3) {
+      grid-column: 4 / -1; grid-row: 4 / -1;
+    }
+
+    /* Se ci sono 4 FOTO: Griglia 2x2 classica */
+    .cropped-mosaic .masonry-item:first-child:nth-last-child(4),
+    .cropped-mosaic .masonry-item:first-child:nth-last-child(4) ~ .masonry-item {
+      grid-column: span 3; grid-row: span 3;
+    }
+
+    /* Se ci sono 5 FOTO: Due blocchi larghi sopra, tre blocchi verticali sotto */
+    .cropped-mosaic .masonry-item:first-child:nth-last-child(5),
+    .cropped-mosaic .masonry-item:first-child:nth-last-child(5) ~ .masonry-item:nth-child(2) {
+      grid-column: span 3; grid-row: 1 / 4;
+    }
+    .cropped-mosaic .masonry-item:first-child:nth-last-child(5) ~ .masonry-item:nth-child(n+3) {
+      grid-column: span 2; grid-row: 4 / -1;
     }
     /* Gold shimmer on top edge */
     .psico-intro-photo::after {
@@ -357,7 +411,6 @@
       .psico-hero { padding: 0 24px 60px; }
       .psico-intro-text { padding: 48px 24px; }
       .psico-intro--reverse .psico-intro-text { padding: 48px 24px; }
-      .psico-dynamic-photos .masonry-item img { min-height: 280px; }
       .psico-gallery-section { padding: 64px 20px 80px; }
       .psico-gallery-header { flex-direction: column; align-items: flex-start; }
       .psico-masonry { columns: 1; }
@@ -496,17 +549,21 @@
     </div>
 
     <div
-      class="psico-intro-photo psico-dynamic-photos masonry-grid"
+      class="psico-intro-photo cropped-mosaic"
       data-gallery-src="./galleries/chi_sono_psicologia.json"
-      data-gallery-limit="2"
+      data-gallery-limit="3"
     ></div>
 
   </section>
 
   <!-- Lightbox (identico agli altri) -->
   <section class="psico-intro">
-    <div class="psico-intro-photo psico-dynamic-photos masonry-grid" 
-      data-gallery-src="./galleries/chi_sono_psicologia.json" data-gallery-limit="2"></div>
+    <div
+      class="psico-intro-photo cropped-mosaic"
+      data-gallery-src="./galleries/chi_sono_psicologia.json"
+      data-gallery-limit="3"
+    ></div>
+
     <div class="psico-intro-text">
       <span class="psico-intro-deco">"</span>
       <div class="psico-divider reveal reveal-delay-1"></div>
