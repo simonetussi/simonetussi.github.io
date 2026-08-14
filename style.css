@@ -1057,26 +1057,28 @@ footer {
   }
   
   .nav-links { 
-    display: flex; /* Rimuoviamo il display:none */
+    display: flex;
     flex-direction: column; 
     position: fixed; 
     top: 0; 
+    bottom: 0; /* ANCORA IL MENU AL FONDO DELLO SCHERMO */
     right: 0; 
     width: 260px; 
     
-    /* 100dvh si adatta all'altezza dinamica di Chrome/Safari mobile */
-    height: 100vh; 
-    height: 100dvh; 
+    /* ELIMINA height: 100vh; e height: 100dvh; */
     
     background: var(--bg2); 
     padding: 100px 40px 40px; 
     gap: 28px; 
     border-left: 1px solid rgba(201,168,76,0.1); 
     
-    /* Sposta il menu fuori dallo schermo a destra anziché nasconderlo */
     transform: translateX(100%); 
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 1000;
+    
+    /* Aggiunto: permette di scorrere il menu se lo schermo è molto piccolo */
+    overflow-y: auto; 
+    overscroll-behavior: contain; /* Impedisce che lo scroll del menu faccia scorrere la pagina dietro */
   }
   
   /* Quando clicchi, il menu scorre elegantemente dentro */
