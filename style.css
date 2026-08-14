@@ -48,6 +48,25 @@ button { cursor: none; }
   white-space: nowrap;
   border: 0;
 }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+[hidden] { display: none !important; }
+html { 
+  scroll-behavior: smooth; 
+  overflow-x: hidden; /* Aggiunto per bloccare l'allargamento su mobile */
+  width: 100vw;       /* Forza la larghezza alla viewport */
+}
+body {
+  background: var(--bg);
+  color: var(--cream);
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 1.7;
+  cursor: none;
+  overflow-x: hidden; /* Mantenuto */
+  position: relative; /* Aggiunto per stabilità */
+  width: 100%;        /* Aggiunto per stabilità */
+}
 
 /* ─── Custom Cursor ─────────────────────────────────────── */
 #cursor {
@@ -1030,10 +1049,42 @@ footer {
   .private-lock-section { padding-left: 28px; padding-right: 28px; }
 }
 @media (max-width: 768px) {
-  .nav-links { display: none; flex-direction: column; position: fixed; top: 0; right: 0; width: 260px; height: 100vh; background: var(--bg2); padding: 100px 40px 40px; gap: 28px; border-left: 1px solid rgba(201,168,76,0.1); }
-  .nav-links.open { display: flex; }
+  /* Assicura che il pulsante menu sia sempre sopra la navbar quando aperta */
+  .nav-toggle { 
+    display: flex; 
+    z-index: 1001; 
+    position: relative;
+  }
+  
+  .nav-links { 
+    display: flex; /* Rimuoviamo il display:none */
+    flex-direction: column; 
+    position: fixed; 
+    top: 0; 
+    right: 0; 
+    width: 260px; 
+    
+    /* 100dvh si adatta all'altezza dinamica di Chrome/Safari mobile */
+    height: 100vh; 
+    height: 100dvh; 
+    
+    background: var(--bg2); 
+    padding: 100px 40px 40px; 
+    gap: 28px; 
+    border-left: 1px solid rgba(201,168,76,0.1); 
+    
+    /* Sposta il menu fuori dallo schermo a destra anziché nasconderlo */
+    transform: translateX(100%); 
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+  }
+  
+  /* Quando clicchi, il menu scorre elegantemente dentro */
+  .nav-links.open { 
+    transform: translateX(0); 
+  }
+  
   .nav-links a { font-size: 14px; }
-  .nav-toggle { display: flex; }
   .masonry-grid { columns: 2; }
   .services-grid { grid-template-columns: 1fr; }
   .footer-top { grid-template-columns: 1fr; }
