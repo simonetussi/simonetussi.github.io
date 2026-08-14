@@ -1,12 +1,12 @@
 {
   "base": "/img/chi_sono/",
   "photos": [
-    { "src": "psicologia (1).webp", "alt": "Psicologia" },
-    { "src": "psicologia (2).webp", "alt": "Psicologia" },
-    { "src": "psicologia (3).webp", "alt": "Psicologia" },
-    { "src": "psicologia (4).webp", "alt": "Psicologia" },
-    { "src": "psicologia (5).webp", "alt": "Psicologia" },
-    { "src": "psicologia (6).webp", "alt": "Psicologia" },
-    { "src": "psicologia (7).webp", "alt": "Psicologia" }
+    { "src": "psicologia(1).webp", "alt": "Psicologia" },
+    { "src": "psicologia(2).webp", "alt": "Psicologia" },
+    { "src": "psicologia(3).webp", "alt": "Psicologia" },
+    { "src": "psicologia(4).webp", "alt": "Psicologia" },
+    { "src": "psicologia(5).webp", "alt": "Psicologia" },
+    { "src": "psicologia(6).webp", "alt": "Psicologia" },
+    { "src": "psicologia(7).webp", "alt": "Psicologia" }
   ]
 }
