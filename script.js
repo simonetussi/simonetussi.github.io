@@ -75,6 +75,8 @@
       empty.textContent = message;
     }
   }
+  
+  const galleryPools = {}; // Memoria globale per il "mazzo di foto"
 
   async function loadGalleryFromJSON(grid) {
     if (grid.dataset.galleryLoaded === 'true') return;
@@ -84,32 +86,31 @@
     pendingGalleries += 1;
 
     try {
-      // Se è la prima volta che chiamiamo questo JSON nella pagina, creamo il mazzo
+      // FIX DEFINITIVO: Salviamo l'operazione in sospeso. 
+      // Se due griglie partono insieme, la seconda attende la prima senza creare doppioni.
       if (!galleryPools[source]) {
-        const response = await fetch(source);
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        const data = await response.json();
-        galleryPools[source] = {
-          base: data.base || '',
-          photos: shuffle(data.photos || []),
-          currentIndex: 0 // Segna da dove iniziare a distribuire le foto
-        };
+        galleryPools[source] = fetch(source)
+          .then(res => res.json())
+          .then(data => ({
+            base: data.base || '',
+            photos: shuffle(data.photos || []),
+            currentIndex: 0
+          }));
       }
 
-      const pool = galleryPools[source];
+      const pool = await galleryPools[source];
       const limit = Number.parseInt(grid.dataset.galleryLimit, 10);
       const count = Number.isFinite(limit) ? limit : pool.photos.length;
       
-      // Distribuiamo le foto pescando dal mazzo globale
       const photos = [];
       for (let i = 0; i < count; i++) {
-        // Se le foto nel mazzo finiscono, lo rimescoliamo e ricominciamo (sicurezza extra)
+        // Se si svuota il mazzo, lo rimescola
         if (pool.currentIndex >= pool.photos.length) {
           pool.photos = shuffle(pool.photos);
           pool.currentIndex = 0;
         }
         photos.push(pool.photos[pool.currentIndex]);
-        pool.currentIndex++;
+        pool.currentIndex++; // Avanza il contatore globale per il prossimo blocco
       }
 
       if (!photos.length) {
