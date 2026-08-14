@@ -110,11 +110,9 @@
       padding: 80px 64px 80px 72px;
     }
     .psico-dynamic-photos.masonry-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      columns: auto;
+      display: block; /* Disattiva la grid per sbloccare la masonry */
+      columns: 2;     /* Forza due colonne */
       column-gap: 3px;
-      align-items: stretch;
     }
     .psico-dynamic-photos .masonry-item {
       display: block;
@@ -123,9 +121,8 @@
     }
     .psico-dynamic-photos .masonry-item img {
       width: 100%;
-      height: 100%;
-      min-height: 420px;
-      object-fit: cover;
+      height: auto; /* Lascia che la foto decida la sua altezza in base alle proporzioni */
+      display: block;
       filter: brightness(0.88) saturate(0.8);
       transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.4s ease;
     }

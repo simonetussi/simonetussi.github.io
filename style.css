@@ -1191,7 +1191,7 @@ body.light-mode p,
 body.light-mode .a:active {
   text-shadow: 0.5px 0.5px 0.5px rgba(12, 11, 9, 0.7);
 }
-s
+
 /* QUI SOPRA */
 
 /* Nav non-scrolled in light mode */
@@ -1236,7 +1236,7 @@ body.light-mode .service-card-title {
 html.light-mode body .service-card img,
 body.light-mode .service-card img {
   filter: brightness(0.9) saturate(0.9);
-}s
+}
 html.light-mode body .service-card:hover img,
 body.light-mode .service-card:hover img {
   filter: brightness(1) saturate(0.95);
