@@ -1,7 +1,6 @@
 {
   "base": "/img/chiesa/",
   "photos": [
-    { "src": "chiesa (0).webp",  "alt": "Chiesa 0"  },
     { "src": "chiesa (1).webp",  "alt": "Chiesa 1"  },
     { "src": "chiesa (2).webp",  "alt": "Chiesa 2"  },
     { "src": "chiesa (3).webp",  "alt": "Chiesa 3"  },
@@ -91,6 +90,7 @@
     { "src": "chiesa (87).webp", "alt": "Chiesa 87" },
     { "src": "chiesa (88).webp", "alt": "Chiesa 88" },
     { "src": "chiesa (89).webp", "alt": "Chiesa 89" },
-    { "src": "chiesa (90).webp", "alt": "Chiesa 90" }
+    { "src": "chiesa (90).webp", "alt": "Chiesa 90" },
+    { "src": "chiesa (91).webp", "alt": "Chiesa 91" }
   ]
 }

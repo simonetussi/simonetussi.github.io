@@ -1,7 +1,6 @@
 {
   "base": "/img/eventi/",
   "photos": [
-    { "src": "eventi (0).webp",  "alt": "Evento 0"  },
     { "src": "eventi (1).webp",  "alt": "Evento 1"  },
     { "src": "eventi (2).webp",  "alt": "Evento 2"  },
     { "src": "eventi (3).webp",  "alt": "Evento 3"  },
@@ -50,6 +49,7 @@
     { "src": "eventi (46).webp", "alt": "Evento 46" },
     { "src": "eventi (47).webp", "alt": "Evento 47" },
     { "src": "eventi (48).webp", "alt": "Evento 48" },
-    { "src": "eventi (49).webp", "alt": "Evento 49" }
+    { "src": "eventi (49).webp", "alt": "Evento 49" },
+    { "src": "eventi (50).webp", "alt": "Evento 50" }
   ]
 }
