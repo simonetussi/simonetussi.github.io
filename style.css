@@ -28,9 +28,7 @@
 
 html { 
   scroll-behavior: smooth; 
-  width: 100vw;       
-  /* ATTIVA LO SCROLL SNAPPING A LIVELLO GLOBALE */
-  scroll-snap-type: y mandatory; 
+  width: 100vw;
 }
 
 body {
@@ -42,8 +40,7 @@ body {
   line-height: 1.7;
   cursor: none;
   position: relative; 
-  width: 100%;        
-  /* FONDAMENTALE: usa clip, non hidden, per non rompere lo snap */
+  width: 100%;
   overflow-x: clip; 
 }
 
