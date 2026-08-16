@@ -1734,14 +1734,14 @@ html.loading-active body {
 /* Fix mobile vero e proprio */
 @media (max-width: 680px) {
   .cropped-mosaic {
-    grid-template-columns: 1fr; /* Colonna singola invece che 2 schiacciate */
+    grid-template-columns: 1fr; 
     min-height: auto; 
     gap: 12px;
   }
   .cropped-mosaic .masonry-item {
-    aspect-ratio: 4 / 3; /* Forziamo un aspect ratio stabile che non deforma l'immagine */
+    /* MODIFICATO: Da 4/3 (orizzontale) a 4/5 (verticale, stile Instagram) */
+    aspect-ratio: 4 / 5; 
   }
-  /* Annulliamo la regola "magica" del dispari su mobile per evitare bug visivi */
   .cropped-mosaic .masonry-item:last-child:nth-child(odd) {
     grid-column: auto;
   }
