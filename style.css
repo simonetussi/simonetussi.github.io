@@ -1038,7 +1038,7 @@ footer {
   .private-lock-section { padding-left: 28px; padding-right: 28px; }
 }
 @media (max-width: 768px) {
-  /* Assicura che il pulsante menu sia sempre sopra la navbar quando aperta */
+/* Assicura che il pulsante menu sia sempre sopra la navbar quando aperta */
   .nav-toggle { 
     display: flex; 
     z-index: 1001; 
@@ -1048,13 +1048,14 @@ footer {
   .nav-links { 
     display: flex;
     flex-direction: column; 
+    
+    /* MODIFICA CHIAVE: Fissa il menu allo schermo intero, dall'alto al basso */
     position: fixed; 
     top: 0; 
-    bottom: 0; /* ANCORA IL MENU AL FONDO DELLO SCHERMO */
     right: 0; 
-    width: 260px; 
+    bottom: 0; /* Lo ancora al fondo dello schermo */
     
-    /* ELIMINA height: 100vh; e height: 100dvh; */
+    width: 260px; 
     
     background: var(--bg2); 
     padding: 100px 40px 40px; 
@@ -1065,9 +1066,9 @@ footer {
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 1000;
     
-    /* Aggiunto: permette di scorrere il menu se lo schermo è molto piccolo */
+    /* MODIFICA CHIAVE: Disabilita lo scorrimento del menu, a meno che i link non sbrodolino */
     overflow-y: auto; 
-    overscroll-behavior: contain; /* Impedisce che lo scroll del menu faccia scorrere la pagina dietro */
+    overscroll-behavior: contain;
   }
   
   /* Quando clicchi, il menu scorre elegantemente dentro */
