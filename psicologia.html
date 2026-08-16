@@ -349,15 +349,15 @@
       line-height: 1.8;
     }
 
-    /* ── Responsive ─────────────────────────────────── */
     @media (max-width: 1024px) {
       .psico-intro {
         grid-template-columns: 1fr;
         min-height: auto;
       }
       .psico-intro-photo {
-        height: 60vw;
-        max-height: 520px;
+        /* Alziamo il limite per tablet e schermi medi */
+        height: 80vw;
+        max-height: 700px;
       }
       .psico-intro-text {
         padding: 64px 48px;
@@ -372,10 +372,18 @@
       }
       .psico-masonry { columns: 2; }
     }
+
     @media (max-width: 680px) {
       .psico-hero { padding: 0 24px 60px; }
       .psico-intro-text { padding: 48px 24px; }
       .psico-intro--reverse .psico-intro-text { padding: 48px 24px; }
+      
+      /* AGGIUNTO: Su smartphone forziamo un'altezza verticale imponente */
+      .psico-intro-photo {
+        height: 125vw; 
+        max-height: 85vh;
+      }
+
       .psico-gallery-section { padding: 64px 20px 80px; }
       .psico-gallery-header { flex-direction: column; align-items: flex-start; }
       .psico-masonry { columns: 1; }

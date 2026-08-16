@@ -302,14 +302,6 @@ document.addEventListener("DOMContentLoaded", () => {
         originalItem.click(); 
       }
     } else if (!item.dataset.lightboxBound) {
-       // Clic su un originale che non ha ancora il listener (caso raro ma possibile)
-       // Puoi chiamare direttamente openLightbox se è disponibile globalmente, 
-       // o delegare l'apertura. Siccome openLightbox è incapsulata in (function(){...}) 
-       // nel tuo script.js, il trucco migliore è simulare il click sull'immagine 
-       // se è già legata, altrimenti esporre openLightbox a window.
-       
-       // Assumendo che initLightbox l'abbia già legata, il click() dovrebbe funzionare
-       // Se non funziona, dobbiamo esporre openLightbox.
     }
   });
 });
