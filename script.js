@@ -253,3 +253,63 @@
   else initialise();
   window.loadGalleryFromJSON = loadGalleryFromJSON;
 })();
+
+document.addEventListener("DOMContentLoaded", () => {
+  const track = document.querySelector(".marquee-track");
+  if (!track) return;
+
+  const observer = new MutationObserver((mutations, obs) => {
+    const items = Array.from(track.children);
+
+    if (items.length > 0) {
+      items.forEach((item) => {
+        item.classList.add("original-item");
+
+        const clone = item.cloneNode(true);
+        clone.classList.remove("original-item");
+        clone.classList.add("cloned-item");
+        // Rimuoviamo data-lightbox-bound per assicurarci che non interferisca
+        delete clone.dataset.lightboxBound; 
+
+        track.appendChild(clone);
+      });
+
+      obs.disconnect();
+    }
+  });
+
+  observer.observe(track, { childList: true });
+
+  // Delegazione degli eventi per i clic sul carosello
+  track.addEventListener("click", (e) => {
+    // Troviamo l'elemento .masonry-item più vicino al punto cliccato
+    const item = e.target.closest(".masonry-item");
+    if (!item) return; // Clic non su un'immagine
+
+    e.preventDefault();
+    e.stopPropagation(); // Evita che il clic si propaghi troppo
+
+    const img = item.querySelector("img");
+    if (!img) return;
+
+    const imgSrc = img.src;
+
+    if (item.classList.contains("cloned-item")) {
+      // Se abbiamo cliccato su un clone, troviamo l'originale corrispondente
+      const originalItem = track.querySelector(`.original-item img[src="${imgSrc}"]`)?.closest(".masonry-item");
+      if (originalItem) {
+        // Simuliamo un click sull'elemento originale
+        originalItem.click(); 
+      }
+    } else if (!item.dataset.lightboxBound) {
+       // Clic su un originale che non ha ancora il listener (caso raro ma possibile)
+       // Puoi chiamare direttamente openLightbox se è disponibile globalmente, 
+       // o delegare l'apertura. Siccome openLightbox è incapsulata in (function(){...}) 
+       // nel tuo script.js, il trucco migliore è simulare il click sull'immagine 
+       // se è già legata, altrimenti esporre openLightbox a window.
+       
+       // Assumendo che initLightbox l'abbia già legata, il click() dovrebbe funzionare
+       // Se non funziona, dobbiamo esporre openLightbox.
+    }
+  });
+});

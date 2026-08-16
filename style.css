@@ -1680,3 +1680,80 @@ html.loading-active body {
   overflow: hidden;
   overscroll-behavior: none;
 }
+
+/* ══════════════════════════════════════════════
+   CAROSELLO SCORREVOLE
+   ══════════════════════════════════════════════ */
+.marquee-wrapper {
+  width: 100%;
+  overflow: hidden;
+  background: var(--bg2); /* Usa lo sfondo secondario per staccare dal footer */
+  padding: 60px 0;
+  border-top: 1px solid rgba(201,168,76,0.1);
+  position: relative;
+}
+
+/* Disabilitiamo il comportamento a colonne del masonry originale per questa track */
+.marquee-track.masonry-grid {
+  display: flex !important;
+  columns: auto !important;
+  gap: 16px;
+  width: max-content;
+  animation: marqueeScroll 40s linear infinite;
+}
+
+/* Pausa all'hover */
+.marquee-wrapper:hover .marquee-track.masonry-grid {
+  animation-play-state: paused;
+}
+
+/* Dimensioni fisse per le foto del carosello */
+.marquee-track .masonry-item {
+  width: 280px;
+  height: 380px;
+  margin-bottom: 0 !important; /* resetta il margine del masonry */
+  flex-shrink: 0;
+  break-inside: auto;
+  cursor: pointer; /* Aggiunto: indica che è cliccabile */
+  pointer-events: auto; /* Aggiunto: assicura che riceva i clic */
+}
+
+.marquee-track .masonry-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@keyframes marqueeScroll {
+  0% { transform: translateX(0); }
+  /* 8px è la metà del gap (16px), assicura un loop matematicamente perfetto */
+  100% { transform: translateX(calc(-50% - 8px)); } 
+}
+
+/* ══════════════════════════════════════════════
+   FIX MOSAICO MOBILE (.cropped-mosaic)
+   ══════════════════════════════════════════════ */
+
+/* Sotto i 1024px la griglia madre si impila, e il mosaico perde 
+   l'altezza 100% rispetto al testo. Diamo un'altezza minima decorosa. */
+@media (max-width: 1024px) {
+  .cropped-mosaic {
+    min-height: 500px;
+  }
+}
+
+/* Fix mobile vero e proprio */
+@media (max-width: 680px) {
+  .cropped-mosaic {
+    grid-template-columns: 1fr; /* Colonna singola invece che 2 schiacciate */
+    min-height: auto; 
+    gap: 12px;
+  }
+  .cropped-mosaic .masonry-item {
+    aspect-ratio: 4 / 3; /* Forziamo un aspect ratio stabile che non deforma l'immagine */
+  }
+  /* Annulliamo la regola "magica" del dispari su mobile per evitare bug visivi */
+  .cropped-mosaic .masonry-item:last-child:nth-child(odd) {
+    grid-column: auto;
+  }
+}
