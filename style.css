@@ -25,7 +25,14 @@
 /* ─── Reset ─────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 [hidden] { display: none !important; }
-html { scroll-behavior: smooth; }
+
+html { 
+  scroll-behavior: smooth; 
+  width: 100vw;       
+  /* ATTIVA LO SCROLL SNAPPING A LIVELLO GLOBALE */
+  scroll-snap-type: y mandatory; 
+}
+
 body {
   background: var(--bg);
   color: var(--cream);
@@ -34,8 +41,12 @@ body {
   font-size: 15px;
   line-height: 1.7;
   cursor: none;
-  overflow-x: hidden;
+  position: relative; 
+  width: 100%;        
+  /* FONDAMENTALE: usa clip, non hidden, per non rompere lo snap */
+  overflow-x: clip; 
 }
+
 img { display: block; max-width: 100%; height: auto; }
 a { color: inherit; text-decoration: none; }
 button { cursor: none; }
@@ -47,25 +58,6 @@ button { cursor: none; }
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
-}
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-[hidden] { display: none !important; }
-html { 
-  scroll-behavior: smooth; 
-  overflow-x: hidden; /* Aggiunto per bloccare l'allargamento su mobile */
-  width: 100vw;       /* Forza la larghezza alla viewport */
-}
-body {
-  background: var(--bg);
-  color: var(--cream);
-  font-family: var(--font-body);
-  font-weight: 300;
-  font-size: 15px;
-  line-height: 1.7;
-  cursor: none;
-  overflow-x: hidden; /* Mantenuto */
-  position: relative; /* Aggiunto per stabilità */
-  width: 100%;        /* Aggiunto per stabilità */
 }
 
 /* ─── Custom Cursor ─────────────────────────────────────── */

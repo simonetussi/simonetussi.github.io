@@ -392,6 +392,36 @@
     body.light-mode .psico-cta {
       background: #f0ebe0;
     }
+
+    /* ══════════════════════════════════════════════
+   SCROLL SNAPPING (Scorrimento a blocchi)
+   ══════════════════════════════════════════════ */
+
+
+/* Diciamo al browser QUALI elementi devono calamitarsi all'inizio (start) dello schermo */
+.psico-hero,
+.psico-intro,
+.marquee-wrapper,
+.psico-cta,
+footer {
+  scroll-snap-align: start;
+  
+  /* Questa riga assicura che un colpo di rotellina troppo forte 
+     non faccia saltare 2 o 3 blocchi in un colpo solo. Si ferma sempre al successivo. */
+  scroll-snap-stop: always; 
+}
+
+/* ── Salvavita per il Mobile ── */
+/* Su schermi piccoli, le tue sezioni di testo+foto potrebbero impilarsi 
+   e diventare più alte dello schermo stesso. Se tenessimo "mandatory", 
+   il browser ti impedirebbe di leggere il centro del blocco (ti spingerebbe 
+   sempre in cima o in fondo). Usando "proximity", manteniamo l'effetto 
+   ma permettiamo all'utente di fermarsi liberamente a metà blocco se necessario. */
+@media (max-width: 1024px) {
+  html {
+    scroll-snap-type: y proximity;
+  }
+}
   </style>
 </head>
 <body>
