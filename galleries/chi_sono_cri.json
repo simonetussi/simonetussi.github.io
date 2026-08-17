@@ -1,0 +1,22 @@
+{
+  "base": "/img/chi_sono/",
+  "photos": [
+    { "src": "cri(1).webp", "alt": "CRI 1" },
+    { "src": "cri(2).webp", "alt": "CRI 2" },
+    { "src": "cri(3).webp", "alt": "CRI 3" },
+    { "src": "cri(4).webp", "alt": "CRI 4" },
+    { "src": "cri(5).webp", "alt": "CRI 5" },
+    { "src": "cri(6).webp", "alt": "CRI 6" },
+    { "src": "cri(7).webp", "alt": "CRI 7" },
+    { "src": "cri(8).webp", "alt": "CRI 8" },
+    { "src": "cri(9).webp", "alt": "CRI 9" },
+    { "src": "cri(10).webp", "alt": "CRI 10" },
+    { "src": "cri(11).webp", "alt": "CRI 11" },
+    { "src": "cri(12).webp", "alt": "CRI 12" },
+    { "src": "cri(13).webp", "alt": "CRI 13" },
+    { "src": "cri(14).webp", "alt": "CRI 14" },
+    { "src": "cri(15).webp", "alt": "CRI 15" },
+    { "src": "cri(16).webp", "alt": "CRI 16" },
+    { "src": "cri(17).webp", "alt": "CRI 17" }
+  ]
+}

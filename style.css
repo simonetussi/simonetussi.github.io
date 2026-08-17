@@ -1392,6 +1392,9 @@ footer {
   .masonry-grid {
     columns: 1;
   }
+  .masonry-grid .masonry-item {
+    margin-bottom: 100px; /* Diamo aria tra le foto singole in colonna */
+  } 
 
   .postprod-compare {
     min-height: 340px;
@@ -2222,11 +2225,19 @@ html.loading-active body {
     grid-template-columns: 1fr;
     min-height: auto;
     gap: 12px;
+    height: auto; /* IMPORTANTE: sblocca l'altezza */
+  }
+
+  /* Rimuoviamo il position: absolute che schiaccia le immagini una sull'altra se l'altezza non è definita */
+  .cropped-mosaic .masonry-item img {
+    position: relative; /* Cambiato da absolute */
+    height: auto;
+    min-height: 450px; /* Altezza minima imposta per assicurarsi che le immagini riempiano bene lo schermo */
   }
 
   .cropped-mosaic .masonry-item {
-    /* MODIFICATO: Da 4/3 (orizzontale) a 4/5 (verticale, stile Instagram) */
     aspect-ratio: 4 / 5;
+    height: auto;
   }
 
   .cropped-mosaic .masonry-item:last-child:nth-child(odd) {
