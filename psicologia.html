@@ -116,11 +116,11 @@
 /* ── Griglia Flessibile e Autoadattante ── */
     .cropped-mosaic {
       display: grid;
-      grid-template-columns: repeat(2, 1fr); /* Crea sempre 2 colonne fisse */
-      grid-auto-rows: 1fr; /* Le righe si dividono l'altezza SEMPRE in parti uguali */
+      grid-template-columns: repeat(2, 1fr); /* 2 colonne */
+      grid-auto-rows: 1fr; /* Righe flessibili */
       gap: 4px;
       width: 100%;
-      height: 100%; /* Si allunga per pareggiare il testo a fianco */
+      height: 100%; 
       padding: 0;
       margin: 0;
     }
@@ -131,8 +131,7 @@
       margin: 0;
     }
 
-    /* LA REGOLA MAGICA: Se le foto sono dispari (es. 3, 5, 7), 
-       l'ultima foto prende tutto lo spazio in basso per non lasciare buchi neri */
+    /* La 3° foto prende tutto lo spazio in basso */
     .cropped-mosaic .masonry-item:last-child:nth-child(odd) {
       grid-column: 1 / -1;
     }
@@ -353,76 +352,132 @@
       line-height: 1.8;
     }
 
+    /* ── Comportamento per TABLET (Schermi medi) ── */
     @media (max-width: 1024px) {
+      /* Diamo il 60% di spazio alla foto e riduciamo il testo al 40% */
       .psico-intro {
-        grid-template-columns: 1fr;
+        grid-template-columns: 60% 40%; 
         min-height: auto;
       }
+
+      /* Invertiamo le percentuali per la sezione reverse (Testo a sx 40%, Foto a dx 60%) */
+      .psico-intro--reverse {
+        grid-template-columns: 40% 60%; 
+      }
+
       .psico-intro-photo {
-        /* Alziamo il limite per tablet e schermi medi */
-        height: 80vw;
-        max-height: 700px;
+        height: 100%;
+        min-height: 400px;
+        max-height: none;
       }
-      .psico-intro-text {
-        padding: 64px 48px;
-        border-left: none;
-        border-top: 1px solid rgba(201,168,76,0.1);
-      }
+      
+      .psico-intro-text,
       .psico-intro--reverse .psico-intro-text {
-        border-right: none;
-        border-top: none;
-        border-bottom: 1px solid rgba(201,168,76,0.1);
-        padding: 64px 48px;
+        padding: 60px 40px;
+        border: none;
       }
+
+      /* ── MODIFICA MOSAICO PER TABLET ── */
+      /* Impostiamo 1 colonna e 2 righe per impilarle una sopra l'altra */
+      .cropped-mosaic {
+        grid-template-columns: 1fr !important;
+        grid-template-rows: 1fr 1fr !important;
+      }
+
+      /* Rimuoviamo la regola desktop che allargava l'ultima foto */
+      .cropped-mosaic .masonry-item:last-child:nth-child(odd) {
+        grid-column: auto;
+      }
+      
+      /* Nascondiamo la 3° foto (mostrandone solo 2 affiancate) */
+      .cropped-mosaic .masonry-item:nth-child(n+3) {
+        display: none !important;
+      }
+      /* ───────────────────────────────── */
+      
       .psico-masonry { columns: 2; }
     }
 
+    /* ── Comportamento per SMARTPHONE (Solo schermi piccoli) ── */
     @media (max-width: 680px) {
       .psico-hero { padding: 0 24px 60px; }
-      .psico-intro-text { padding: 48px 24px; }
-      .psico-intro--reverse .psico-intro-text { padding: 48px 24px; }
       
-      /* 1. La foto STATICA ha la sua altezza fissa su mobile, e NON cresce a dismisura */
+      .psico-intro, .psico-intro--reverse {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .psico-intro--reverse .psico-intro-photo {
+        order: -1; 
+      }
+
+      .psico-intro-text, 
+      .psico-intro--reverse .psico-intro-text { 
+        padding: 48px 24px; 
+        border: none; 
+      }
+      
       .psico-intro-photo:not(.cropped-mosaic) {
         height: 125vw; 
         max-height: 85vh;
+        width: 100%;
       }
 
-      /* 2. SOLO il MOSAICO ha l'altezza sbloccata per accogliere le foto in colonna */
       .psico-intro-photo.cropped-mosaic {
         height: auto; 
         max-height: none;
+        width: 100%;
       }
 
-      /* 3. FIX MOSAICO: Forza 1 singola colonna e resetta le altezze */
       .cropped-mosaic {
+        display: grid; 
         grid-template-columns: 1fr;
         gap: 12px;
       }
+      
       .cropped-mosaic .masonry-item {
         height: auto;
-        aspect-ratio: 4 / 5; /* Formato verticale perfetto per smartphone */
+        aspect-ratio: 4 / 5; 
       }
+      
       .cropped-mosaic .masonry-item img {
         position: relative;
         height: 100%;
       }
 
+      /* ── UNA SOLA FOTO SU TELEFONO: RIMUOVI LA SECONDA E LA TERZA ── */
+      .cropped-mosaic .masonry-item:nth-child(n+2) {
+        display: none !important;
+      }
+      
+      .cropped-mosaic {
+        grid-template-columns: 1fr !important;
+        grid-template-rows: 1fr !important; 
+      }
+      
+      .psico-intro-photo.cropped-mosaic {
+        height: auto; 
+        max-height: none;
+        min-height: 0; /* <--- Rimuove eventuali altezze fisse ereditate dal tablet */
+        width: 100%;
+        background: transparent; /* <--- Assicura che non ci siano fondi grigi visibili */
+      }
+      
+      .cropped-mosaic .masonry-item:first-child {
+        aspect-ratio: 4 / 5;
+        height: auto;
+      }
+      
+      .cropped-mosaic .masonry-item:first-child img {
+        position: relative;
+        height: 100%;
+      }
+      /* ─────────────────────────────────────────────────────────────── */
+
       .psico-gallery-section { padding: 64px 20px 80px; }
       .psico-gallery-header { flex-direction: column; align-items: flex-start; }
       .psico-masonry { columns: 1; }
       .psico-cta { padding: 80px 24px; }
-    }
-
-    /* ── Light mode overrides ───────────────────────── */
-    body.light-mode .psico-intro-text {
-      background: #f5f0e8;
-    }
-    body.light-mode .psico-gallery-section {
-      background: #f9f5ee;
-    }
-    body.light-mode .psico-cta {
-      background: #f0ebe0;
     }
   </style>
 </head>

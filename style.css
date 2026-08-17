@@ -1393,7 +1393,7 @@ footer {
     columns: 1;
   }
   .masonry-grid .masonry-item {
-    margin-bottom: 100px; /* Diamo aria tra le foto singole in colonna */
+    margin-bottom: 4px; /* Diamo aria tra le foto singole in colonna */
   } 
 
   .postprod-compare {
@@ -2217,6 +2217,9 @@ html.loading-active body {
   .cropped-mosaic {
     min-height: 500px;
   }
+  .masonry-grid {
+    columns: 2;
+  }
 }
 
 /* Fix mobile vero e proprio */
@@ -2241,6 +2244,6 @@ html.loading-active body {
   }
 
   .cropped-mosaic .masonry-item:last-child:nth-child(odd) {
-    grid-column: auto;
+    grid-column: 2;
   }
 }
