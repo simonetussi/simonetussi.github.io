@@ -1,4 +1,4 @@
-/* Shared site behaviour — v2.1.0 */
+/* Shared site behaviour — v2.1.1 */
 (function () {
   'use strict';
 
@@ -189,52 +189,94 @@
 
     /* ── Eventi ── */
     _bind() {
+      this.hasPointerDown = false;
+      this.pointerTargetItem = null;
+
       // Hover → pausa
       this.wrapper.addEventListener('mouseenter', () => { this.hovered = true; });
       this.wrapper.addEventListener('mouseleave', () => {
         this.hovered = false;
-        if (this.dragging) this.dragging = false;
+        if (this.dragging) {
+          this.dragging = false;
+          this.hasPointerDown = false;
+          this.wrapper.classList.remove('is-dragging');
+        }
       });
 
-      // Drag / Swipe
+      // Pointer down
       this.wrapper.addEventListener('pointerdown', e => {
         if (e.button !== 0 && e.pointerType === 'mouse') return;
-        this.dragging = true;
+        this.hasPointerDown = true;
+        this.dragging = false;
         this.dragStartX = e.clientX;
+        this.dragStartY = e.clientY;
         this.dragStartOffset = this.offset;
         this.dragTotalMoved = 0;
-        this.wrapper.classList.add('is-dragging');
-        try { this.wrapper.setPointerCapture(e.pointerId); } catch (_) {}
+        this.pointerTargetItem = e.target.closest('.masonry-item');
       });
 
+      // Pointer move
       this.wrapper.addEventListener('pointermove', e => {
-        if (!this.dragging) return;
+        if (!this.hasPointerDown) return;
         const dx = e.clientX - this.dragStartX;
-        this.dragTotalMoved = Math.max(this.dragTotalMoved, Math.abs(dx));
-        this.offset = this.dragStartOffset + dx;
-        this._render();
+        const dy = e.clientY - this.dragStartY;
+        const dist = Math.hypot(dx, dy);
+        this.dragTotalMoved = Math.max(this.dragTotalMoved, dist);
+
+        // Attiva il drag solo se il movimento supera 6px
+        if (!this.dragging && dist > 6) {
+          this.dragging = true;
+          this.wrapper.classList.add('is-dragging');
+          try { this.wrapper.setPointerCapture(e.pointerId); } catch (_) {}
+        }
+
+        if (this.dragging) {
+          this.offset = this.dragStartOffset + dx;
+          this._render();
+        }
       });
 
-      const endDrag = e => {
-        if (!this.dragging) return;
-        this.dragging = false;
-        this.wrapper.classList.remove('is-dragging');
-        try { this.wrapper.releasePointerCapture(e.pointerId); } catch (_) {}
-      };
-      this.wrapper.addEventListener('pointerup', endDrag);
-      this.wrapper.addEventListener('pointercancel', endDrag);
+      // Pointer up (gestisce sia la fine del drag sia il click/tap immediato)
+      const onPointerUp = e => {
+        if (!this.hasPointerDown) return;
 
-      // Click → Lightbox (solo se non è un drag)
-      this.items.forEach(item => {
-        item.addEventListener('click', e => {
-          if (this.dragTotalMoved > 6) {
-            e.preventDefault();
-            e.stopPropagation();
-            return;
+        if (this.dragging) {
+          this.dragging = false;
+          this.wrapper.classList.remove('is-dragging');
+          try { this.wrapper.releasePointerCapture(e.pointerId); } catch (_) {}
+        } else if (this.dragTotalMoved <= 6) {
+          // È un click / tap pulito: apri direttamente il Lightbox
+          const item = this.pointerTargetItem || e.target.closest('.masonry-item');
+          if (item) {
+            const img = item.querySelector('img');
+            if (img) openLightbox(img);
           }
+        }
+
+        this.hasPointerDown = false;
+        this.pointerTargetItem = null;
+      };
+
+      this.wrapper.addEventListener('pointerup', onPointerUp);
+      this.wrapper.addEventListener('pointercancel', () => {
+        this.hasPointerDown = false;
+        this.dragging = false;
+        this.pointerTargetItem = null;
+        this.wrapper.classList.remove('is-dragging');
+      });
+
+      // Click standard come ulteriore salvaguardia
+      this.track.addEventListener('click', e => {
+        if (this.dragTotalMoved > 6) {
+          e.preventDefault();
+          e.stopPropagation();
+          return;
+        }
+        const item = e.target.closest('.masonry-item');
+        if (item) {
           const img = item.querySelector('img');
           if (img) openLightbox(img);
-        });
+        }
       });
 
       // Resize
