@@ -1,7 +1,6 @@
 {
   "base": "/img/chi_sono/",
   "photos": [
-    { "src": "animatore(0).webp", "alt": "Animatore 0" },
     { "src": "animatore(1).webp", "alt": "Animatore 1" },
     { "src": "animatore(2).webp", "alt": "Animatore 2" },
     { "src": "animatore(3).webp", "alt": "Animatore 3" },
