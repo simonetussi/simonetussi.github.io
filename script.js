@@ -1,4 +1,4 @@
-/* Shared site behaviour — v2.1.1 */
+/* Shared site behaviour — v2.1.4 */
 (function () {
   'use strict';
 
@@ -163,9 +163,10 @@
       this._render();
     }
 
-    /* ── Misurazione ── */
+    /* ── Misurazione (Zero Clonazione, Zero Duplicati) ── */
     _measure() {
       this.containerW = this.wrapper.getBoundingClientRect().width || window.innerWidth;
+      if (!this.items.length) return;
 
       const first = this.items[0];
       const rect  = first.getBoundingClientRect();
@@ -179,11 +180,8 @@
       const totalW = this.items.length * this.pitch;
 
       // Span = ampiezza del ciclo virtuale:
-      // Se le foto coprono più dello schermo → span = totalW (loop naturale).
-      // Se le foto sono poche → span = schermo + 1 elemento (ogni foto scompare
-      // a sinistra e riappare a destra senza buchi).
+      // ZERO CLONI NEL DOM: esattamente N elementi unici dal JSON
       this.span = Math.max(totalW, this.containerW + this.pitch);
-
       this.track.style.height = itemH + 'px';
     }
 
@@ -351,24 +349,44 @@
       const limit = limitAttr ? parseInt(limitAttr, 10) : null;
 
       if (isMarquee) {
-        // ── CAROSELLO ──
-        // Prende TUTTE le foto del mazzo nella loro posizione mescolata.
-        // La posizione di partenza è ruotata in base a quante foto sono già
-        // state pescate dalle griglie, così ad ogni refresh cambia tutto.
+        // ── CAROSELLO: Foto UNICHE dal mazzo condiviso, ZERO duplicati ──
         const deck = pool.deck;
         if (!deck.length) { showGalleryError(grid, 'Galleria in aggiornamento'); return; }
 
-        const startIdx = pool.cursor % deck.length;
-        const rotated = [...deck.slice(startIdx), ...deck.slice(0, startIdx)];
+        // Quantità di foto: personalizzabile con data-gallery-limit="..." nell'HTML (default: 10)
+        const maxPhotos = Number.isFinite(limit) ? limit : 10;
 
-        const entries = rotated.map(p => ({ url: photoURL(pool, p), alt: p.alt || '' }));
+        // Velocità: personalizzabile con data-carousel-speed="..." nell'HTML 
+        const speedAttr = grid.dataset.carouselSpeed;
+        const speed = speedAttr ? parseFloat(speedAttr) : 100;
+
+        let photos = [];
+
+        // 1. Prendi prima le foto non ancora utilizzate nelle griglie a monte
+        const unused = deck.slice(pool.cursor);
+        if (unused.length > 0) {
+          photos = unused.slice(0, maxPhotos);
+        } else {
+          // Per gallerie con pochi scatti in totale, prendi dal mazzo originale
+          photos = deck.slice(0, maxPhotos);
+        }
+
+        // Garanzia assoluta: nessun duplicato ammesso nella lista
+        const seen = new Set();
+        photos = photos.filter(p => {
+          if (seen.has(p.src)) return false;
+          seen.add(p.src);
+          return true;
+        });
+
+        const entries = photos.map(p => ({ url: photoURL(pool, p), alt: p.alt || '' }));
         await preloadImages(entries.map(e => e.url));
 
-        // Esattamente N foto nel JSON → esattamente N nodi nel DOM (ZERO duplicati)
+        // Esattamente N nodi nel DOM, ZERO cloni
         entries.forEach(e => grid.appendChild(galleryItem(e.url, e.alt)));
 
-        // Avvia il motore a velocità costante
-        new InfiniteMarquee(grid, { speed: 50 });
+        // Avvia il motore a velocità costante e wrapping virtuale
+        new InfiniteMarquee(grid, { speed });
 
       } else {
         // ── GRIGLIA MOSAICO ──
