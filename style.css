@@ -2150,100 +2150,735 @@ html.loading-active body {
 }
 
 /* ══════════════════════════════════════════════
-   CAROSELLO SCORREVOLE
+   CHI SONO SUBPAGES (Psicologia, Fotografo, Oof Cot, Animatore, Soccorritore)
    ══════════════════════════════════════════════ */
+
+/* ── Hero ──────────────────────────────────────── */
+.psico-hero {
+  position: relative;
+  height: 100vh;
+  min-height: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 48px 80px;
+  overflow: hidden;
+}
+
+.psico-hero .hero-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center 30%;
+  filter: brightness(0.55) saturate(0.65);
+}
+
+.psico-hero .hero-vignette {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(12, 11, 9, 0.85) 0%,
+    rgba(12, 11, 9, 0.3) 30%,
+    transparent 70%
+  );
+}
+
+.psico-hero .hero-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 26%;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, rgba(201, 168, 76, 0.2), transparent);
+  pointer-events: none;
+}
+
+.psico-hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* ── Block 1 — Intro (foto + testo) ─────────────── */
+.psico-intro {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  min-height: 680px;
+}
+
+/* Left: photo */
+.psico-intro-photo {
+  position: relative;
+  overflow: hidden;
+  background: var(--bg3);
+}
+
+/* Usando > img colpiamo SOLO la foto statica e non quelle del mosaico */
+.psico-intro-photo > img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  filter: brightness(0.9) saturate(0.8);
+}
+
+.psico-intro-photo:hover img {
+  transform: scale(1.04);
+}
+
+.psico-intro-photo::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+}
+
+.psico-intro--reverse .psico-intro-text {
+  border-left: 0;
+  border-right: 1px solid rgba(201, 168, 76, 0.1);
+  padding: 80px 64px 80px 72px;
+}
+
+/* ── Griglia Mosaico Flessibile e Autoadattante ── */
+.cropped-mosaic {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: 1fr;
+  gap: 4px;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.cropped-mosaic .masonry-item {
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+}
+
+/* La 3° foto prende tutto lo spazio in basso */
+.cropped-mosaic .masonry-item:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
+.cropped-mosaic .masonry-item img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: brightness(0.9) saturate(0.8);
+  transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.4s ease;
+}
+
+.cropped-mosaic .masonry-item:hover img {
+  transform: scale(1.04);
+  filter: brightness(1) saturate(1);
+}
+
+/* ── Text panel ── */
+.psico-intro-text {
+  padding: 80px 72px 80px 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--bg2);
+  border-left: 1px solid rgba(201, 168, 76, 0.1);
+  position: relative;
+}
+
+.psico-intro-text::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(201, 168, 76, 0.04) 0%, transparent 55%);
+  pointer-events: none;
+}
+
+.psico-intro-text .section-label {
+  margin-bottom: 20px;
+}
+
+.psico-intro-text h2 {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 3.5vw, 54px);
+  font-weight: 300;
+  line-height: 1.08;
+  color: var(--cream);
+  margin-bottom: 32px;
+}
+
+.psico-intro-text h2 em {
+  font-style: italic;
+  color: var(--gold-light);
+}
+
+.psico-intro-body {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.95;
+  color: var(--cream);
+  max-width: 480px;
+  position: relative;
+  z-index: 1;
+}
+
+.psico-intro-body p + p {
+  margin-top: 20px;
+}
+
+.psico-intro-deco {
+  font-family: var(--font-display);
+  font-size: 140px;
+  line-height: 1;
+  color: rgba(201, 168, 76, 0.07);
+  position: absolute;
+  top: 40px;
+  right: 48px;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+.psico-divider {
+  width: 48px;
+  height: 1px;
+  background: linear-gradient(to right, var(--gold), transparent);
+  margin-bottom: 28px;
+}
+
+/* ── Block 2 — Gallery section ──────────────────── */
+.psico-gallery-section {
+  padding: 100px 48px 120px;
+  background: var(--bg);
+}
+
+.psico-gallery-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 56px;
+  gap: 32px;
+}
+
+.psico-gallery-header h2 {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 5vw, 68px);
+  font-weight: 300;
+  line-height: 1.05;
+  color: var(--cream);
+}
+
+.psico-gallery-header h2 em {
+  font-style: italic;
+  color: var(--gold-light);
+}
+
+.psico-gallery-note {
+  font-family: var(--font-body);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gray);
+  white-space: nowrap;
+  padding-bottom: 8px;
+}
+
+.psico-masonry {
+  columns: 3;
+  column-gap: 12px;
+}
+
+.psico-masonry .masonry-item {
+  break-inside: avoid;
+  margin-bottom: 12px;
+  position: relative;
+  overflow: hidden;
+  display: block;
+}
+
+.psico-masonry .masonry-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.5s ease;
+  filter: brightness(0.88) saturate(0.75);
+}
+
+.psico-masonry .masonry-item:hover img {
+  transform: scale(1.04);
+  filter: brightness(1) saturate(1);
+}
+
+.psico-masonry .masonry-item-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(12, 11, 9, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.psico-masonry .masonry-item:hover .masonry-item-overlay {
+  opacity: 1;
+}
+
+.psico-masonry .masonry-item-overlay svg {
+  width: 32px;
+  height: 32px;
+  color: var(--gold);
+  stroke-width: 1.5;
+}
+
+/* Loading state */
+.psico-gallery-loading {
+  text-align: center;
+  padding: 80px 0;
+  color: var(--gray);
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+
+.psico-gallery-loading::after {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+  margin: 20px auto 0;
+  animation: loadPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes loadPulse {
+  0%, 100% { opacity: 0.3; transform: scaleX(0.5); }
+  50%       { opacity: 1;   transform: scaleX(1); }
+}
+
+/* ── Page Navigation ────────────────────────────── */
+.psico-page-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 80px 48px;
+  background: var(--bg);
+}
+
+.psico-nav-block {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-decoration: none;
+  flex: 1;
+}
+
+.psico-nav-prev { align-items: flex-start; text-align: left; }
+.psico-nav-next { align-items: flex-end; text-align: right; }
+
+.psico-nav-label {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gray);
+  transition: color 0.3s ease;
+}
+
+.psico-nav-title {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 4vw, 56px);
+  font-weight: 300;
+  color: var(--cream);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: color 0.3s ease;
+}
+
+.psico-nav-title em { 
+  font-style: italic; 
+  color: var(--gold-light); 
+  transition: color 0.3s ease;
+}
+
+.psico-nav-icon {
+  color: var(--gold);
+  width: 36px;
+  height: 36px;
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Effetti Hover Navigazione */
+.psico-nav-block:hover .psico-nav-label { color: var(--gold); }
+.psico-nav-block:hover .psico-nav-title { color: var(--white); }
+.psico-nav-prev:hover .psico-nav-icon { transform: translateX(-10px); }
+.psico-nav-next:hover .psico-nav-icon { transform: translateX(10px); }
+
+/* ── CTA ────────────────────────────────────────── */
+.psico-cta {
+  padding: 120px 48px;
+  text-align: center;
+  background: var(--bg2);
+  border-top: 1px solid rgba(201, 168, 76, 0.1);
+}
+
+.psico-cta .section-label { margin-bottom: 16px; }
+
+.psico-cta h2 {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 6vw, 80px);
+  font-weight: 300;
+  line-height: 1.05;
+  color: var(--cream);
+  margin-bottom: 24px;
+}
+
+.psico-cta h2 em { font-style: italic; color: var(--gold-light); }
+
+.psico-cta p {
+  color: var(--gray-light);
+  font-size: 13px;
+  max-width: 380px;
+  margin: 0 auto 44px;
+  letter-spacing: 0.04em;
+  line-height: 1.8;
+}
+
+/* ══════════════════════════════════════════════
+   CAROSELLO SCORREVOLE (MARQUEE)
+   ══════════════════════════════════════ */
 .marquee-wrapper {
   width: 100%;
   overflow: hidden;
   background: var(--bg2);
-  /* Usa lo sfondo secondario per staccare dal footer */
   padding: 60px 0;
   border-top: 1px solid rgba(201, 168, 76, 0.1);
   position: relative;
 }
 
-/* Disabilitiamo il comportamento a colonne del masonry originale per questa track */
 .marquee-track.masonry-grid {
   display: flex !important;
   columns: auto !important;
   gap: 16px;
   width: max-content;
-  animation: marqueeScroll 40s linear infinite;
+  animation: marqueeScroll 45s linear infinite;
+  will-change: transform;
 }
 
-/* Pausa all'hover */
 .marquee-wrapper:hover .marquee-track.masonry-grid {
   animation-play-state: paused;
 }
 
-/* Dimensioni fisse per le foto del carosello */
 .marquee-track .masonry-item {
   width: 280px;
   height: 380px;
   margin-bottom: 0 !important;
-  /* resetta il margine del masonry */
   flex-shrink: 0;
   break-inside: auto;
   cursor: pointer;
-  /* Aggiunto: indica che è cliccabile */
   pointer-events: auto;
-  /* Aggiunto: assicura che riceva i clic */
+  position: relative;
+  overflow: hidden;
 }
 
 .marquee-track .masonry-item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.4s ease;
+}
+
+.marquee-track .masonry-item:hover img {
+  transform: scale(1.04);
+  filter: brightness(1) saturate(1);
 }
 
 @keyframes marqueeScroll {
   0% {
     transform: translateX(0);
   }
-
-  /* 8px è la metà del gap (16px), assicura un loop matematicamente perfetto */
   100% {
     transform: translateX(calc(-50% - 8px));
   }
 }
 
-/* ══════════════════════════════════════════════
-   FIX MOSAICO MOBILE (.cropped-mosaic)
-   ══════════════════════════════════════════════ */
-
-/* Sotto i 1024px la griglia madre si impila, e il mosaico perde 
-   l'altezza 100% rispetto al testo. Diamo un'altezza minima decorosa. */
+/* ── Comportamento per TABLET (Schermi medi <= 1024px) ── */
 @media (max-width: 1024px) {
-  .cropped-mosaic {
-    min-height: 500px;
-  }
-  .masonry-grid {
-    columns: 2;
-  }
-}
-
-/* Fix mobile vero e proprio */
-@media (max-width: 680px) {
-  .cropped-mosaic {
-    grid-template-columns: 1fr;
+  .psico-intro {
+    grid-template-columns: 60% 40%; 
     min-height: auto;
-    gap: 12px;
-    height: auto; /* IMPORTANTE: sblocca l'altezza */
   }
 
-  /* Rimuoviamo il position: absolute che schiaccia le immagini una sull'altra se l'altezza non è definita */
-  .cropped-mosaic .masonry-item img {
-    position: relative; /* Cambiato da absolute */
-    height: auto;
-    min-height: 450px; /* Altezza minima imposta per assicurarsi che le immagini riempiano bene lo schermo */
+  .psico-intro--reverse {
+    grid-template-columns: 40% 60%; 
   }
 
-  .cropped-mosaic .masonry-item {
-    aspect-ratio: 4 / 5;
-    height: auto;
+  .psico-intro-photo {
+    height: 100%;
+    min-height: 400px;
+    max-height: none;
+  }
+  
+  .psico-intro-text,
+  .psico-intro--reverse .psico-intro-text {
+    padding: 60px 40px;
+    border: none;
+  }
+
+  .cropped-mosaic {
+    grid-template-columns: 1fr !important;
+    grid-template-rows: 1fr 1fr !important;
+    min-height: 500px;
   }
 
   .cropped-mosaic .masonry-item:last-child:nth-child(odd) {
-    grid-column: 2;
+    grid-column: auto;
+  }
+  
+  .cropped-mosaic .masonry-item:nth-child(n+3) {
+    display: none !important;
+  }
+  
+  .psico-masonry { columns: 2; }
+}
+
+/* ── Comportamento per SMARTPHONE (<= 680px) ── */
+@media (max-width: 680px) {
+  .psico-page-nav {
+    flex-direction: column;
+    gap: 56px;
+    padding: 64px 24px;
+  }
+  .psico-nav-block {
+    align-items: center !important;
+    text-align: center !important;
+  }
+  .psico-hero { padding: 0 24px 60px; }
+  
+  .psico-intro, .psico-intro--reverse {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .psico-intro--reverse .psico-intro-photo {
+    order: -1; 
+  }
+
+  .psico-intro-text, 
+  .psico-intro--reverse .psico-intro-text { 
+    padding: 48px 24px; 
+    border: none; 
+  }
+  
+  .psico-intro-photo:not(.cropped-mosaic) {
+    height: 125vw; 
+    max-height: 85vh;
+    width: 100%;
+  }
+
+  .psico-intro-photo.cropped-mosaic {
+    height: auto; 
+    max-height: none;
+    min-height: 0;
+    width: 100%;
+    background: transparent;
+  }
+
+  .cropped-mosaic {
+    display: grid; 
+    grid-template-columns: 1fr !important;
+    grid-template-rows: 1fr !important;
+    gap: 12px;
+    min-height: auto;
+    height: auto;
+  }
+  
+  .cropped-mosaic .masonry-item {
+    height: auto;
+    aspect-ratio: 4 / 5; 
+  }
+  
+  .cropped-mosaic .masonry-item img {
+    position: relative;
+    height: 100%;
+    min-height: 0;
+  }
+
+  /* Una sola foto su mobile per i blocchi a mosaico */
+  .cropped-mosaic .masonry-item:nth-child(n+2) {
+    display: none !important;
+  }
+
+  .psico-gallery-section { padding: 64px 20px 80px; }
+  .psico-gallery-header { flex-direction: column; align-items: flex-start; }
+  .psico-masonry { columns: 1; }
+  .psico-cta { padding: 80px 24px; }
+  
+  .marquee-track .masonry-item {
+    width: 220px;
+    height: 300px;
   }
 }
+
+/* ── Light Mode per Sottopagine ── */
+body.light-mode .psico-hero .hero-vignette {
+  background: linear-gradient(
+    to top,
+    rgba(223, 220, 211, 0.95) 0%,
+    rgba(223, 220, 211, 0.4) 30%,
+    transparent 70%
+  );
+}
+
+body.light-mode .psico-intro-text {
+  background: var(--bg2);
+  border-color: rgba(201, 168, 76, 0.2);
+}
+
+body.light-mode .psico-intro-text::before {
+  background: linear-gradient(135deg, rgba(201, 168, 76, 0.08) 0%, transparent 55%);
+}
+
+body.light-mode .psico-intro-deco {
+  color: rgba(201, 168, 76, 0.15);
+}
+
+body.light-mode .psico-cta {
+  background: var(--bg2);
+  border-color: rgba(201, 168, 76, 0.2);
+}
+
+body.light-mode .marquee-wrapper {
+  background: var(--bg2);
+  border-color: rgba(201, 168, 76, 0.2);
+}
+
+/* ══════════════════════════════════════════════
+   OTTIMIZZAZIONE SCHERMI 2K (>= 2000px)
+   ══════════════════════════════════════════════ */
+@media (min-width: 2000px) {
+  /* Larghezza massima estesa per i contenitori */
+  .about-section,
+  .services-header,
+  .services-grid,
+  .postprod-section,
+  .contact-section,
+  .chisono-intro,
+  .gallery-section {
+    max-width: 2000px;
+  }
+
+  /* ── Carosello 3D di Chi Sono: foto più alte e quadrate ── */
+  .carousel-stage {
+    height: 680px;
+  }
+
+  .carousel-card {
+    width: 720px;
+  }
+
+  .carousel-card[data-pos="left"] {
+    transform: translateX(-560px) scale(0.74);
+  }
+
+  .carousel-card[data-pos="right"] {
+    transform: translateX(560px) scale(0.74);
+  }
+
+  .carousel-card[data-pos="hidden-left"] {
+    transform: translateX(-1040px) scale(0.52);
+  }
+
+  .carousel-card[data-pos="hidden-right"] {
+    transform: translateX(1040px) scale(0.52);
+  }
+
+  /* Rendiamo l'immagine più quadrata aumentando notevolmente l'altezza (da 16/9 a 4/3) */
+  .carousel-card-image {
+    aspect-ratio: 4 / 3;
+  }
+
+  .carousel-card-title {
+    font-size: 28px;
+  }
+
+  .carousel-card-caption {
+    font-size: 13px;
+  }
+
+  /* ── Sottopagine (Psicologia, Fotografo, Oof, Animatore, Soccorritore) ── */
+  .psico-hero {
+    min-height: 720px;
+  }
+
+  .psico-intro {
+    min-height: 860px;
+  }
+
+  .psico-intro-text {
+    padding: 100px 96px 100px 84px;
+  }
+
+  .psico-intro-text h2 {
+    font-size: clamp(44px, 3.5vw, 64px);
+  }
+
+  .psico-intro-body {
+    max-width: 600px;
+    font-size: 16px;
+    line-height: 2.05;
+  }
+
+  .psico-page-nav {
+    padding: 100px 80px;
+  }
+
+  /* ── Carosello a Scorrimento Marquee: foto più alte e quadrate su 2K ── */
+  .marquee-wrapper {
+    padding: 80px 0;
+  }
+
+  .marquee-track.masonry-grid {
+    gap: 24px;
+    animation-duration: 55s;
+  }
+
+  .marquee-track .masonry-item {
+    width: 380px;
+    height: 480px; /* Formato più quadrato e altezza maggiorata per 2K */
+  }
+
+  /* ── Sezioni Home e Card ── */
+  .about-image-wrap img {
+    height: 750px;
+  }
+
+  .service-card {
+    aspect-ratio: 4 / 5; /* Più squadrato rispetto al 3/4 */
+  }
+
+  .service-card-title {
+    font-size: 48px;
+  }
+
+  .postprod-compare {
+    min-height: 640px;
+    aspect-ratio: 1 / 1; /* Foto comparatore quadrata su schermi 2K */
+  }
+}

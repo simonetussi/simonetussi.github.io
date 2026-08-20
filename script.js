@@ -78,6 +78,33 @@
   
   const galleryPools = {}; // Memoria globale per il "mazzo di foto"
 
+  function setupMarqueeTrack(track, entries) {
+    if (!entries || !entries.length) return;
+
+    // Se ci sono poche foto (es. 3 come in fotografo), ripetiamo la sequenza base
+    // in modo da avere abbastanza elementi per coprire comodamente qualsiasi schermo (inclusi 2K)
+    let sequence = [...entries];
+    while (sequence.length < 8) {
+      sequence = sequence.concat(entries);
+    }
+
+    // Creiamo gli elementi originali
+    sequence.forEach(entry => {
+      const item = galleryItem(entry.url, entry.alt);
+      item.classList.add('original-item');
+      track.appendChild(item);
+    });
+
+    // Creiamo il set di cloni per il loop continuo senza interruzioni (animazione CSS translateX -50%)
+    sequence.forEach(entry => {
+      const clone = galleryItem(entry.url, entry.alt);
+      clone.classList.add('cloned-item');
+      track.appendChild(clone);
+    });
+
+    initLightbox(track);
+  }
+
   async function loadGalleryFromJSON(grid) {
     if (grid.dataset.galleryLoaded === 'true') return;
     const source = grid.dataset.gallerySrc;
@@ -86,45 +113,62 @@
     pendingGalleries += 1;
 
     try {
-      // FIX DEFINITIVO: Salviamo l'operazione in sospeso. 
-      // Se due griglie partono insieme, la seconda attende la prima senza creare doppioni.
       if (!galleryPools[source]) {
         galleryPools[source] = fetch(source)
           .then(res => res.json())
           .then(data => ({
             base: data.base || '',
-            photos: shuffle(data.photos || []),
+            allPhotos: data.photos || [],
+            shuffled: shuffle(data.photos || []),
             currentIndex: 0
           }));
       }
 
       const pool = await galleryPools[source];
-      const limit = Number.parseInt(grid.dataset.galleryLimit, 10);
-      const count = Number.isFinite(limit) ? limit : pool.photos.length;
+      const isMarquee = grid.classList.contains('marquee-track');
+      const limitAttr = grid.dataset.galleryLimit;
+      const limit = limitAttr ? Number.parseInt(limitAttr, 10) : null;
       
-      const photos = [];
-      for (let i = 0; i < count; i++) {
-        // Se si svuota il mazzo, lo rimescola
-        if (pool.currentIndex >= pool.photos.length) {
-          pool.photos = shuffle(pool.photos);
-          pool.currentIndex = 0;
+      if (isMarquee) {
+        // Carica TUTTE le foto definite nel rispettivo galleries.json
+        const photos = pool.allPhotos.length ? pool.allPhotos : pool.shuffled;
+        if (!photos.length) {
+          showGalleryError(grid, 'Galleria in aggiornamento');
+          return;
         }
-        photos.push(pool.photos[pool.currentIndex]);
-        pool.currentIndex++; // Avanza il contatore globale per il prossimo blocco
-      }
 
-      if (!photos.length) {
-        showGalleryError(grid, 'Galleria in aggiornamento');
-        return;
-      }
+        const entries = photos.map(photo => ({
+          alt: photo.alt || '',
+          url: /^https?:\/\//.test(photo.src) || photo.src.startsWith('/') ? photo.src : pool.base + photo.src
+        }));
 
-      const entries = photos.map(photo => ({
-        alt: photo.alt || '',
-        url: /^https?:\/\//.test(photo.src) || photo.src.startsWith('/') ? photo.src : pool.base + photo.src
-      }));
-      await preloadImages(entries.map(entry => entry.url));
-      entries.forEach(entry => grid.appendChild(galleryItem(entry.url, entry.alt)));
-      initLightbox(grid);
+        await preloadImages(entries.map(entry => entry.url));
+        setupMarqueeTrack(grid, entries);
+      } else {
+        const count = Number.isFinite(limit) ? limit : pool.allPhotos.length;
+        const photos = [];
+        for (let i = 0; i < count; i++) {
+          if (pool.currentIndex >= pool.shuffled.length) {
+            pool.shuffled = shuffle(pool.allPhotos);
+            pool.currentIndex = 0;
+          }
+          photos.push(pool.shuffled[pool.currentIndex]);
+          pool.currentIndex++;
+        }
+
+        if (!photos.length) {
+          showGalleryError(grid, 'Galleria in aggiornamento');
+          return;
+        }
+
+        const entries = photos.map(photo => ({
+          alt: photo.alt || '',
+          url: /^https?:\/\//.test(photo.src) || photo.src.startsWith('/') ? photo.src : pool.base + photo.src
+        }));
+        await preloadImages(entries.map(entry => entry.url));
+        entries.forEach(entry => grid.appendChild(galleryItem(entry.url, entry.alt)));
+        initLightbox(grid);
+      }
     } catch (error) {
       console.warn(`[Gallery] Impossibile caricare ${source}:`, error);
       showGalleryError(grid);
@@ -141,15 +185,23 @@
     grid.querySelectorAll('.masonry-item').forEach(item => {
       if (item.dataset.lightboxBound) return;
       item.dataset.lightboxBound = 'true';
-      item.addEventListener('click', () => openLightbox(item.querySelector('img')));
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
+        const img = item.querySelector('img');
+        if (img) openLightbox(img);
+      });
     });
   }
 
   function openLightbox(image) {
     const box = lightbox();
     if (!box || !image) return;
-    const images = [...document.querySelectorAll('.masonry-item img')];
-    let index = Math.max(0, images.indexOf(image));
+    // Consideriamo solo le immagini originali per non duplicare le foto nella navigazione del lightbox
+    const images = [...document.querySelectorAll('.masonry-item:not(.cloned-item) img')];
+    let index = images.findIndex(img => img.src === image.src);
+    if (index === -1) index = Math.max(0, images.indexOf(image));
+    if (index === -1) index = 0;
+
     const boxImage = box.querySelector('#lightbox-img');
     const counter = box.querySelector('#lightbox-counter');
     const show = () => {
@@ -212,12 +264,12 @@
       range.addEventListener('input', update); update();
     });
 
-    // Inizializza le gallerie a griglia classica
+    // Inizializza le gallerie a griglia classica e marquee
     document.querySelectorAll('.masonry-grid[data-gallery-src]').forEach(grid => {
       if (!grid.closest('[data-private-content][hidden]')) loadGalleryFromJSON(grid);
     });
     
-    // Inizializza il mosaico ritagliato (psicologia)
+    // Inizializza il mosaico ritagliato (psicologia, fotografo, oof, animatore, soccorritore)
     document.querySelectorAll('.cropped-mosaic[data-gallery-src]').forEach(grid => {
       if (!grid.closest('[data-private-content][hidden]')) loadGalleryFromJSON(grid);
     });
@@ -253,55 +305,3 @@
   else initialise();
   window.loadGalleryFromJSON = loadGalleryFromJSON;
 })();
-
-document.addEventListener("DOMContentLoaded", () => {
-  const track = document.querySelector(".marquee-track");
-  if (!track) return;
-
-  const observer = new MutationObserver((mutations, obs) => {
-    const items = Array.from(track.children);
-
-    if (items.length > 0) {
-      items.forEach((item) => {
-        item.classList.add("original-item");
-
-        const clone = item.cloneNode(true);
-        clone.classList.remove("original-item");
-        clone.classList.add("cloned-item");
-        // Rimuoviamo data-lightbox-bound per assicurarci che non interferisca
-        delete clone.dataset.lightboxBound; 
-
-        track.appendChild(clone);
-      });
-
-      obs.disconnect();
-    }
-  });
-
-  observer.observe(track, { childList: true });
-
-  // Delegazione degli eventi per i clic sul carosello
-  track.addEventListener("click", (e) => {
-    // Troviamo l'elemento .masonry-item più vicino al punto cliccato
-    const item = e.target.closest(".masonry-item");
-    if (!item) return; // Clic non su un'immagine
-
-    e.preventDefault();
-    e.stopPropagation(); // Evita che il clic si propaghi troppo
-
-    const img = item.querySelector("img");
-    if (!img) return;
-
-    const imgSrc = img.src;
-
-    if (item.classList.contains("cloned-item")) {
-      // Se abbiamo cliccato su un clone, troviamo l'originale corrispondente
-      const originalItem = track.querySelector(`.original-item img[src="${imgSrc}"]`)?.closest(".masonry-item");
-      if (originalItem) {
-        // Simuliamo un click sull'elemento originale
-        originalItem.click(); 
-      }
-    } else if (!item.dataset.lightboxBound) {
-    }
-  });
-});
