@@ -1,0 +1,17 @@
+{
+  "base": "/img/chi_sono/",
+  "photos": [
+    { "src": "oof(1).webp", "alt": "Oof Còt 1" },
+    { "src": "oof(2).webp", "alt": "Oof Còt 2" },
+    
+    { "src": "oof(4).webp", "alt": "Oof Còt 4" },
+    { "src": "oof(5).webp", "alt": "Oof Còt 5" },
+    { "src": "oof(6).webp", "alt": "Oof Còt 6" },
+    { "src": "oof(7).webp", "alt": "Oof Còt 7" },
+    { "src": "oof(8).webp", "alt": "Oof Còt 8" },
+    { "src": "oof(9).webp", "alt": "Oof Còt 9" },
+    { "src": "oof(10).webp", "alt": "Oof Còt 10" },
+    { "src": "oof(11).webp", "alt": "Oof Còt 11" },
+    { "src": "oof(12).webp", "alt": "Oof Còt 12" }
+  ]
+}

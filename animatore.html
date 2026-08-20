@@ -13,7 +13,7 @@
 
   <style>
     /* ═══════════════════════════════════════════════
-       ANIMATORE — Page-specific styles
+       FOTOGRAFO — Page-specific styles
        ═══════════════════════════════════════════════ */
 
     /* ── Hero ──────────────────────────────────────── */
@@ -326,6 +326,62 @@
       50%       { opacity: 1;   transform: scaleX(1); }
     }
 
+    /* ── Page Navigation ────────────────────────────── */
+    .psico-page-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 80px 48px;
+      background: var(--bg);
+    }
+    .psico-nav-block {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      text-decoration: none;
+      flex: 1;
+    }
+    .psico-nav-prev { align-items: flex-start; text-align: left; }
+    .psico-nav-next { align-items: flex-end; text-align: right; }
+    
+    .psico-nav-label {
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gray);
+      transition: color 0.3s ease;
+    }
+    .psico-nav-title {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 4vw, 56px);
+      font-weight: 300;
+      color: var(--cream);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: color 0.3s ease;
+    }
+    .psico-nav-title em { 
+      font-style: italic; 
+      color: var(--gold-light); 
+      transition: color 0.3s ease;
+    }
+    
+    .psico-nav-icon {
+      color: var(--gold);
+      width: 36px;
+      height: 36px;
+      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    /* Effetti Hover */
+    .psico-nav-block:hover .psico-nav-label { color: var(--gold); }
+    .psico-nav-block:hover .psico-nav-title { color: var(--white); }
+    .psico-nav-prev:hover .psico-nav-icon { transform: translateX(-10px); }
+    .psico-nav-next:hover .psico-nav-icon { transform: translateX(10px); }
+
     /* ── CTA ────────────────────────────────────────── */
     .psico-cta {
       padding: 120px 48px;
@@ -400,6 +456,16 @@
 
     /* ── Comportamento per SMARTPHONE (Solo schermi piccoli) ── */
     @media (max-width: 680px) {
+
+      .psico-page-nav {
+          flex-direction: column;
+          gap: 56px;
+          padding: 64px 24px;
+        }
+        .psico-nav-block {
+          align-items: center !important;
+          text-align: center !important;
+        }
       .psico-hero { padding: 0 24px 60px; }
       
       .psico-intro, .psico-intro--reverse {
@@ -634,13 +700,32 @@
   </section>
 
   <!-- ══════════════════════════════════════
-       CTA
+       PAGE NAVIGATION
   ══════════════════════════════════════ -->
-  <section class="psico-cta">
-    <p class="section-label reveal">Collaboriamo</p>
-    <h2 class="reveal reveal-delay-1">Prenota il tuo<br><em>servizio</em></h2>
-    <p class="reveal reveal-delay-2">Ogni viso ha la sua storia da raccontare.</p>
-    <a href="/contatti.html" class="btn btn-gold reveal reveal-delay-3">Contattami</a>
+  <section class="psico-page-nav reveal">
+    <!-- Pulsante Sinistra -->
+    <a href="/soccorritore.html" class="psico-nav-block psico-nav-prev">
+      <span class="psico-nav-label">GUARDA</span>
+      <h3 class="psico-nav-title">
+        <svg class="psico-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        <em>Soccorritore</em>
+      </h3>
+    </a>
+
+    <!-- Pulsante Destra -->
+    <a href="/fotografo.html" class="psico-nav-block psico-nav-next">
+      <span class="psico-nav-label">GUARDA</span>
+      <h3 class="psico-nav-title">
+        <em>Fotografo</em>
+        <svg class="psico-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </h3>
+    </a>
   </section>
 
   <!-- Footer -->

@@ -1,0 +1,8 @@
+{
+  "base": "/img/chi_sono/",
+  "photos": [
+    { "src": "fotografo(1).webp", "alt": "Fotografo 1" },
+    { "src": "fotografo(2).webp", "alt": "Fotografo 2" },
+    { "src": "fotografo(3).webp", "alt": "Fotografo 3" }
+  ]
+}
