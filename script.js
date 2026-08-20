@@ -1,4 +1,4 @@
-/* Shared site behaviour */
+/* Shared site behaviour — v2.1.0 */
 (function () {
   'use strict';
 
@@ -210,7 +210,7 @@
       this.wrapper.addEventListener('pointermove', e => {
         if (!this.dragging) return;
         const dx = e.clientX - this.dragStartX;
-        this.dragTotalMoved += Math.abs(dx);
+        this.dragTotalMoved = Math.max(this.dragTotalMoved, Math.abs(dx));
         this.offset = this.dragStartOffset + dx;
         this._render();
       });
