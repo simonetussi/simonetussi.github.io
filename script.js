@@ -15,14 +15,25 @@
     return copy;
   };
 
-  function pageLoader() {
+    function pageLoader() {
     let loader = document.getElementById('page-loader');
     if (!loader) {
       loader = document.createElement('div');
       loader.id = 'page-loader';
       loader.setAttribute('role', 'status');
       loader.setAttribute('aria-live', 'polite');
-      loader.innerHTML = '<img src="/img/altro/logo-w.png" alt=""><span>Caricamento fotografie</span>';
+      
+      // Inseriamo l'immagine e raggruppiamo i testi in un div centrato
+      loader.innerHTML = `
+        <img src="/img/altro/logo-w.png" alt="">
+        <div style="text-align: center; display: flex; flex-direction: column; gap: 8px;">
+          <span style="font-size: 14px; font-weight: 500; letter-spacing: 0.1em;">Caricamento fotografie</span>
+          <p style="opacity: 0.8; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase;">
+            Se la galleria non appare, ricarica la pagina
+          </p>
+        </div>
+      `;
+      
       document.body.appendChild(loader);
     }
     const logo = loader.querySelector('img');
@@ -362,12 +373,12 @@
 
         let photos = [];
 
-        // 1. Prendi prima le foto non ancora utilizzate nelle griglie a monte
+        // 1. Prendi prima le foto non ancora utilizzate nelle griglie a monte se sufficienti
         const unused = deck.slice(pool.cursor);
-        if (unused.length > 0) {
+        if (unused.length >= 6) {
           photos = unused.slice(0, maxPhotos);
         } else {
-          // Per gallerie con pochi scatti in totale, prendi dal mazzo originale
+          // Per gallerie con pochi scatti residui, prendi dal mazzo intero
           photos = deck.slice(0, maxPhotos);
         }
 

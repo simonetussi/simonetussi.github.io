@@ -1377,6 +1377,24 @@ footer {
     /* Scroll interno SOLO se i link sono tanti */
     overflow-y: auto;
     overscroll-behavior: contain;
+
+    /* Fix: Servizi in colonna su smartphone e tablet verticali */
+  .services-grid {
+    grid-template-columns: 1fr;
+    gap: 16px; /* Aggiunge un po' di respiro tra una card e l'altra */
+  }
+
+  /* Fix: Allinea il titolo e il testo descrittivo in colonna per non schiacciarli */
+  .services-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  
+  .services-header .section-body {
+    text-align: left !important;
+    max-width: 100%;
+  }
   }
 
   /* Quando clicchi, il menu scivola perfettamente dentro */
@@ -1681,7 +1699,7 @@ body.light-mode .postprod-compare-line::before {
 .carousel-stage {
   position: relative;
   width: 100%;
-  height: 520px;
+  height: 760px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1764,7 +1782,7 @@ body.light-mode .postprod-compare-line::before {
 /* ─── Card Image ─────────────────────────────── */
 .carousel-card-image {
   width: 100%;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 1 / 1;
   overflow: hidden;
   position: relative;
   background: var(--bg3);
@@ -1991,7 +2009,7 @@ body.light-mode .carousel-card[data-pos="center"] {
 
 @media (max-width: 900px) {
   .carousel-stage {
-    height: 460px;
+    height: 560px;
   }
 
   .carousel-card {
@@ -2027,7 +2045,7 @@ body.light-mode .carousel-card[data-pos="center"] {
 
 @media (max-width: 680px) {
   .carousel-stage {
-    height: 380px;
+    height: 440px;
   }
 
   .carousel-card {
@@ -2060,7 +2078,7 @@ body.light-mode .carousel-card[data-pos="center"] {
 
 @media (max-width: 480px) {
   .carousel-stage {
-    height: 340px;
+    height: 390px;
   }
 
   .carousel-card {
@@ -2125,6 +2143,7 @@ body.light-mode .custom-select-dropdown li.selected {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.25s ease;
+  text-align: center; /* Aggiungi questa riga */
 }
 
 #page-loader.is-visible {
@@ -2788,9 +2807,9 @@ body.light-mode .marquee-wrapper {
     max-width: 2000px;
   }
 
-  /* ── Carosello 3D di Chi Sono: foto più alte e quadrate ── */
+  /* ── Carosello 3D di Chi Sono: foto quadrate 1:1 ── */
   .carousel-stage {
-    height: 680px;
+    height: 920px;
   }
 
   .carousel-card {
@@ -2813,17 +2832,17 @@ body.light-mode .marquee-wrapper {
     transform: translateX(1040px) scale(0.52);
   }
 
-  /* Rendiamo l'immagine più quadrata aumentando notevolmente l'altezza (da 16/9 a 4/3) */
+  /* Aspect ratio 1:1 fisso a prescindere dallo schermo */
   .carousel-card-image {
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 1 / 1;
   }
 
   .carousel-card-title {
-    font-size: 28px;
+    font-size: 32px;
   }
 
   .carousel-card-caption {
-    font-size: 13px;
+    font-size: 14px;
   }
 
   /* ── Sottopagine (Psicologia, Fotografo, Oof, Animatore, Soccorritore) ── */
@@ -2832,7 +2851,7 @@ body.light-mode .marquee-wrapper {
   }
 
   .psico-intro {
-    min-height: 860px;
+    min-height: 1200px;
   }
 
   .psico-intro-text {
@@ -2845,7 +2864,7 @@ body.light-mode .marquee-wrapper {
 
   .psico-intro-body {
     max-width: 600px;
-    font-size: 16px;
+    font-size: 24px;
     line-height: 2.05;
   }
 
@@ -2865,7 +2884,7 @@ body.light-mode .marquee-wrapper {
 
   .marquee-track .masonry-item {
     width: 380px;
-    height: 480px; /* Formato più quadrato e altezza maggiorata per 2K */
+    height: 640px; /* Formato più quadrato e altezza maggiorata per 2K */
   }
 
   /* ── Sezioni Home e Card ── */
@@ -2885,4 +2904,51 @@ body.light-mode .marquee-wrapper {
     min-height: 640px;
     aspect-ratio: 1 / 1; /* Foto comparatore quadrata su schermi 2K */
   }
+
+  /* 1. Tipografia: Scaliamo leggermente i font base per non farli sparire */
+  body {
+    font-size: 18px; /* Aumentato dal base 15px */
+  }
+
+  .section-body, 
+  .chisono-cta p, 
+  .psico-cta p {
+    font-size: 18px; /* Aumentato dal base 13px */
+    max-width: 700px; /* Permette righe più larghe per riempire meglio lo spazio */
+  }
+
+  .btn {
+    padding: 20px 48px;
+    font-size: 12px; /* Pulsanti leggermente più importanti */
+  }
+
+  /* 2. Spaziature: Diamo più respiro (padding) alle sezioni */
+  .quote-section, 
+  .about-section, 
+  .services-section, 
+  .postprod-section, 
+  .cta-section {
+    padding-top: 180px;
+    padding-bottom: 180px;
+  }
+
+  /* 3. Navbar: Proporzionata allo schermo gigante */
+  nav {
+    height: 120px; /* Aumentato da 80px */
+    padding: 0 80px;
+  }
+  
+  .nav-logo {
+    height: 48px; /* Logo più visibile */
+  }
+
+  .nav-links a {
+    font-size: 14px; /* Aumentato da 11px */
+  }
+
+  /* 4. Griglia Servizi: Aumentiamo il gap da 2px a 6px per maggiore eleganza */
+  .services-grid {
+    gap: 6px;
+  }
+
 }
