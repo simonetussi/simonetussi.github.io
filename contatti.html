@@ -91,23 +91,6 @@
         <span class="contact-detail-label">Zona operativa</span>
         <span class="contact-detail-value" style="cursor:default">Cremona, Parma e provincia</span>
       </div>
-
-      <div style="margin-top:48px" class="reveal reveal-delay-3">
-        <p class="section-label" style="margin-bottom:16px">Seguimi</p>
-        <div style="display:flex;gap:24px;flex-wrap:wrap">
-          <a href="https://www.instagram.com/simonetussi.ph/" target="_blank" rel="noopener"
-             style="display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gray-light);transition:color 0.2s"
-             onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--gray-light)'">
-            ↗ Instagram
-          </a>
-          <a href="https://wa.me/message/F4VJDF4QB6U6H1" target="_blank" rel="noopener"
-             style="display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gray-light);transition:color 0.2s"
-             onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--gray-light)'">
-            ↗ WhatsApp
-          </a>
-        </div>
-      </div>
-
       <div style="margin-top:64px;padding-top:40px;border-top:1px solid rgba(201,168,76,0.12)" class="reveal">
         <p style="font-family:var(--font-display);font-style:italic;font-size:18px;color:var(--gray-light);line-height:1.5">
           "La fotografia è l'unico linguaggio che può essere capito ovunque nel mondo."
@@ -128,7 +111,7 @@
           <input class="form-input" type="email" id="email" name="email" placeholder="mario@email.com" required>
         </div>
         <div class="form-group">
-          <label class="form-label">Tipo di servizio</label>
+          <label class="form-label">Interesse</label>
           <div class="custom-select" id="custom-select">
             <button type="button" class="custom-select-trigger" id="custom-select-trigger" aria-haspopup="listbox" aria-expanded="false">
               <span id="custom-select-value">Seleziona un servizio</span>
@@ -145,17 +128,17 @@
         </div>
         <div class="form-group">
           <label class="form-label" for="messaggio">Messaggio</label>
-          <textarea class="form-textarea" id="messaggio" name="messaggio" placeholder="Raccontami del tuo progetto: data, luogo, numero di persone, esigenze particolari..." required></textarea>
+          <textarea class="form-textarea" id="messaggio" name="messaggio" placeholder="Raccontami il tuo progetto: data, luogo, numero di persone, ..." required></textarea>
         </div>
 
-        <p class="form-note" style="font-family:'Montserrat'">Scegli come inviarmi il messaggio — i campi vengono precompilati automaticamente.</p>
+        <p class="form-note" style="font-size:25px">Scegli come inviarmi il messaggio.</p>
 
         <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px">
           <button type="button" id="btn-whatsapp" class="btn btn-gold">↗ Invia su WhatsApp</button>
           <button type="button" id="btn-email" class="btn btn-outline">↗ Invia per Email</button>
         </div>
 
-        <p class="form-error" id="form-error" style="display:none;color:var(--gold);font-size:11px;letter-spacing:0.15em;margin-top:12px">Compila tutti i campi prima di inviare.</p>
+        <p class="form-error" id="form-error" style="display:none;color:#ff0000;font-size:20px;letter-spacing:0.15em;margin-top:12px"><strong>Compila tutti i campi prima di inviare.</strong></p>
       </form>
     </div>
 
