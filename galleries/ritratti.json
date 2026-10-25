@@ -1,21 +1,21 @@
 {
   "base": "/img/ritratti/",
   "photos": [
-    { "src": "ritratti (1).webp",  "alt": "Ritratto 1" },
-    { "src": "ritratti (2).webp",  "alt": "Ritratto 2" },
-    { "src": "ritratti (3).webp",  "alt": "Ritratto 3" },
-    { "src": "ritratti (4).webp",  "alt": "Ritratto 4" },
-    { "src": "ritratti (5).webp",  "alt": "Ritratto 5" },
-    { "src": "ritratti (6).webp",  "alt": "Ritratto 6" },
-    { "src": "ritratti (7).webp",  "alt": "Ritratto 7" },
-    { "src": "ritratti (8).webp",  "alt": "Ritratto 8" },
-    { "src": "ritratti (9).webp",  "alt": "Ritratto 9" },
-    { "src": "ritratti (10).webp", "alt": "Ritratto 10" },
-    { "src": "ritratti (11).webp", "alt": "Ritratto 11" },
-    { "src": "ritratti (12).webp", "alt": "Ritratto 12" },
-    { "src": "ritratti (13).webp", "alt": "Ritratto 13" },
-    { "src": "ritratti (14).webp", "alt": "Ritratto 14" },
-    { "src": "ritratti (15).webp", "alt": "Ritratto 15" },
-    { "src": "ritratti (16).webp", "alt": "Ritratto 16" }
+    { "src": "simone-tussi-ritratti-1.webp",  "alt": "Simone Tussi - Ritratto 1" },
+    { "src": "simone-tussi-ritratti-2.webp",  "alt": "Simone Tussi - Ritratto 2" },
+    { "src": "simone-tussi-ritratti-3.webp",  "alt": "Simone Tussi - Ritratto 3" },
+    { "src": "simone-tussi-ritratti-4.webp",  "alt": "Simone Tussi - Ritratto 4" },
+    { "src": "simone-tussi-ritratti-5.webp",  "alt": "Simone Tussi - Ritratto 5" },
+    { "src": "simone-tussi-ritratti-6.webp",  "alt": "Simone Tussi - Ritratto 6" },
+    { "src": "simone-tussi-ritratti-7.webp",  "alt": "Simone Tussi - Ritratto 7" },
+    { "src": "simone-tussi-ritratti-8.webp",  "alt": "Simone Tussi - Ritratto 8" },
+    { "src": "simone-tussi-ritratti-9.webp",  "alt": "Simone Tussi - Ritratto 9" },
+    { "src": "simone-tussi-ritratti-10.webp", "alt": "Simone Tussi - Ritratto 10" },
+    { "src": "simone-tussi-ritratti-11.webp", "alt": "Simone Tussi - Ritratto 11" },
+    { "src": "simone-tussi-ritratti-12.webp", "alt": "Simone Tussi - Ritratto 12" },
+    { "src": "simone-tussi-ritratti-13.webp", "alt": "Simone Tussi - Ritratto 13" },
+    { "src": "simone-tussi-ritratti-14.webp", "alt": "Simone Tussi - Ritratto 14" },
+    { "src": "simone-tussi-ritratti-15.webp", "alt": "Simone Tussi - Ritratto 15" },
+    { "src": "simone-tussi-ritratti-16.webp", "alt": "Simone Tussi - Ritratto 16" }
   ]
 }

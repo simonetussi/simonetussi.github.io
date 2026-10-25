@@ -1,15 +1,15 @@
 {
   "base": "/img/sport/",
   "photos": [
-    { "src": "sport (1).webp", "alt": "Sport 1" },
-    { "src": "sport (2).webp", "alt": "Sport 2" },
-    { "src": "sport (3).webp", "alt": "Sport 3" },
-    { "src": "sport (4).webp", "alt": "Sport 4" },
-    { "src": "sport (5).webp", "alt": "Sport 5" },
-    { "src": "sport (6).webp", "alt": "Sport 6" },
-    { "src": "sport (7).webp", "alt": "Sport 7" },
-    { "src": "sport (8).webp", "alt": "Sport 8" },
-    { "src": "sport (9).webp", "alt": "Sport 9" },
-    { "src": "sport (10).webp", "alt": "Sport 10"}
+    { "src": "simone-tussi-sport-1.webp", "alt": "Simone Tussi - Sport 1" },
+    { "src": "simone-tussi-sport-2.webp", "alt": "Simone Tussi - Sport 2" },
+    { "src": "simone-tussi-sport-3.webp", "alt": "Simone Tussi - Sport 3" },
+    { "src": "simone-tussi-sport-4.webp", "alt": "Simone Tussi - Sport 4" },
+    { "src": "simone-tussi-sport-5.webp", "alt": "Simone Tussi - Sport 5" },
+    { "src": "simone-tussi-sport-6.webp", "alt": "Simone Tussi - Sport 6" },
+    { "src": "simone-tussi-sport-7.webp", "alt": "Simone Tussi - Sport 7" },
+    { "src": "simone-tussi-sport-8.webp", "alt": "Simone Tussi - Sport 8" },
+    { "src": "simone-tussi-sport-9.webp", "alt": "Simone Tussi - Sport 9" },
+    { "src": "simone-tussi-sport-10.webp", "alt": "Simone Tussi - Sport 10"}
   ]
 }

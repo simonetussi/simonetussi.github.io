@@ -1,8 +1,9 @@
 {
   "base": "/img/chi_sono/",
   "photos": [
-    { "src": "fotografo(1).webp", "alt": "Fotografo 1" },
-    
-    { "src": "fotografo(3).webp", "alt": "Fotografo 3" }
+    { "src": "simone-tussi-fotografo-1.webp", "alt": "Simone Tussi Fotografo 1" },
+
+    { "src": "simone-tussi-fotografo-3.webp", "alt": "Simone Tussi - Fotografo 3" },
+    { "src": "simone-tussi-fotografo-4.webp", "alt": "Simone Tussi - Fotografo 4" }
   ]
 }

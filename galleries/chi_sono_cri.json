@@ -1,22 +1,22 @@
 {
   "base": "/img/chi_sono/",
   "photos": [
-    { "src": "cri(1).webp", "alt": "CRI 1" },
-    { "src": "cri(2).webp", "alt": "CRI 2" },
-    { "src": "cri(3).webp", "alt": "CRI 3" },
-    { "src": "cri(4).webp", "alt": "CRI 4" },
+    { "src": "simone-tussi-croce-rossa-1.webp", "alt": "Simone Tussi - Croce Rossa 1" },
+    { "src": "simone-tussi-croce-rossa-2.webp", "alt": "Simone Tussi - Croce Rossa 2" },
+    { "src": "simone-tussi-croce-rossa-3.webp", "alt": "Simone Tussi - Croce Rossa 3" },
+    { "src": "simone-tussi-croce-rossa-4.webp", "alt": "Simone Tussi - Croce Rossa 4" },
     
-    { "src": "cri(6).webp", "alt": "CRI 6" },
-    { "src": "cri(7).webp", "alt": "CRI 7" },
-    { "src": "cri(8).webp", "alt": "CRI 8" },
-    { "src": "cri(9).webp", "alt": "CRI 9" },
-    { "src": "cri(10).webp", "alt": "CRI 10" },
-    { "src": "cri(11).webp", "alt": "CRI 11" },
-    { "src": "cri(12).webp", "alt": "CRI 12" },
-    { "src": "cri(13).webp", "alt": "CRI 13" },
-    { "src": "cri(14).webp", "alt": "CRI 14" },
-    { "src": "cri(15).webp", "alt": "CRI 15" },
-    { "src": "cri(16).webp", "alt": "CRI 16" },
-    { "src": "cri(17).webp", "alt": "CRI 17" }
+    { "src": "simone-tussi-croce-rossa-6.webp", "alt": "Simone Tussi - Croce Rossa 6" },
+    { "src": "simone-tussi-croce-rossa-7.webp", "alt": "Simone Tussi - Croce Rossa 7" },
+    { "src": "simone-tussi-croce-rossa-8.webp", "alt": "Simone Tussi - Croce Rossa 8" },
+    { "src": "simone-tussi-croce-rossa-9.webp", "alt": "Simone Tussi - Croce Rossa 9" },
+    { "src": "simone-tussi-croce-rossa-10.webp", "alt": "Simone Tussi - Croce Rossa 10" },
+    { "src": "simone-tussi-croce-rossa-11.webp", "alt": "Simone Tussi - Croce Rossa 11" },
+    { "src": "simone-tussi-croce-rossa-12.webp", "alt": "Simone Tussi - Croce Rossa 12" },
+    { "src": "simone-tussi-croce-rossa-13.webp", "alt": "Simone Tussi - Croce Rossa 13" },
+    { "src": "simone-tussi-croce-rossa-14.webp", "alt": "Simone Tussi - Croce Rossa 14" },
+    { "src": "simone-tussi-croce-rossa-15.webp", "alt": "Simone Tussi - Croce Rossa 15" },
+    { "src": "simone-tussi-croce-rossa-16.webp", "alt": "Simone Tussi - Croce Rossa 16" },
+    { "src": "simone-tussi-croce-rossa-17.webp", "alt": "Simone Tussi - Croce Rossa 17" }
   ]
 }
